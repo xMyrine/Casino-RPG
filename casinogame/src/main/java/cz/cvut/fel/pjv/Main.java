@@ -13,6 +13,9 @@ public class Main {
         frame.setLocationRelativeTo(null); // center the window
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close the program when the window is closed
 
+        ImageIcon img = new ImageIcon("casinogame\\src\\main\\java\\cz\\cvut\\fel\\pjv\\images\\casino_icon.png");
+        frame.setIconImage(img.getImage());
+
         walkingGame walkingGame = new walkingGame(boardWidth, boardHeight);
         frame.add(walkingGame);
         frame.pack(); // fit the window to the preferred size of its subcomponents

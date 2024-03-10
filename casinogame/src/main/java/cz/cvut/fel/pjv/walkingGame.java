@@ -4,7 +4,13 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -26,6 +32,9 @@ public class walkingGame extends JPanel implements ActionListener, KeyListener{
     ArrayList<Tile> score = new ArrayList<Tile>();
     int newWidth = 50;
     int newHeight = 50;
+    URL url;
+    Clip clip;
+    AudioInputStream coinAudioInputStream;
 
     //game logic
     Timer gameLoop; //timer for the game loop
@@ -59,6 +68,9 @@ public class walkingGame extends JPanel implements ActionListener, KeyListener{
             coinImage = ImageIO.read(getClass().getResource("images/coin.gif"));
             coinImage = coinImage.getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
             backgroundImage = ImageIO.read(getClass().getResource("images/casino_pixel_bg.jpg"));
+            //URL url = this.getClass().getClassLoader().getResource("sounds/coin.wav");
+            //coinAudioInputStream = AudioSystem.getAudioInputStream(url);
+            //clip = AudioSystem.getClip();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,25 +85,15 @@ public class walkingGame extends JPanel implements ActionListener, KeyListener{
     
 
     public void draw(Graphics g){
-        //for (int i = 0; i < boardWidth / tileSize; i++){
-        //    g.drawLine(i * tileSize, 0, i * tileSize, boardHeight);
-        //    g.drawLine(0, i*tileSize, boardWidth, i*tileSize);
-        //}
-
-        //g.setColor(Color.RED);
-        //g.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        
+        //coin
         g.drawImage(coinImage, coin.x * tileSize, coin.y * tileSize, tileSize, tileSize, null);
-         //draw the snake
+
+        //character
         g.drawImage(charImage, charModel.x * tileSize, charModel.y * tileSize, tileSize, tileSize, null);
-        //g.fillRect(snakeheadTile.x * tileSize, snakeheadTile.y * tileSize, tileSize, tileSize);
+        
 
-        //for (int i = 0; i < snake.size(); i++){
-        //    Tile tile = snake.get(i);
-        //    //System.out.println("Snake tile: " + tile.x + " " + tile.y);
-        //    g.fillRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize);
-        //}
-
-        g.setFont(new Font("Arial", Font.PLAIN, 40));
+        g.setFont(new Font("Arial", Font.PLAIN, 30));
         g.setColor(Color.WHITE);
         g.drawString("Score: " + (score.size()), 10, 30);
 
@@ -112,6 +114,24 @@ public class walkingGame extends JPanel implements ActionListener, KeyListener{
         if (checkCoinCollision(charModel, coin)){
             score.add(new Tile(coin.x, coin.y));
             spawnCoin();
+
+            //try {
+            //    // Open an audio input stream.
+            //    URL url = this.getClass().getClassLoader().getResource("sounds/win.wav");
+            //    System.out.println(url);
+            //    AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            //    // Get a sound clip resource.
+            //    Clip clip = AudioSystem.getClip();
+            //    // Open audio clip and load samples from the audio input stream.
+            //    clip.open(audioIn);
+            //    clip.start();
+            //} catch (UnsupportedAudioFileException e) {
+            //    e.printStackTrace();
+            //} catch (IOException e) {
+            //    e.printStackTrace();
+            //} catch (LineUnavailableException e) {
+            //    e.printStackTrace();
+            //}
         }
 
 
