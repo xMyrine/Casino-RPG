@@ -8,11 +8,15 @@
 package cz.cvut.fel.pjv;
 
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 public class Main {
     public static void main(String[] args) {
 
-        JFrame window = new JFrame("Game");
+        Image icon = new ImageIcon("phammin1\\2Dgame\\game\\src\\main\\resources\\icons\\game_icon.png").getImage();
+        JFrame window = new JFrame("Casino Game");
+        window.setIconImage(icon);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
