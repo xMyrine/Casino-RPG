@@ -2,21 +2,26 @@ package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.KeyHandler;
+import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.*;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.util.Random;
 
 public class Player extends Entity {
 
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
+    private int chipCount = 0;
+    private int slotMachineCount = 0;
+
     public final int screenX;
     public final int screenY;
+    private float playerLuck = 0.3f;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
@@ -25,20 +30,34 @@ public class Player extends Entity {
         screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
         screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
 
-        collisionArea = new Rectangle(8, 16, gamePanel.tileSize * (2 / 3), gamePanel.tileSize * (2 / 3));
+        collisionArea = new Rectangle(8, 16, 32, 32);
+        collisionAreaDefaultX = collisionArea.x;
+        collisionAreaDefaultY = collisionArea.y;
 
         setDefaultValues();
         getPlayerImage();
     }
 
-    /*
-     * Update the player's position based on the key inputs
-     */
+    public int getSlotMachineCount() {
+        return slotMachineCount;
+    }
+
+    public int getChipCount() {
+        return chipCount;
+    }
+
+    public void setPlayerLuck(float playerLuck) {
+        this.playerLuck = playerLuck;
+    }
+
+    public float getPlayerLuck() {
+        return playerLuck;
+    }
 
     public void setDefaultValues() {
-        worldX = gamePanel.worldWidth / 2 - gamePanel.tileSize / 2;
-        worldY = gamePanel.worldHeight / 2 - gamePanel.tileSize / 2;
-        speed = 4;
+        worldX = gamePanel.tileSize * 2;
+        worldY = gamePanel.tileSize * 2;
+        this.speed = 10;
         direction = "down"; // default direction
     }
 
@@ -58,6 +77,10 @@ public class Player extends Entity {
         }
     }
 
+    /*
+     * Update the player's position based on the key inputs
+     */
+
     public void update() {
         if (keyHandler.up == true || keyHandler.down == true || keyHandler.left == true || keyHandler.right == true) {
             if (keyHandler.up == true) {
@@ -75,6 +98,9 @@ public class Player extends Entity {
 
             collision = false;
             gamePanel.collisionManager.checkTile(this);
+
+            int objectIndex = gamePanel.collisionManager.checkObjectCollision(this, true);
+            pickUp(objectIndex);
 
             if (collision == false) {
 
@@ -100,6 +126,42 @@ public class Player extends Entity {
             if (spriteCounter > 15) {
                 spriteIndex = (spriteIndex == 1) ? 2 : 1;
                 spriteCounter = 0;
+            }
+        }
+    }
+
+    public void pickUp(int objectIndex) {
+        if (objectIndex != 69) {
+            String objectName = gamePanel.objects[objectIndex].name;
+
+            switch (objectName) {
+                case "chip":
+                    chipCount++;
+                    gamePanel.objects[objectIndex] = null;
+                    gamePanel.sound.playMusic(1);
+                    break;
+                case "slotMachine":
+                    if (chipCount > 0) {
+                        chipCount--;
+                        Random random = new Random();
+                        if (random.nextFloat() < playerLuck) {
+                            gamePanel.objects[objectIndex].changePicture("/objects/slot_mach_w.png");
+                            slotMachineCount++;
+                            gamePanel.sound.playMusic(3);
+                        }
+                    }
+                    break;
+                case "beer":
+                    this.speed = 10;
+                    gamePanel.sound.playMusic(2);
+                    if (gamePanel.objects[objectIndex] instanceof Beer) {
+                        this.playerLuck = ((Beer) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+                        System.out.println("Player's luck is now: " + this.playerLuck);
+                    }
+                    gamePanel.objects[objectIndex] = null;
+                    break;
+                default:
+                    break;
             }
         }
     }

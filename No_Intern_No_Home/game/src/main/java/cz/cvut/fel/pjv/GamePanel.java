@@ -6,9 +6,11 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
+import cz.cvut.fel.pjv.objects.Object;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN settings
@@ -23,8 +25,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
+    // public final int worldWidth = tileSize * maxWorldCol;
+    // public final int worldHeight = tileSize * maxWorldRow;
 
     protected int fps = 60;
 
@@ -32,7 +34,12 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     public Player player = new Player(this, keyHandler);
     public CollisionManager collisionManager = new CollisionManager(this);
-    TileManager tileManager = new TileManager(this);
+    protected TileManager tileManager = new TileManager(this);
+    public Object objects[] = new Object[20];
+    public ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
+    public Sound sound = new Sound();
+    public LevelManager levelManager = new LevelManager(this);
+    public UI ui = new UI(this);
 
     public GamePanel() {
 
@@ -41,6 +48,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true); // so that the panel can listen to key events
+    }
+
+    public void setUpGame() {
+        objectsSpawner.spawnObjects();
+        sound.playMusic();
     }
 
     public void startGameThread() {
@@ -125,8 +137,29 @@ public class GamePanel extends JPanel implements Runnable {
 
         // draw the game
         tileManager.draw(g2);
+
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] != null) {
+                objects[i].draw(g2, this);
+                // System.out.println("Drawing object");
+            }
+        }
+
         player.draw(g2);
 
+        ui.draw(g2);
+
         g2.dispose();
+    }
+
+    public int countObjectsByClass(Class<?> clazz) {
+        int count = 0;
+        for (Object obj : objects) {
+            if (obj != null && obj.getClass().equals(clazz)) {
+                count++;
+                System.out.println("Amount of class " + clazz + " is: " + count);
+            }
+        }
+        return count;
     }
 }

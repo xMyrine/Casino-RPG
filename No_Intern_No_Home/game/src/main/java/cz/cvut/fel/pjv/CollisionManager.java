@@ -54,4 +54,80 @@ public class CollisionManager {
             }
         }
     }
+
+    public int checkObjectCollision(Entity entity, boolean player) {
+        int index = 69;
+
+        for (int i = 0; i < gamePanel.objects.length; i++) {
+            if (gamePanel.objects[i] != null) {
+                entity.collisionArea.x = entity.worldX + entity.collisionAreaDefaultX;
+                entity.collisionArea.y = entity.worldY + entity.collisionAreaDefaultY;
+
+                gamePanel.objects[i].collisionArea.x = gamePanel.objects[i].worldX
+                        + gamePanel.objects[i].collisionArea.x;
+                gamePanel.objects[i].collisionArea.y = gamePanel.objects[i].worldY
+                        + gamePanel.objects[i].collisionArea.y;
+
+                switch (entity.direction) {
+                    case "up":
+                        entity.collisionArea.y -= entity.speed;
+                        if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
+                            System.out.println("UP Collision with object " + gamePanel.objects[i].name);
+                            if (gamePanel.objects[i].collision) {
+                                entity.collision = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "down":
+                        entity.collisionArea.y += entity.speed;
+                        if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
+                            System.out.println("DOWN Collision with object " + gamePanel.objects[i].name);
+                            if (gamePanel.objects[i].collision) {
+                                entity.collision = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "left":
+                        entity.collisionArea.x -= entity.speed;
+                        if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
+                            System.out.println("LEFT Collision with object " + gamePanel.objects[i].name);
+                            if (gamePanel.objects[i].collision) {
+                                entity.collision = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "right":
+                        entity.collisionArea.x += entity.speed;
+                        if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
+                            System.out.println("RIGHT Collision with object " + gamePanel.objects[i].name);
+                            if (gamePanel.objects[i].collision) {
+                                entity.collision = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+
+                        }
+                        break;
+                }
+                entity.collisionArea.x = entity.collisionAreaDefaultX;
+                entity.collisionArea.y = entity.collisionAreaDefaultY;
+
+                gamePanel.objects[i].collisionArea.x = gamePanel.objects[i].collisionAreaDefaultX;
+                gamePanel.objects[i].collisionArea.y = gamePanel.objects[i].collisionAreaDefaultY;
+            }
+        }
+
+        return index;
+
+    }
 }
