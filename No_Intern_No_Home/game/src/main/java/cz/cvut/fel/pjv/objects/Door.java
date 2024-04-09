@@ -29,4 +29,11 @@ public class Door extends Object implements InteractableObject {
         }
     }
 
+    public boolean getState() {
+        if (!collision) {
+            return true;
+        }
+        return false;
+    }
+
 }

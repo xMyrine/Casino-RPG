@@ -1,6 +1,8 @@
 package cz.cvut.fel.pjv.levels;
 
-public class FirstLevel {
+import cz.cvut.fel.pjv.objects.*;
+
+public class FirstLevel implements Level {
     private int FinishedSlotMachineCount;
     private boolean miniGameFinished;
     private boolean levelFinished;
@@ -55,6 +57,7 @@ public class FirstLevel {
 
     public boolean checkLevelFinished() {
         if (checkSlotMachineCount() && miniGameFinished) {
+            System.out.println("First Level finished");
             return true;
         }
         return false;

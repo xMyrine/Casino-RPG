@@ -3,7 +3,7 @@ package cz.cvut.fel.pjv.entity;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.objects.Alcohol.*;
-import cz.cvut.fel.pjv.*;
+import cz.cvut.fel.pjv.objects.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -141,13 +141,19 @@ public class Player extends Entity {
                     gamePanel.sound.playMusic(1);
                     break;
                 case "slotMachine":
-                    if (chipCount > 0) {
-                        chipCount--;
-                        Random random = new Random();
-                        if (random.nextFloat() < playerLuck) {
-                            gamePanel.objects[objectIndex].changePicture("/objects/slot_mach_w.png");
-                            slotMachineCount++;
-                            gamePanel.sound.playMusic(3);
+                    if (gamePanel.objects[objectIndex] instanceof SlotMachine) {
+                        if (!((SlotMachine) gamePanel.objects[objectIndex]).Finished()) {
+                            if (chipCount > 0) {
+                                chipCount--;
+                                Random random = new Random();
+                                if (random.nextFloat() < playerLuck) {
+                                    ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
+                                    ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
+                                    slotMachineCount++;
+                                    gamePanel.sound.playMusic(3);
+                                }
+                            }
+                            break;
                         }
                     }
                     break;
@@ -160,6 +166,16 @@ public class Player extends Entity {
                     }
                     gamePanel.objects[objectIndex] = null;
                     break;
+                case "door":
+                    if (gamePanel.objects[objectIndex] instanceof Door) {
+                        ((Door) gamePanel.objects[objectIndex])
+                                .changeState(gamePanel.levelManager
+                                        .checkLevelFirstFinished());
+                        System.out.println(((Door) gamePanel.objects[objectIndex]).getState());
+                        if (((Door) gamePanel.objects[objectIndex]).getState()) {
+                            gamePanel.sound.playMusic(4);
+                        }
+                    }
                 default:
                     break;
             }

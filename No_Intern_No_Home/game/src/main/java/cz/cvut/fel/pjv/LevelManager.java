@@ -13,14 +13,11 @@ public class LevelManager {
         this.firstLevelFinished = false;
     }
 
-    public void checkLevelFirstFinished() {
+    public boolean checkLevelFirstFinished() {
         if (firstLevel.checkLevelFinished()) {
-            firstLevelFinished = true;
+            return true;
         }
-    }
-
-    public boolean isFirstLevelFinished() {
-        return firstLevelFinished;
+        return false;
     }
 
 }
