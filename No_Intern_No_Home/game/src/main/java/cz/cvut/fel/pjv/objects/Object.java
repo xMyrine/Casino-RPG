@@ -3,11 +3,13 @@ package cz.cvut.fel.pjv.objects;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.GamePanel;
 
-public class Object {
+public abstract class Object {
 
     public BufferedImage image;
     public String name;
@@ -17,6 +19,8 @@ public class Object {
     public Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
     public int collisionAreaDefaultX = 0;
     public int collisionAreaDefaultY = 0;
+
+    protected Logger logger = Logger.getLogger(Object.class.getName());
 
     // public void draw(Graphics2D g, GamePanel gamePanel) {
     // int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth;

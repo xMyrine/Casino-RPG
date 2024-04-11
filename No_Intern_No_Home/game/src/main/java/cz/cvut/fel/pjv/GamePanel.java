@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
@@ -25,13 +25,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    // public final int worldWidth = tileSize * maxWorldCol;
-    // public final int worldHeight = tileSize * maxWorldRow;
 
     protected int fps = 60;
 
-    KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
+    transient KeyHandler keyHandler = new KeyHandler();
+    transient Thread gameThread;
     public Player player = new Player(this, keyHandler);
     public CollisionManager collisionManager = new CollisionManager(this);
     protected TileManager tileManager = new TileManager(this);
@@ -40,6 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Sound sound = new Sound();
     public LevelManager levelManager = new LevelManager(this);
     public UI ui = new UI(this);
+
+    private Logger logger = Logger.getLogger(GamePanel.class.getName());
 
     public GamePanel() {
 
@@ -113,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1000000000) { // if a second has passed
-                System.out.println("FPS: " + drawCount); // print the draw count
+                logger.info(String.format("FPS: %d", drawCount)); // print the draw count
                 drawCount = 0; // reset the draw count
                 timer = 0; // reset the timer
             }
@@ -141,7 +141,6 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] != null) {
                 objects[i].draw(g2, this);
-                // System.out.println("Drawing object");
             }
         }
 
@@ -157,7 +156,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (Object obj : objects) {
             if (obj != null && obj.getClass().equals(clazz)) {
                 count++;
-                System.out.println("Amount of class " + clazz + " is: " + count);
+                logger.finest(String.format("Object of class %s found", clazz.getName()));
             }
         }
         return count;

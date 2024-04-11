@@ -14,9 +14,8 @@ public class SlotMachine extends Object implements InteractableObject {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/slot_mach_l.png"));
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading image");
+            logger.severe("Error loading image");
         }
-        collision = true;
 
     }
 
@@ -30,17 +29,16 @@ public class SlotMachine extends Object implements InteractableObject {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/slot_mach_l.png"));
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading image");
+            logger.severe("Error loading image");
         }
-        collision = true;
     }
 
     public boolean Finished() {
         return Finished;
     }
 
-    public void setFinished(boolean Finished) {
-        this.Finished = Finished;
+    public void setFinished(boolean finished) {
+        this.Finished = finished;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class SlotMachine extends Object implements InteractableObject {
     }
 
     public boolean getState() {
-        System.out.println("Slot machine is finished");
+        logger.fine("Slot machine state: " + Finished);
         return Finished;
     }
 

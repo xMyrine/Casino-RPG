@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
 
 public class Entity {
 
@@ -17,4 +18,6 @@ public class Entity {
     public Rectangle collisionArea;
     public int collisionAreaDefaultX, collisionAreaDefaultY;
     public boolean collision = false;
+
+    protected static Logger logger;
 }

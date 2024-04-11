@@ -1,18 +1,18 @@
 package cz.cvut.fel.pjv.levels;
 
-import cz.cvut.fel.pjv.objects.*;
+import java.util.logging.Logger;
 
-public class FirstLevel implements Level {
-    private int FinishedSlotMachineCount;
+public class FirstLevel extends Level {
+    private int finishedSlotMachineCount;
     private boolean miniGameFinished;
-    private boolean levelFinished;
     private int playerSlotMachineCount;
 
     public FirstLevel(int playerSlotMachineCount, int totalSlotMachineCount) {
-        this.FinishedSlotMachineCount = playerSlotMachineCount;
+        this.finishedSlotMachineCount = playerSlotMachineCount;
         this.playerSlotMachineCount = totalSlotMachineCount;
         this.miniGameFinished = true; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
-        this.levelFinished = false;
+        this.firstLevelFinished = false;
+        logger = Logger.getLogger(FirstLevel.class.getName());
     }
 
     public int getPlayerSlotMachineCount() {
@@ -23,20 +23,21 @@ public class FirstLevel implements Level {
         this.playerSlotMachineCount = playerSlotMachineCount;
     }
 
-    public void setFinishedSlotMachineCount(int finishedSlotMachineCount) {
-        FinishedSlotMachineCount = finishedSlotMachineCount;
+    public void setFinishedSlotMachineCount(int count) {
+        this.finishedSlotMachineCount = count;
     }
 
     public void setMiniGameFinished(boolean miniGameFinished) {
         this.miniGameFinished = miniGameFinished;
     }
 
+    @Override
     public void setLevelFinished(boolean levelFinished) {
-        this.levelFinished = levelFinished;
+        this.firstLevelFinished = levelFinished;
     }
 
     public int getFinishedSlotMachineCount() {
-        return FinishedSlotMachineCount;
+        return finishedSlotMachineCount;
     }
 
     public boolean isMiniGameFinished() {
@@ -48,16 +49,17 @@ public class FirstLevel implements Level {
     }
 
     public boolean checkSlotMachineCount() {
-        if (FinishedSlotMachineCount == playerSlotMachineCount) {
-            System.out.println("Slot machines finished");
+        if (finishedSlotMachineCount == playerSlotMachineCount) {
+            logger.config("Slot machines finished");
             return true;
         }
         return false;
     }
 
+    @Override
     public boolean checkLevelFinished() {
         if (checkSlotMachineCount() && miniGameFinished) {
-            System.out.println("First Level finished");
+            logger.info("Level finished");
             return true;
         }
         return false;

@@ -10,14 +10,21 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.util.Random;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class Player extends Entity {
 
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
-    private int chipCount = 0;
+    private int chipCount = 100;
     private int slotMachineCount = 0;
+    private Random random = new Random();
 
     public final int screenX;
     public final int screenY;
@@ -34,6 +41,8 @@ public class Player extends Entity {
         collisionAreaDefaultX = collisionArea.x;
         collisionAreaDefaultY = collisionArea.y;
 
+        logger = Logger.getLogger(Player.class.getName());
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -47,7 +56,13 @@ public class Player extends Entity {
     }
 
     public void setPlayerLuck(float playerLuck) {
-        this.playerLuck = playerLuck;
+        if (playerLuck < 0) {
+            this.playerLuck = 0;
+        } else if (playerLuck > 1) {
+            this.playerLuck = 1;
+        } else {
+            this.playerLuck = playerLuck;
+        }
     }
 
     public float getPlayerLuck() {
@@ -82,17 +97,17 @@ public class Player extends Entity {
      */
 
     public void update() {
-        if (keyHandler.up == true || keyHandler.down == true || keyHandler.left == true || keyHandler.right == true) {
-            if (keyHandler.up == true) {
+        if (keyHandler.up | keyHandler.down || keyHandler.left || keyHandler.right) {
+            if (keyHandler.up) {
                 direction = "up";
             }
-            if (keyHandler.down == true) {
+            if (keyHandler.down) {
                 direction = "down";
             }
-            if (keyHandler.left == true) {
+            if (keyHandler.left) {
                 direction = "left";
             }
-            if (keyHandler.right == true) {
+            if (keyHandler.right) {
                 direction = "right";
             }
 
@@ -102,7 +117,7 @@ public class Player extends Entity {
             int objectIndex = gamePanel.collisionManager.checkObjectCollision(this, true);
             pickUp(objectIndex);
 
-            if (collision == false) {
+            if (!collision) {
 
                 switch (direction) {
                     case "up":
@@ -141,20 +156,17 @@ public class Player extends Entity {
                     gamePanel.sound.playMusic(1);
                     break;
                 case "slotMachine":
-                    if (gamePanel.objects[objectIndex] instanceof SlotMachine) {
-                        if (!((SlotMachine) gamePanel.objects[objectIndex]).Finished()) {
-                            if (chipCount > 0) {
-                                chipCount--;
-                                Random random = new Random();
-                                if (random.nextFloat() < playerLuck) {
-                                    ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
-                                    ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
-                                    slotMachineCount++;
-                                    gamePanel.sound.playMusic(3);
-                                }
-                            }
-                            break;
+                    if (gamePanel.objects[objectIndex] instanceof SlotMachine &&
+                            !((SlotMachine) gamePanel.objects[objectIndex]).Finished() &&
+                            chipCount > 0) {
+                        chipCount--;
+                        if (random.nextFloat() < playerLuck) {
+                            ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
+                            ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
+                            slotMachineCount++;
+                            gamePanel.sound.playMusic(3);
                         }
+                        break;
                     }
                     break;
                 case "beer":
@@ -162,7 +174,7 @@ public class Player extends Entity {
                     gamePanel.sound.playMusic(2);
                     if (gamePanel.objects[objectIndex] instanceof Beer) {
                         this.playerLuck = ((Beer) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
-                        System.out.println("Player's luck is now: " + this.playerLuck);
+                        logger.info(String.format("Player's luck increased to %f", this.playerLuck));
                     }
                     gamePanel.objects[objectIndex] = null;
                     break;
@@ -171,37 +183,56 @@ public class Player extends Entity {
                         ((Door) gamePanel.objects[objectIndex])
                                 .changeState(gamePanel.levelManager
                                         .checkLevelFirstFinished());
-                        System.out.println(((Door) gamePanel.objects[objectIndex]).getState());
-                        if (((Door) gamePanel.objects[objectIndex]).getState()) {
+                        logger.log(Level.INFO, "Door state changed");
+                        if (((Door) gamePanel.objects[objectIndex]).getState()
+                                && !((Door) gamePanel.objects[objectIndex]).open) {
+                            ((Door) gamePanel.objects[objectIndex]).open = true;
                             gamePanel.sound.playMusic(4);
                         }
                     }
+                    break;
                 default:
                     break;
             }
         }
     }
 
-    public void draw(Graphics2D g) {
-        BufferedImage img = null;
-
-        switch (direction) {
-            case "up":
-                img = (spriteIndex == 1) ? up1 : (spriteIndex == 2) ? up2 : img;
-                break;
-            case "down":
-                img = (spriteIndex == 1) ? down1 : (spriteIndex == 2) ? down2 : img;
-                break;
-            case "left":
-                img = (spriteIndex == 1) ? left1 : (spriteIndex == 2) ? left2 : img;
-                break;
-            case "right":
-                img = (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : img;
-                break;
-        }
-
-        g.drawImage(img, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
-
+    private Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
+    {
+        directionToImageMap.put("up", () -> (spriteIndex == 1) ? up1 : (spriteIndex == 2) ? up2 : null);
+        directionToImageMap.put("down", () -> (spriteIndex == 1) ? down1 : (spriteIndex == 2) ? down2 : null);
+        directionToImageMap.put("left", () -> (spriteIndex == 1) ? left1 : (spriteIndex == 2) ? left2 : null);
+        directionToImageMap.put("right", () -> (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : null);
     }
+
+    public void draw(Graphics2D g) {
+        BufferedImage img = directionToImageMap.getOrDefault(direction, () -> null).get();
+        g.drawImage(img, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+    }
+
+    // public void draw(Graphics2D g) {
+    // BufferedImage img = null;
+    //
+    // switch (direction) {
+    // case "up":
+    // img = (spriteIndex == 1) ? up1 : (spriteIndex == 2) ? up2 : img;
+    // break;
+    // case "down":
+    // img = (spriteIndex == 1) ? down1 : (spriteIndex == 2) ? down2 : img;
+    // break;
+    // case "left":
+    // img = (spriteIndex == 1) ? left1 : (spriteIndex == 2) ? left2 : img;
+    // break;
+    // case "right":
+    // img = (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : img;
+    // break;
+    // default:
+    // break;
+    // }
+    //
+    // g.drawImage(img, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize,
+    // null);
+    //
+    // }
 
 }

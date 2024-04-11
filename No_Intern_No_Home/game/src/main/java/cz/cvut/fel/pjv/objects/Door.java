@@ -4,17 +4,20 @@ import javax.imageio.ImageIO;
 
 public class Door extends Object implements InteractableObject {
 
+    public boolean open;
+
     public Door(int worldX, int worldY) {
         this.worldX = worldX;
         this.worldY = worldY;
         this.name = "door";
         this.collision = true;
+        this.open = false;
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/objects/doors.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        collision = true;
+
     }
 
     @Override
@@ -30,10 +33,7 @@ public class Door extends Object implements InteractableObject {
     }
 
     public boolean getState() {
-        if (!collision) {
-            return true;
-        }
-        return false;
+        return !collision;
     }
 
 }

@@ -1,11 +1,24 @@
 package cz.cvut.fel.pjv.levels;
 
-public interface Level {
+import java.util.logging.Logger;
 
-    public void setLevelFinished(boolean levelFinished);
+public abstract class Level {
 
-    public boolean checkLevelFinished();
+    protected boolean levelFinished;
+    protected Logger logger;
+    protected boolean firstLevelFinished;
 
-    public boolean isMiniGameFinished();
+    protected Level() {
+    }
+
+    public void setLevelFinished(boolean finished) {
+        levelFinished = finished;
+    }
+
+    public boolean checkLevelFinished() {
+        return levelFinished;
+    }
+
+    public abstract boolean isMiniGameFinished();
 
 }

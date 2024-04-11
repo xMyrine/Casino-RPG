@@ -1,13 +1,17 @@
 package cz.cvut.fel.pjv;
 
+import java.util.logging.Logger;
+
 import cz.cvut.fel.pjv.entity.Entity;
 
 public class CollisionManager {
 
     GamePanel gamePanel;
+    private Logger logger;
 
     public CollisionManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+        logger = Logger.getLogger(this.getClass().getName());
     }
 
     public void checkTile(Entity entity) {
@@ -72,7 +76,7 @@ public class CollisionManager {
                     case "up":
                         entity.collisionArea.y -= entity.speed;
                         if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
-                            System.out.println("UP Collision with object " + gamePanel.objects[i].name);
+                            logger.info("UP Collision with object " + gamePanel.objects[i].name);
                             if (gamePanel.objects[i].collision) {
                                 entity.collision = true;
                             }
@@ -84,7 +88,7 @@ public class CollisionManager {
                     case "down":
                         entity.collisionArea.y += entity.speed;
                         if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
-                            System.out.println("DOWN Collision with object " + gamePanel.objects[i].name);
+                            logger.finer("DOWN Collision with object " + gamePanel.objects[i].name);
                             if (gamePanel.objects[i].collision) {
                                 entity.collision = true;
                             }
@@ -96,7 +100,7 @@ public class CollisionManager {
                     case "left":
                         entity.collisionArea.x -= entity.speed;
                         if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
-                            System.out.println("LEFT Collision with object " + gamePanel.objects[i].name);
+                            logger.finer("LEFT Collision with object " + gamePanel.objects[i].name);
                             if (gamePanel.objects[i].collision) {
                                 entity.collision = true;
                             }
@@ -108,7 +112,7 @@ public class CollisionManager {
                     case "right":
                         entity.collisionArea.x += entity.speed;
                         if (entity.collisionArea.intersects(gamePanel.objects[i].collisionArea)) {
-                            System.out.println("RIGHT Collision with object " + gamePanel.objects[i].name);
+                            logger.finer("RIGHT Collision with object " + gamePanel.objects[i].name);
                             if (gamePanel.objects[i].collision) {
                                 entity.collision = true;
                             }
