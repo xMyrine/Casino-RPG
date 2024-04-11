@@ -2,6 +2,8 @@ package cz.cvut.fel.pjv.levels;
 
 import java.util.logging.Logger;
 
+import cz.cvut.fel.pjv.GamePanel;
+
 public abstract class Level {
 
     protected boolean levelFinished;

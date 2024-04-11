@@ -33,7 +33,7 @@ public class SlotMachine extends Object implements InteractableObject {
         }
     }
 
-    public boolean Finished() {
+    public boolean finished() {
         return Finished;
     }
 

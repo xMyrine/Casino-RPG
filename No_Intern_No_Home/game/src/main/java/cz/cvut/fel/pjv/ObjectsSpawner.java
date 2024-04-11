@@ -24,16 +24,28 @@ public class ObjectsSpawner {
 
         gamePanel.objects[5] = new SlotMachine(gamePanel.tileSize * 4, gamePanel.tileSize * 2);
 
-        gamePanel.objects[6] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 13);
-
-        gamePanel.objects[7] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 14);
-
         gamePanel.objects[8] = new Beer(gamePanel.tileSize * 5, gamePanel.tileSize * 5);
 
         gamePanel.objects[9] = new Beer(gamePanel.tileSize * 6, gamePanel.tileSize * 5);
 
         gamePanel.objects[10] = new Beer(gamePanel.tileSize * 7, gamePanel.tileSize * 5);
 
+        gamePanel.objects[15] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 13);
+
+        gamePanel.objects[16] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 14);
+    }
+
+    public void update() {
+        if (!gamePanel.levelManager.levelInProgress && gamePanel.levelManager.checkLevelFirstFinished()) {
+            for (int i = 0; i < gamePanel.objects.length; i++) {
+                if (gamePanel.objects[i] != null && !gamePanel.objects[i].isSolid()
+                        && !(gamePanel.objects[i] instanceof Door)) {
+                    gamePanel.objects[i] = null;
+                }
+            }
+            gamePanel.levelManager.levelInProgress = true;
+
+        }
     }
 
 }

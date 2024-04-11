@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true); // so that the panel can listen to key events
+        logger.setLevel(Level.WARNING);
     }
 
     public void setUpGame() {
@@ -126,6 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public void update() {
         player.update();
+        objectsSpawner.update();
 
     }
 
@@ -157,8 +160,10 @@ public class GamePanel extends JPanel implements Runnable {
             if (obj != null && obj.getClass().equals(clazz)) {
                 count++;
                 logger.finest(String.format("Object of class %s found", clazz.getName()));
+                System.out.println(String.format("Object of class %s found", clazz.getName()));
             }
         }
+        System.out.println(String.format("Found %d objects of class %s", count, clazz.getName()));
         return count;
     }
 }

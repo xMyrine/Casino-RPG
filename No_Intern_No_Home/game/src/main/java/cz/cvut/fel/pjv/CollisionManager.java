@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv;
 
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.entity.Entity;
 
@@ -12,6 +13,7 @@ public class CollisionManager {
     public CollisionManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         logger = Logger.getLogger(this.getClass().getName());
+        logger.setLevel(Level.WARNING);
     }
 
     public void checkTile(Entity entity) {

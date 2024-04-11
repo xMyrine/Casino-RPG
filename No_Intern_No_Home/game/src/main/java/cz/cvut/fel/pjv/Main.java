@@ -10,6 +10,8 @@ package cz.cvut.fel.pjv;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +21,8 @@ public class Main {
         window.setIconImage(icon);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
+        Logger logger = Logger.getLogger(Main.class.getName());
+        logger.setLevel(Level.WARNING);
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

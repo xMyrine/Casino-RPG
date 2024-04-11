@@ -63,4 +63,8 @@ public abstract class Object {
             e.printStackTrace();
         }
     }
+
+    public boolean isSolid() {
+        return collision;
+    }
 }

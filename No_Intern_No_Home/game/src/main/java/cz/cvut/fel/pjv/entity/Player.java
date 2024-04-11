@@ -42,6 +42,7 @@ public class Player extends Entity {
         collisionAreaDefaultY = collisionArea.y;
 
         logger = Logger.getLogger(Player.class.getName());
+        logger.setLevel(Level.WARNING);
 
         setDefaultValues();
         getPlayerImage();
@@ -157,7 +158,7 @@ public class Player extends Entity {
                     break;
                 case "slotMachine":
                     if (gamePanel.objects[objectIndex] instanceof SlotMachine &&
-                            !((SlotMachine) gamePanel.objects[objectIndex]).Finished() &&
+                            !((SlotMachine) gamePanel.objects[objectIndex]).finished() &&
                             chipCount > 0) {
                         chipCount--;
                         if (random.nextFloat() < playerLuck) {
@@ -180,6 +181,7 @@ public class Player extends Entity {
                     break;
                 case "door":
                     if (gamePanel.objects[objectIndex] instanceof Door) {
+                        System.out.println("Level state: " + gamePanel.levelManager.checkLevelFirstFinished());
                         ((Door) gamePanel.objects[objectIndex])
                                 .changeState(gamePanel.levelManager
                                         .checkLevelFirstFinished());
