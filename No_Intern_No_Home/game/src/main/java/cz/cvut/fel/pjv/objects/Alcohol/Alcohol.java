@@ -8,4 +8,5 @@ import cz.cvut.fel.pjv.entity.Player;
 public interface Alcohol {
 
     public float increasePlayersLuck(Player player);
+
 }
