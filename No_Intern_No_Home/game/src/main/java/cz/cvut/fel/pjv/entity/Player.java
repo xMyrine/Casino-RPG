@@ -29,7 +29,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    private float playerLuck = 0.3f;
+    private float playerLuck = 0.1f;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;

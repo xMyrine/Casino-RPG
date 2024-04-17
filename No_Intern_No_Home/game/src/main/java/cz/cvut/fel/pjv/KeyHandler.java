@@ -6,6 +6,11 @@ import java.awt.event.KeyEvent;
 public class KeyHandler implements KeyListener {
 
     public boolean up, down, left, right;
+    private GamePanel gamePanel;
+
+    public KeyHandler(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -26,6 +31,9 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_D) {
             right = true;
+        }
+        if (code == KeyEvent.VK_ESCAPE) {
+            gamePanel.changeGameState();
         }
 
     }

@@ -20,19 +20,37 @@ public class ObjectsSpawner {
         gamePanel.objects[2] = new Chip(gamePanel.tileSize * 2, gamePanel.tileSize * 3);
         gamePanel.objects[3] = new Chip(gamePanel.tileSize * 2, gamePanel.tileSize * 2);
 
-        gamePanel.objects[4] = new SlotMachine(gamePanel.tileSize * 4, gamePanel.tileSize * 3);
+        gamePanel.objects[4] = new SlotMachine(gamePanel.tileSize * 17, gamePanel.tileSize * 3);
 
-        gamePanel.objects[5] = new SlotMachine(gamePanel.tileSize * 4, gamePanel.tileSize * 2);
+        gamePanel.objects[5] = new SlotMachine(gamePanel.tileSize * 19, gamePanel.tileSize * 3);
 
-        gamePanel.objects[8] = new Beer(gamePanel.tileSize * 5, gamePanel.tileSize * 5);
+        gamePanel.objects[6] = new SlotMachine(gamePanel.tileSize * 21, gamePanel.tileSize * 3);
 
-        gamePanel.objects[9] = new Beer(gamePanel.tileSize * 6, gamePanel.tileSize * 5);
+        gamePanel.objects[7] = new SlotMachine(gamePanel.tileSize * 23, gamePanel.tileSize * 3);
 
-        gamePanel.objects[10] = new Beer(gamePanel.tileSize * 7, gamePanel.tileSize * 5);
+        gamePanel.objects[8] = new SlotMachine(gamePanel.tileSize * 17, gamePanel.tileSize * 6);
 
-        gamePanel.objects[15] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 13);
+        gamePanel.objects[9] = new SlotMachine(gamePanel.tileSize * 19, gamePanel.tileSize * 6);
 
-        gamePanel.objects[16] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 14);
+        gamePanel.objects[10] = new SlotMachine(gamePanel.tileSize * 21, gamePanel.tileSize * 6);
+
+        gamePanel.objects[11] = new SlotMachine(gamePanel.tileSize * 23, gamePanel.tileSize * 6);
+
+        gamePanel.objects[12] = new SlotMachine(gamePanel.tileSize * 17, gamePanel.tileSize * 9);
+
+        gamePanel.objects[13] = new SlotMachine(gamePanel.tileSize * 19, gamePanel.tileSize * 9);
+
+        gamePanel.objects[14] = new SlotMachine(gamePanel.tileSize * 21, gamePanel.tileSize * 9);
+
+        gamePanel.objects[15] = new SlotMachine(gamePanel.tileSize * 23, gamePanel.tileSize * 9);
+
+        gamePanel.objects[28] = new Beer(gamePanel.tileSize * 5, gamePanel.tileSize * 5);
+
+        gamePanel.objects[29] = new Beer(gamePanel.tileSize * 6, gamePanel.tileSize * 5);
+
+        gamePanel.objects[30] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 13);
+
+        gamePanel.objects[31] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 14);
     }
 
     /*

@@ -29,33 +29,38 @@ public class GamePanel extends JPanel implements Runnable {
 
     protected int fps = 60;
 
-    transient KeyHandler keyHandler = new KeyHandler();
+    transient KeyHandler keyHandler = new KeyHandler(this);
     transient Thread gameThread;
     public Player player = new Player(this, keyHandler);
     public CollisionManager collisionManager = new CollisionManager(this);
     protected TileManager tileManager = new TileManager(this);
-    public Object objects[] = new Object[20];
-    public ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
+    public Object objects[] = new Object[50];
+    private ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
     public Sound sound = new Sound();
     public LevelManager levelManager = new LevelManager(this);
-    public UI ui = new UI(this);
+    protected UI ui = new UI(this);
 
     private Logger logger = Logger.getLogger(GamePanel.class.getName());
 
-    public GamePanel() {
+    // Game State
+    public int gameState;
+    protected final int menuScreen = 0;
+    protected final int gameScreen = 1;
+    protected final int pauseScreen = 2;
 
+    public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true); // so that the panel can listen to key events
         logger.setLevel(Level.WARNING);
-
     }
 
     public void setUpGame() {
         objectsSpawner.spawnObjects();
         sound.playMusic();
+        gameState = gameScreen;
     }
 
     public void startGameThread() {
@@ -101,8 +106,12 @@ public class GamePanel extends JPanel implements Runnable {
      * 
      */
     public void update() {
-        player.update();
-        objectsSpawner.update();
+        if (gameState == gameScreen) {
+            player.update();
+            objectsSpawner.update();
+        } else if (gameState == pauseScreen) {
+            // do nothing
+        }
 
     }
 
@@ -140,5 +149,13 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         return count;
+    }
+
+    protected void changeGameState() {
+        if (gameState == gameScreen) {
+            gameState = pauseScreen;
+        } else if (gameState == pauseScreen) {
+            gameState = gameScreen;
+        }
     }
 }

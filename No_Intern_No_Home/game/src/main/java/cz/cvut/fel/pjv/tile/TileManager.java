@@ -9,20 +9,40 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class TileManager {
     GamePanel gamePanel;
     public Tile[] tiles;
     public int mapTileNum[][];
+    ArrayList<String> tileNames = new ArrayList<>();
+    ArrayList<String> tileCollision = new ArrayList<>();
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
-        tiles = new Tile[100];
+        InputStream in = getClass().getResourceAsStream("/maps/data_test.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+        String line;
+
+        try {
+            while ((line = br.readLine()) != null) {
+                tileNames.add(line);
+                tileCollision.add(br.readLine());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        tiles = new Tile[tileNames.size()];
+        getTileImage();
+
         mapTileNum = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
 
-        getTileImage();
-        loadMap("/maps/world01.txt");
+        // getTileImage();
+        loadMap("/maps/test.txt");
 
     }
 
@@ -30,9 +50,24 @@ public class TileManager {
      * Load the tile images.
      */
     public void getTileImage() {
-        assignTiles(0, "floor", false);
-        assignTiles(1, "wall", true);
-        assignTiles(2, "carpet", false);
+        // assignTiles(0, "floor", false);
+        // assignTiles(1, "wall", true);
+        // assignTiles(2, "carpet", false);
+
+        String name;
+        boolean collision;
+
+        for (int i = 0; i < tiles.length; i++) {
+
+            name = tileNames.get(i);
+            if (tileCollision.get(i).equals("true")) {
+                collision = true;
+            } else {
+                collision = false;
+            }
+            assignTiles(i, name, collision);
+        }
+
     }
 
     /*
@@ -69,10 +104,13 @@ public class TileManager {
         }
     }
 
+    /*
+     * Assigns the tile image and collision
+     */
     private void assignTiles(int index, String path, boolean collision) {
         try {
             tiles[index] = new Tile();
-            tiles[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + path + ".png"));
+            tiles[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + path));
             tiles[index].image = Toolbox.scaleImage(tiles[index].image, gamePanel.tileSize, gamePanel.tileSize);
             tiles[index].collision = collision;
         } catch (Exception e) {

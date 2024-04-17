@@ -24,7 +24,7 @@ public class Beer extends Object implements Alcohol {
     @Override
     public float increasePlayersLuck(Player player) {
         float newLuck = player.getPlayerLuck();
-        newLuck += 0.1f;
+        newLuck += 0.05f;
         System.out.println("You drank a beer and your luck increased by 0.1");
         if (newLuck > 1) {
             newLuck = 0.3f;
