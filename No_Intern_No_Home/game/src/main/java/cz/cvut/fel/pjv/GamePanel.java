@@ -50,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyHandler);
         this.setFocusable(true); // so that the panel can listen to key events
         logger.setLevel(Level.WARNING);
+
     }
 
     public void setUpGame() {
@@ -61,33 +62,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
-
-    /*
-     * Sleep the game loop to achieve the desired FPS
-     */
-    // @Override
-    // public void run() {
-    // double drawInterval = 1000000000 / fps;
-    // double nextDrawTime = System.nanoTime() + drawInterval;
-    //
-    // while (gameThread != null) {
-    // try {
-    // double waitTime = nextDrawTime - System.nanoTime();
-    //
-    // waitTime = waitTime / 1000000;
-    // waitTime = waitTime < 0 ? 0 : waitTime;
-    //
-    // Thread.sleep((long) waitTime / 1000000);
-    //
-    // nextDrawTime += drawInterval;
-    //
-    // } catch (InterruptedException e) {
-    // e.printStackTrace();
-    // }
-    // update();
-    // repaint();
-    // }
-    // }
 
     /*
      * Delta accumulator method
@@ -154,16 +128,17 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
+    /*
+     * Counts the number of objects of a given class
+     */
     public int countObjectsByClass(Class<?> clazz) {
         int count = 0;
         for (Object obj : objects) {
             if (obj != null && obj.getClass().equals(clazz)) {
                 count++;
                 logger.finest(String.format("Object of class %s found", clazz.getName()));
-                System.out.println(String.format("Object of class %s found", clazz.getName()));
             }
         }
-        System.out.println(String.format("Found %d objects of class %s", count, clazz.getName()));
         return count;
     }
 }

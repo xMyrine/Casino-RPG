@@ -8,9 +8,6 @@ public abstract class Level {
 
     protected boolean levelFinished;
     protected Logger logger;
-    protected boolean firstLevelFinished;
-    protected boolean secondLevelFinished;
-    protected boolean thirdLevelFinished;
 
     protected Level() {
     }

@@ -1,9 +1,11 @@
 package cz.cvut.fel.pjv.tile;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.Toolbox;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +18,7 @@ public class TileManager {
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
-        tiles = new Tile[11];
+        tiles = new Tile[100];
         mapTileNum = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
 
         getTileImage();
@@ -28,20 +30,9 @@ public class TileManager {
      * Load the tile images.
      */
     public void getTileImage() {
-        try {
-            tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/floor.png"));
-
-            tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall3.png"));
-            tiles[1].collision = true;
-
-            tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/carp_r_d.png"));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        assignTiles(0, "floor", false);
+        assignTiles(1, "wall", true);
+        assignTiles(2, "carpet", false);
     }
 
     /*
@@ -78,29 +69,20 @@ public class TileManager {
         }
     }
 
-    // public void loadMap(String mapName) {
-    // try {
-    // InputStream in = getClass().getResourceAsStream//(mapName);
-    // BufferedReader br = new BufferedReader(new //InputStreamReader(in));
-    // int row = 0;
-    //
-    // String line;
-    // while ((line = br.readLine()) != null && row < //gamePanel.maxWorldRow) {
-    // String[] numbers = line.split(" ");
-    // for (int col = 0; col < gamePanel.maxWorldCol && //col < numbers.length;
-    // col++) {
-    // int num = Integer.parseInt(numbers[col]);
-    // mapTileNum[col][row] = num;
-    // }
-    // row++;
-    // }
-    //
-    // br.close();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // }
+    private void assignTiles(int index, String path, boolean collision) {
+        try {
+            tiles[index] = new Tile();
+            tiles[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + path + ".png"));
+            tiles[index].image = Toolbox.scaleImage(tiles[index].image, gamePanel.tileSize, gamePanel.tileSize);
+            tiles[index].collision = collision;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    /*
+     * Draw the map adjusted to the player's position
+     */
     public void draw(Graphics2D g) {
 
         int worldCol = 0;
@@ -121,20 +103,6 @@ public class TileManager {
             screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
             screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
 
-            // if (worldX - 7 * gamePanel.tileSize < gamePanel.player.worldX +
-            // gamePanel.tileSize
-            // && worldX + 7 * gamePanel.tileSize > gamePanel.player.worldX -
-            // gamePanel.tileSize
-            // && worldY - 5 * gamePanel.tileSize < gamePanel.player.worldY +
-            // gamePanel.tileSize
-            // && worldY + 5 * gamePanel.tileSize > gamePanel.player.worldY -
-            // gamePanel.tileSize) {
-            //
-            // g.drawImage(tiles[tileNum].image, screenX, screenY, gamePanel.tileSize,
-            // gamePanel.tileSize,
-            // null);
-            // }
-
             int screenTilesWidth = gamePanel.screenWidth / gamePanel.tileSize;
             int screenTilesHeight = gamePanel.screenHeight / gamePanel.tileSize;
 
@@ -143,11 +111,9 @@ public class TileManager {
                     && worldY - screenTilesHeight * gamePanel.tileSize < gamePanel.player.worldY + gamePanel.tileSize
                     && worldY + screenTilesHeight * gamePanel.tileSize > gamePanel.player.worldY - gamePanel.tileSize) {
 
-                g.drawImage(tiles[tileNum].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+                g.drawImage(tiles[tileNum].image, screenX, screenY, null);
             }
 
-            // g.drawImage(tiles[tileNum].image, screenX, screenY, gamePanel.tileSize,
-            // gamePanel.tileSize, null);
             worldCol++;
             if (worldCol == gamePanel.maxWorldCol) {
                 worldCol = 0;

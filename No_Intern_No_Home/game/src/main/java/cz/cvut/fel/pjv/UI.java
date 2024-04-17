@@ -20,11 +20,14 @@ public class UI {
 
     BufferedImage chipImage;
 
+    private double playTime;
+
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         defaultFont = new Font("Ink Free", Font.PLAIN, 25);
         Chip chip = new Chip();
         chipImage = chip.image;
+        playTime = 0;
     }
 
     public void setAnnounceMessage(String message) {
@@ -36,12 +39,18 @@ public class UI {
         return announceMessage;
     }
 
+    /*
+     * Draws the UI elements on the screen
+     */
+
     public void draw(Graphics2D g) {
         g.setFont(defaultFont);
         g.setColor(Color.WHITE);
         g.drawImage(chipImage, 0, 0, 40, 40, null);
         g.drawString("" + gamePanel.player.getChipCount(), xStatsTextOffset, yStatsTextOffset);
         g.drawString("Luck: " + gamePanel.player.getPlayerLuck() * 100 + "%", 0, yStatsTextOffset * 2);
+
+        g.drawString("Time: " + playTime, gamePanel.tileSize * 13, gamePanel.tileSize);
 
         if (announceMessage) {
             g.setFont(g.getFont().deriveFont(50.0f));
@@ -55,6 +64,8 @@ public class UI {
                 message = "";
             }
         }
+
+        playTime += (double) 1 / 60;
 
     }
 }

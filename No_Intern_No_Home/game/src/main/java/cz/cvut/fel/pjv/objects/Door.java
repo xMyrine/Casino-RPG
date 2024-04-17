@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.objects;
 
 import javax.imageio.ImageIO;
+import cz.cvut.fel.pjv.Toolbox;
 
 public class Door extends Object implements InteractableObject {
 
@@ -14,6 +15,7 @@ public class Door extends Object implements InteractableObject {
         this.open = false;
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/objects/doors.png"));
+            this.image = Toolbox.scaleImage(this.image, 48, 48);
         } catch (Exception e) {
             e.printStackTrace();
         }

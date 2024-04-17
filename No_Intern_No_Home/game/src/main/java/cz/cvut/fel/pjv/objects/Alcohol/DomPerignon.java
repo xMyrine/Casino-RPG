@@ -7,6 +7,7 @@ public class DomPerignon implements Alcohol {
     private final float luck = 0.5f;
 
     public DomPerignon() {
+
     }
 
     @Override

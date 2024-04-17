@@ -2,6 +2,8 @@ package cz.cvut.fel.pjv.objects;
 
 import javax.imageio.ImageIO;
 
+import cz.cvut.fel.pjv.Toolbox;
+
 public class Chip extends Object {
 
     public Chip() {
@@ -9,6 +11,7 @@ public class Chip extends Object {
         this.collision = false;
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/chip.png"));
+            this.image = Toolbox.scaleImage(this.image, 48, 48);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error loading image");

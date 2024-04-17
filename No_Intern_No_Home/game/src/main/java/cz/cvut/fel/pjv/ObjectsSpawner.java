@@ -35,6 +35,9 @@ public class ObjectsSpawner {
         gamePanel.objects[16] = new Door(gamePanel.tileSize * 23, gamePanel.tileSize * 14);
     }
 
+    /*
+     * Updates the game
+     */
     public void update() {
         if (!gamePanel.levelManager.levelInProgress && gamePanel.levelManager.checkLevelFirstFinished()) {
             for (int i = 0; i < gamePanel.objects.length; i++) {

@@ -14,7 +14,7 @@ public class FirstLevel extends Level {
         this.finishedSlotMachineCount = 2;
         this.playerSlotMachineCount = playerSlotMachineCount;
         this.miniGameFinished = true; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
-        this.firstLevelFinished = false;
+        this.levelFinished = false;
         logger = Logger.getLogger(FirstLevel.class.getName());
         this.gamePanel = gamePanel;
 
@@ -38,7 +38,7 @@ public class FirstLevel extends Level {
 
     @Override
     public void setLevelFinished(boolean levelFinished) {
-        this.firstLevelFinished = levelFinished;
+        this.levelFinished = levelFinished;
     }
 
     public int getFinishedSlotMachineCount() {
@@ -55,7 +55,6 @@ public class FirstLevel extends Level {
 
     public boolean checkSlotMachineCount() {
         fetchPlayerSlotMachineCount(gamePanel.player.getSlotMachineCount());
-        System.out.println("Finished: " + finishedSlotMachineCount + " Player: " + playerSlotMachineCount);
         if (finishedSlotMachineCount == playerSlotMachineCount) {
             logger.config("Slot machines finished");
             return true;

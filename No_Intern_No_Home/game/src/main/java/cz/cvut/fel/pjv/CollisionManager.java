@@ -16,6 +16,68 @@ public class CollisionManager {
         logger.setLevel(Level.WARNING);
     }
 
+    /*
+     * Check if the entity collides with a tile
+     */
+    // public void checkTile(Entity entity) {
+    // int entityLeftWorldX = entity.worldX + entity.collisionArea.x;
+    // int entityRightWorldX = entity.worldX + entity.collisionArea.x +
+    // entity.collisionArea.width;
+    // int entityTopWorldY = entity.worldY + entity.collisionArea.y;
+    // int entityBottomWorldY = entity.worldY + entity.collisionArea.y +
+    // entity.collisionArea.height;
+    //
+    // int entityLeftTileX = entityLeftWorldX / gamePanel.tileSize;
+    // int entityRightTileX = entityRightWorldX / gamePanel.tileSize;
+    // int entityTopTileY = entityTopWorldY / gamePanel.tileSize;
+    // int entityBottomTileY = entityBottomWorldY / gamePanel.tileSize;
+    //
+    // int tileNum1;
+    // int tileNum2;
+    //
+    // if (entity.direction.equals("up")) {
+    // entityTopTileY = (entityTopWorldY - entity.speed) / gamePanel.tileSize;
+    // tileNum1 = gamePanel.tileManager.mapTileNum[entityLeftTileX][entityTopTileY];
+    // tileNum2 =
+    // gamePanel.tileManager.mapTileNum[entityRightTileX][entityTopTileY];
+    // if (gamePanel.tileManager.tiles[tileNum1].isSolid() ||
+    // gamePanel.tileManager.tiles[tileNum2].isSolid()) {
+    // entity.collision = true;
+    // }
+    // } else if (entity.direction.equals("down")) {
+    // entityBottomTileY = (entityBottomWorldY + entity.speed) / gamePanel.tileSize;
+    // tileNum1 =
+    // gamePanel.tileManager.mapTileNum[entityLeftTileX][entityBottomTileY];
+    // tileNum2 =
+    // gamePanel.tileManager.mapTileNum[entityRightTileX][entityBottomTileY];
+    // if (gamePanel.tileManager.tiles[tileNum1].isSolid() ||
+    // gamePanel.tileManager.tiles[tileNum2].isSolid()) {
+    // entity.collision = true;
+    // }
+    // } else if (entity.direction.equals("left")) {
+    // entityLeftTileX = (entityLeftWorldX - entity.speed) / gamePanel.tileSize; //
+    // subtract speed
+    // tileNum1 = gamePanel.tileManager.mapTileNum[entityLeftTileX][entityTopTileY];
+    // tileNum2 =
+    // gamePanel.tileManager.mapTileNum[entityLeftTileX][entityBottomTileY];
+    // if (gamePanel.tileManager.tiles[tileNum1].isSolid() ||
+    // gamePanel.tileManager.tiles[tileNum2].isSolid()) {
+    // entity.collision = true;
+    // }
+    // } else {
+    // entityRightTileX = (entityRightWorldX + entity.speed) / gamePanel.tileSize;
+    // // add speed
+    // tileNum1 =
+    // gamePanel.tileManager.mapTileNum[entityRightTileX][entityTopTileY];
+    // tileNum2 =
+    // gamePanel.tileManager.mapTileNum[entityRightTileX][entityBottomTileY];
+    // if (gamePanel.tileManager.tiles[tileNum1].isSolid() ||
+    // gamePanel.tileManager.tiles[tileNum2].isSolid()) {
+    // entity.collision = true;
+    // }
+    // }
+    // }
+
     public void checkTile(Entity entity) {
         int entityLeftWorldX = entity.worldX + entity.collisionArea.x;
         int entityRightWorldX = entity.worldX + entity.collisionArea.x + entity.collisionArea.width;
@@ -27,40 +89,54 @@ public class CollisionManager {
         int entityTopTileY = entityTopWorldY / gamePanel.tileSize;
         int entityBottomTileY = entityBottomWorldY / gamePanel.tileSize;
 
-        int tileNum1;
-        int tileNum2;
-
-        if (entity.direction.equals("up")) {
-            entityTopTileY = (entityTopWorldY - entity.speed) / gamePanel.tileSize;
-            tileNum1 = gamePanel.tileManager.mapTileNum[entityLeftTileX][entityTopTileY];
-            tileNum2 = gamePanel.tileManager.mapTileNum[entityRightTileX][entityTopTileY];
-            if (gamePanel.tileManager.tiles[tileNum1].isSolid() || gamePanel.tileManager.tiles[tileNum2].isSolid()) {
-                entity.collision = true;
-            }
-        } else if (entity.direction.equals("down")) {
-            entityBottomTileY = (entityBottomWorldY + entity.speed) / gamePanel.tileSize;
-            tileNum1 = gamePanel.tileManager.mapTileNum[entityLeftTileX][entityBottomTileY];
-            tileNum2 = gamePanel.tileManager.mapTileNum[entityRightTileX][entityBottomTileY];
-            if (gamePanel.tileManager.tiles[tileNum1].isSolid() || gamePanel.tileManager.tiles[tileNum2].isSolid()) {
-                entity.collision = true;
-            }
-        } else if (entity.direction.equals("left")) {
-            entityLeftTileX = (entityLeftWorldX - entity.speed) / gamePanel.tileSize; // subtract speed
-            tileNum1 = gamePanel.tileManager.mapTileNum[entityLeftTileX][entityTopTileY];
-            tileNum2 = gamePanel.tileManager.mapTileNum[entityLeftTileX][entityBottomTileY];
-            if (gamePanel.tileManager.tiles[tileNum1].isSolid() || gamePanel.tileManager.tiles[tileNum2].isSolid()) {
-                entity.collision = true;
-            }
-        } else {
-            entityRightTileX = (entityRightWorldX + entity.speed) / gamePanel.tileSize; // add speed
-            tileNum1 = gamePanel.tileManager.mapTileNum[entityRightTileX][entityTopTileY];
-            tileNum2 = gamePanel.tileManager.mapTileNum[entityRightTileX][entityBottomTileY];
-            if (gamePanel.tileManager.tiles[tileNum1].isSolid() || gamePanel.tileManager.tiles[tileNum2].isSolid()) {
-                entity.collision = true;
-            }
+        switch (entity.direction) {
+            case "up":
+                checkTileUp(entity, entityLeftTileX, entityRightTileX, entityTopWorldY);
+                break;
+            case "down":
+                checkTileDown(entity, entityLeftTileX, entityRightTileX, entityBottomWorldY);
+                break;
+            case "left":
+                checkTileLeft(entity, entityLeftTileX, entityTopTileY, entityBottomTileY);
+                break;
+            case "right":
+                checkTileRight(entity, entityRightTileX, entityTopTileY, entityBottomTileY);
+                break;
         }
     }
 
+    private void checkTileUp(Entity entity, int entityLeftTileX, int entityRightTileX, int entityTopWorldY) {
+        int entityTopTileY = (entityTopWorldY - entity.speed) / gamePanel.tileSize;
+        checkCollision(entity, entityLeftTileX, entityRightTileX, entityTopTileY);
+    }
+
+    private void checkTileDown(Entity entity, int entityLeftTileX, int entityRightTileX, int entityBottomWorldY) {
+        int entityBottomTileY = (entityBottomWorldY + entity.speed) / gamePanel.tileSize;
+        checkCollision(entity, entityLeftTileX, entityRightTileX, entityBottomTileY);
+    }
+
+    private void checkTileLeft(Entity entity, int entityLeftTileX, int entityTopTileY, int entityBottomTileY) {
+        entityLeftTileX = (entity.worldX + entity.collisionArea.x - entity.speed) / gamePanel.tileSize;
+        checkCollision(entity, entityLeftTileX, entityTopTileY, entityBottomTileY);
+    }
+
+    private void checkTileRight(Entity entity, int entityRightTileX, int entityTopTileY, int entityBottomTileY) {
+        entityRightTileX = (entity.worldX + entity.collisionArea.x + entity.collisionArea.width + entity.speed)
+                / gamePanel.tileSize;
+        checkCollision(entity, entityRightTileX, entityTopTileY, entityBottomTileY);
+    }
+
+    private void checkCollision(Entity entity, int entityTileX1, int entityTileX2, int entityTileY) {
+        int tileNum1 = gamePanel.tileManager.mapTileNum[entityTileX1][entityTileY];
+        int tileNum2 = gamePanel.tileManager.mapTileNum[entityTileX2][entityTileY];
+        if (gamePanel.tileManager.tiles[tileNum1].isSolid() || gamePanel.tileManager.tiles[tileNum2].isSolid()) {
+            entity.collision = true;
+        }
+    }
+
+    /*
+     * Check if the entity collides with an object
+     */
     public int checkObjectCollision(Entity entity, boolean player) {
         int index = 69;
 

@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.objects;
 
 import javax.imageio.ImageIO;
+import cz.cvut.fel.pjv.Toolbox;
 
 public class SlotMachine extends Object implements InteractableObject {
 
@@ -27,6 +28,7 @@ public class SlotMachine extends Object implements InteractableObject {
         this.Finished = false;
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/slot_mach_l.png"));
+            this.image = Toolbox.scaleImage(this.image, 48, 48);
         } catch (Exception e) {
             e.printStackTrace();
             logger.severe("Error loading image");

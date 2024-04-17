@@ -21,6 +21,9 @@ public class LevelManager {
         logger.setLevel(Level.WARNING);
     }
 
+    /*
+     * Check if the first level is finished
+     */
     public boolean checkLevelFirstFinished() {
         if (firstLevel.checkLevelFinished() && !firstLevelMessage) {
             gamePanel.ui.setAnnounceMessage("First Level finished");
@@ -32,6 +35,7 @@ public class LevelManager {
         return firstLevel.checkLevelFinished();
     }
 
+    // Get the current level number
     private int getLevelNumber() {
         return levelNumber;
     }

@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.KeyHandler;
+import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.Alcohol.*;
 import cz.cvut.fel.pjv.objects.*;
 
@@ -78,19 +79,28 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/pup.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/pup2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/pdown.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/pdown2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/pleft.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/pleft2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/pright.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/pright2.png"));
 
+        up1 = assignImage("pup");
+        up2 = assignImage("pup2");
+        down1 = assignImage("pdown");
+        down2 = assignImage("pdown2");
+        left1 = assignImage("pleft");
+        left2 = assignImage("pleft2");
+        right1 = assignImage("pright");
+        right2 = assignImage("pright2");
+
+    }
+
+    private BufferedImage assignImage(String path) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/player/" + path + ".png"));
+            image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return image;
+
     }
 
     /*
@@ -146,6 +156,9 @@ public class Player extends Entity {
         }
     }
 
+    /*
+     * Pick up an object
+     */
     public void pickUp(int objectIndex) {
         if (objectIndex != 69) {
             String objectName = gamePanel.objects[objectIndex].name;
@@ -209,32 +222,7 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g) {
         BufferedImage img = directionToImageMap.getOrDefault(direction, () -> null).get();
-        g.drawImage(img, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g.drawImage(img, screenX, screenY, null);
     }
-
-    // public void draw(Graphics2D g) {
-    // BufferedImage img = null;
-    //
-    // switch (direction) {
-    // case "up":
-    // img = (spriteIndex == 1) ? up1 : (spriteIndex == 2) ? up2 : img;
-    // break;
-    // case "down":
-    // img = (spriteIndex == 1) ? down1 : (spriteIndex == 2) ? down2 : img;
-    // break;
-    // case "left":
-    // img = (spriteIndex == 1) ? left1 : (spriteIndex == 2) ? left2 : img;
-    // break;
-    // case "right":
-    // img = (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : img;
-    // break;
-    // default:
-    // break;
-    // }
-    //
-    // g.drawImage(img, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize,
-    // null);
-    //
-    // }
 
 }
