@@ -1,7 +1,7 @@
 package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.objects.*;
-import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.objects.alcohol.*;
 
 public class ObjectsSpawner {
 

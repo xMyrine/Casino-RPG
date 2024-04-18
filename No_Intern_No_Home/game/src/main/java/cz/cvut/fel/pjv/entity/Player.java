@@ -3,7 +3,7 @@ package cz.cvut.fel.pjv.entity;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.Toolbox;
-import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.objects.alcohol.*;
 import cz.cvut.fel.pjv.objects.*;
 
 import java.awt.Graphics2D;
