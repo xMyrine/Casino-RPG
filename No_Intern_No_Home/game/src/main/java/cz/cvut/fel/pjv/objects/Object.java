@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.Sound;
 
 public abstract class Object {
 
@@ -21,36 +22,18 @@ public abstract class Object {
     public int collisionAreaDefaultY = 0;
 
     protected Logger logger = Logger.getLogger(Object.class.getName());
-
-    // public void draw(Graphics2D g, GamePanel gamePanel) {
-    // int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth;
-    // int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight;
-    //
-    // if (worldX + gamePanel.tileSize > gamePanel.player.worldX -
-    // gamePanel.screenWidth
-    // && worldX - gamePanel.tileSize < gamePanel.player.worldX +
-    // gamePanel.screenWidth
-    // && worldY + gamePanel.tileSize > gamePanel.player.worldY -
-    // gamePanel.screenHeight
-    // && worldY - gamePanel.tileSize < gamePanel.player.worldY +
-    // gamePanel.screenHeight) {
-    // g.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize,
-    // null);
-    // }
-    // }
+    protected static Sound sound = new Sound();
 
     public void draw(Graphics2D g, GamePanel gamePanel) {
         int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * gamePanel.tileSize - 24;
 
         int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * gamePanel.tileSize - 24;
 
+        // draw only objects that are in the screen
         if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.screenWidth
                 && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.screenWidth
                 && worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.screenHeight
                 && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.screenHeight) {
-            // System.out.println(
-            // "Drawing object " + name + " at " + screenX + ", " + screenY + " with size "
-            // + gamePanel.tileSize);
             g.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
         }
     }
@@ -58,7 +41,6 @@ public abstract class Object {
     public void changePicture(String filepath) {
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream(filepath));
-            System.out.println("Changed image to " + filepath);
         } catch (Exception e) {
             e.printStackTrace();
         }

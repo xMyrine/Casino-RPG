@@ -9,9 +9,12 @@ import java.awt.Graphics2D;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import cz.cvut.fel.pjv.entity.Entity;
+import cz.cvut.fel.pjv.entity.IntroNPC;
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
 import cz.cvut.fel.pjv.objects.Object;
+import cz.cvut.fel.pjv.objects.Door;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN settings
@@ -34,13 +37,17 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyHandler);
     public CollisionManager collisionManager = new CollisionManager(this);
     protected TileManager tileManager = new TileManager(this);
-    public Object objects[] = new Object[50];
-    private ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
+    public ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
     public Sound sound = new Sound();
     public LevelManager levelManager = new LevelManager(this);
     protected UI ui = new UI(this);
+    public NPCManager npcManager = new NPCManager(this);
 
     private Logger logger = Logger.getLogger(GamePanel.class.getName());
+
+    // Game objects
+    public Object objects[] = new Object[50];
+    public Entity entities[] = new Entity[20];
 
     // Game State
     public int gameState;
@@ -61,6 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
         objectsSpawner.spawnObjects();
         sound.playMusic();
         gameState = gameScreen;
+        npcManager.spawnNPC();
     }
 
     public void startGameThread() {
@@ -135,6 +143,12 @@ public class GamePanel extends JPanel implements Runnable {
         ui.draw(g2);
 
         g2.dispose();
+
+        for (int i = 0; i < entities.length; i++) {
+            if (entities[i] != null && entities[i] instanceof IntroNPC) {
+                ((IntroNPC) entities[i]).draw(g2);
+            }
+        }
     }
 
     /*

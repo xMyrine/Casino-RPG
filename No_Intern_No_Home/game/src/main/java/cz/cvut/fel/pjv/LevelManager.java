@@ -11,12 +11,11 @@ public class LevelManager {
     public GamePanel gamePanel;
     private boolean firstLevelMessage = false;
     public boolean levelInProgress = true;
-    private int levelNumber = 1;
+    private static int levelNumber = 1;
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
 
     public LevelManager(GamePanel gamePanel) {
-        this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(),
-                gamePanel.countObjectsByClass(SlotMachine.class), gamePanel);
+        this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 2, gamePanel);
         this.gamePanel = gamePanel;
         logger.setLevel(Level.WARNING);
     }
@@ -24,20 +23,40 @@ public class LevelManager {
     /*
      * Check if the first level is finished
      */
-    public boolean checkLevelFirstFinished() {
-        if (firstLevel.checkLevelFinished() && !firstLevelMessage) {
-            gamePanel.ui.setAnnounceMessage("First Level finished");
-            firstLevelMessage = true;
-            levelInProgress = false;
-            levelNumber++;
-            logger.warning("Level number: " + levelNumber);
+    public boolean checkLevelFinished() {
+        if (levelNumber == 1) {
+            if (firstLevel.checkLevelFinished() && !firstLevelMessage) {
+                gamePanel.ui.setAnnounceMessage("First Level finished");
+                firstLevelMessage = true;
+                levelInProgress = false;
+                levelNumber++;
+                openDoors();
+                logger.warning("Level number: " + levelNumber);
+                return firstLevel.checkLevelFinished();
+            }
         }
-        return firstLevel.checkLevelFinished();
+        return false;
     }
 
     // Get the current level number
-    private int getLevelNumber() {
+    public static int getLevelNumber() {
         return levelNumber;
+    }
+
+    private void openDoors() {
+        for (int i = 0; i < gamePanel.objects.length; i++) {
+            if (gamePanel.objects[i] instanceof Door) {
+                ((Door) gamePanel.objects[i])
+                        .changeState((LevelManager.getLevelNumber() > gamePanel.objectsSpawner
+                                .getCurrentObjectLevelSpawned()));
+                logger.log(Level.INFO, "Door state changed");
+                if (((Door) gamePanel.objects[i]).getState()
+                        && !((Door) gamePanel.objects[i]).open) {
+                    ((Door) gamePanel.objects[i]).open = true;
+                    gamePanel.sound.playMusic(4);
+                }
+            }
+        }
     }
 
 }

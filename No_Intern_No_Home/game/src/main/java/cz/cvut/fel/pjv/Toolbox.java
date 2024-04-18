@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class Toolbox {
 

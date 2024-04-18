@@ -4,7 +4,9 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 
-public class Entity {
+import cz.cvut.fel.pjv.GamePanel;
+
+public abstract class Entity {
 
     public int worldX, worldY; // player's position in the world
     public int screenX, screenY;
@@ -20,4 +22,5 @@ public class Entity {
     public boolean collision = false;
 
     protected static Logger logger;
+
 }

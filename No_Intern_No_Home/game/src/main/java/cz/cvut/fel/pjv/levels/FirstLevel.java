@@ -11,7 +11,7 @@ public class FirstLevel extends Level {
     private GamePanel gamePanel;
 
     public FirstLevel(int playerSlotMachineCount, int totalSlotMachineCount, GamePanel gamePanel) {
-        this.finishedSlotMachineCount = 12;
+        this.finishedSlotMachineCount = totalSlotMachineCount;
         this.playerSlotMachineCount = playerSlotMachineCount;
         this.miniGameFinished = true; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
         this.levelFinished = false;
@@ -55,6 +55,7 @@ public class FirstLevel extends Level {
 
     public boolean checkSlotMachineCount() {
         fetchPlayerSlotMachineCount(gamePanel.player.getSlotMachineCount());
+        System.out.println("Player slot machine count: " + playerSlotMachineCount);
         if (finishedSlotMachineCount <= playerSlotMachineCount) {
             logger.config("Slot machines finished");
             return true;
