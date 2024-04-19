@@ -2,9 +2,10 @@ package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.KeyHandler;
+import cz.cvut.fel.pjv.LevelManager;
 import cz.cvut.fel.pjv.Toolbox;
-import cz.cvut.fel.pjv.objects.alcohol.*;
 import cz.cvut.fel.pjv.objects.*;
+import cz.cvut.fel.pjv.objects.alcohol.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -29,7 +30,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    private float playerLuck = 0.1f;
+    private float playerLuck = 1f;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
@@ -80,21 +81,22 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        up1 = assignImage("pup");
-        up2 = assignImage("pup2");
-        down1 = assignImage("pdown");
-        down2 = assignImage("pdown2");
-        left1 = assignImage("pleft");
-        left2 = assignImage("pleft2");
-        right1 = assignImage("pright");
-        right2 = assignImage("pright2");
+        up1 = assignImage("/player/pup");
+        up2 = assignImage("/player/pup2");
+        down1 = assignImage("/player/pdown");
+        down2 = assignImage("/player/pdown2");
+        left1 = assignImage("/player/pleft");
+        left2 = assignImage("/player/pleft2");
+        right1 = assignImage("/player/pright");
+        right2 = assignImage("/player/pright2");
 
     }
 
     private BufferedImage assignImage(String path) {
         BufferedImage image = null;
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/player/" + path + ".png"));
+            image = ImageIO.read(getClass().getResourceAsStream(path +
+                    ".png"));
             image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,14 +180,13 @@ public class Player extends Entity {
                             ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
                             ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
                             slotMachineCount++;
+                            gamePanel.levelManager.checkLevelFinished();
                             gamePanel.sound.playMusic(3);
                         }
                         break;
                     }
                     break;
                 case "beer":
-                    this.speed = 10;
-                    gamePanel.sound.playMusic(2);
                     if (gamePanel.objects[objectIndex] instanceof Beer) {
                         this.playerLuck = ((Beer) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
                         logger.info(String.format("Player's luck increased to %f", this.playerLuck));
@@ -193,18 +194,15 @@ public class Player extends Entity {
                     gamePanel.objects[objectIndex] = null;
                     break;
                 case "door":
-                    if (gamePanel.objects[objectIndex] instanceof Door) {
-                        System.out.println("Level state: " + gamePanel.levelManager.checkLevelFirstFinished());
-                        ((Door) gamePanel.objects[objectIndex])
-                                .changeState(gamePanel.levelManager
-                                        .checkLevelFirstFinished());
-                        logger.log(Level.INFO, "Door state changed");
-                        if (((Door) gamePanel.objects[objectIndex]).getState()
-                                && !((Door) gamePanel.objects[objectIndex]).open) {
-                            ((Door) gamePanel.objects[objectIndex]).open = true;
-                            gamePanel.sound.playMusic(4);
-                        }
+                    break;
+                case "vodka":
+                    System.out.println("Vodka");
+                    if (gamePanel.objects[objectIndex] instanceof Vodka) {
+                        this.playerLuck = ((Vodka) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+                        System.out.println(this.playerLuck);
+                        logger.info(String.format("Player's luck increased to %f", this.playerLuck));
                     }
+                    gamePanel.objects[objectIndex] = null;
                     break;
                 default:
                     break;

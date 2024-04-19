@@ -2,9 +2,18 @@ package cz.cvut.fel.pjv.entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 import java.util.logging.Logger;
 
-public class Entity {
+import cz.cvut.fel.pjv.CollisionManager;
+import cz.cvut.fel.pjv.GamePanel;
+
+import java.awt.Graphics2D;
+
+public abstract class Entity {
+
+    protected static Random random = new Random();
+    public static GamePanel gamePanel;
 
     public int worldX, worldY; // player's position in the world
     public int screenX, screenY;
@@ -15,9 +24,98 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteIndex = 1;
 
-    public Rectangle collisionArea;
+    public Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
     public int collisionAreaDefaultX, collisionAreaDefaultY;
     public boolean collision = false;
 
+    protected int actionCounter = 0;
+
+    protected static final int ACTION_DELAY = 120;
+
     protected static Logger logger;
+
+    public static void getGamePanelInstance(GamePanel gP) {
+        gamePanel = gP;
+    }
+
+    public void update() {
+        move();
+
+        collision = false;
+        gamePanel.collisionManager.checkTile(this);
+
+        if (!collision) {
+
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        spriteCounter++;
+        if (spriteCounter > 15) {
+            spriteIndex = (spriteIndex == 1) ? 2 : 1;
+            spriteCounter = 0;
+        }
+    }
+
+    /*
+     * Default draw method for all entities.
+     */
+    public void draw(Graphics2D g) {
+        if (direction.equals("up")) {
+            if (spriteCounter % 20 < 10) {
+                g.drawImage(up1, screenX, screenY, null);
+            } else {
+                g.drawImage(up2, screenX, screenY, null);
+            }
+        } else if (direction.equals("down")) {
+            if (spriteCounter % 20 < 10) {
+                g.drawImage(down1, screenX, screenY, null);
+            } else {
+                g.drawImage(down2, screenX, screenY, null);
+            }
+        } else if (direction.equals("left")) {
+            if (spriteCounter % 20 < 10) {
+                g.drawImage(left1, screenX, screenY, null);
+            } else {
+                g.drawImage(left2, screenX, screenY, null);
+            }
+        } else if (direction.equals("right")) {
+            if (spriteCounter % 20 < 10) {
+                g.drawImage(right1, screenX, screenY, null);
+            } else {
+                g.drawImage(right2, screenX, screenY, null);
+            }
+        }
+    }
+
+    /*
+     * Default move method for all entities. Will probably be overridden by
+     * subclasses.
+     */
+    public void move() {
+        if (direction.equals("up")) {
+            worldY -= speed;
+        } else if (direction.equals("down")) {
+            worldY += speed;
+        } else if (direction.equals("left")) {
+            worldX -= speed;
+        } else if (direction.equals("right")) {
+            worldX += speed;
+        }
+    }
+
 }
