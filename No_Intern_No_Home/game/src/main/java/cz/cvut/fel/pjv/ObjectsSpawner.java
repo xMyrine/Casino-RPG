@@ -5,7 +5,7 @@ import cz.cvut.fel.pjv.objects.alcohol.*;
 
 public class ObjectsSpawner {
 
-    GamePanel gamePanel;
+    public GamePanel gamePanel;
     private int currentObjectLevelSpawned = 1;
 
     public ObjectsSpawner(GamePanel gamePanel) {
@@ -92,11 +92,11 @@ public class ObjectsSpawner {
 
             }
             currentObjectLevelSpawned++;
+            if (LevelManager.getLevelNumber() == 2 && !gamePanel.levelManager.levelInProgress) {
+                spawnLevelTwoObjects();
+            }
             gamePanel.levelManager.levelInProgress = true;
 
-        }
-        if (LevelManager.getLevelNumber() == 2) {
-            spawnLevelTwoObjects();
         }
     }
 

@@ -20,6 +20,9 @@ public abstract class Level {
         return levelFinished;
     }
 
-    public abstract boolean isMiniGameFinished();
+    private boolean isMiniGameFinished() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isMiniGameFinished'");
+    }
 
 }

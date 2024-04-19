@@ -69,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
         sound.playMusic();
         gameState = gameScreen;
         npcManager.spawnNPC();
+        Entity.getGamePanelInstance(this);
     }
 
     public void startGameThread() {
@@ -117,6 +118,11 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == gameScreen) {
             player.update();
             objectsSpawner.update();
+            for (int i = 0; i < entities.length; i++) {
+                if (entities[i] != null) {
+                    entities[i].update();
+                }
+            }
         } else if (gameState == pauseScreen) {
             // do nothing
         }
@@ -142,13 +148,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         ui.draw(g2);
 
-        g2.dispose();
-
         for (int i = 0; i < entities.length; i++) {
-            if (entities[i] != null && entities[i] instanceof IntroNPC) {
-                ((IntroNPC) entities[i]).draw(g2);
+            if (entities[i] != null) {
+                entities[i].draw(g2);
             }
         }
+
+        g2.dispose();
+
     }
 
     /*

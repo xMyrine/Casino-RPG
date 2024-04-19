@@ -21,7 +21,7 @@ public class IntroNPC extends Entity implements NPC {
     public IntroNPC(GamePanel panel) {
         this.gamePanel = panel;
         this.speed = 1;
-        this.direction = "left";
+        this.direction = "down";
         this.worldX = 10;
         this.worldY = 10;
 
@@ -31,7 +31,7 @@ public class IntroNPC extends Entity implements NPC {
     public IntroNPC(GamePanel panel, int x, int y) {
         this.gamePanel = panel;
         this.speed = 1;
-        this.direction = "left";
+        this.direction = "down";
         this.worldX = x;
         this.worldY = y;
 
@@ -73,12 +73,12 @@ public class IntroNPC extends Entity implements NPC {
         directionToImageMap.put("right", () -> (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : down1);
     }
 
+    @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
         int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * gamePanel.tileSize - 24;
 
         int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * gamePanel.tileSize - 24;
-
         // draw only objects that are in the screen
         if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.screenWidth
                 && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.screenWidth
@@ -96,8 +96,29 @@ public class IntroNPC extends Entity implements NPC {
 
     @Override
     public void move() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+        int i;
+
+        if (actionCounter < ACTION_DELAY) {
+            actionCounter++;
+
+        } else {
+            i = Entity.random.nextInt(4);
+
+            if (i == 0) {
+                direction = "up";
+                worldY -= speed;
+            } else if (i == 1) {
+                direction = "down";
+                worldY += speed;
+            } else if (i == 2) {
+                direction = "left";
+                worldX -= speed;
+            } else if (i == 3) {
+                direction = "right";
+                worldX += speed;
+            }
+            actionCounter = 0;
+        }
     }
 
 }
