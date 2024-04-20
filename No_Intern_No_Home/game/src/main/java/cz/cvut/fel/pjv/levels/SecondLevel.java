@@ -14,14 +14,12 @@ public class SecondLevel extends Level {
     }
 
     private boolean isLuckSexyAndChipsBlaze() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isLuckSexyAndChipsBlaze'");
+        return true; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
     }
 
     @Override
     public boolean checkLevelFinished() {
         if (isLuckSexyAndChipsBlaze() && miniGameFinished) {
-            logger.info("Level finished");
             return true;
         }
         return false;

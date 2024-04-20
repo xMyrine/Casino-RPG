@@ -18,6 +18,7 @@ public class UI {
     public String message = "";
     private static final int announceMessageDuration = 120;
     private int displayMessageCounter = 0;
+    private String dialogueText = "...";
 
     BufferedImage chipImage;
 
@@ -69,11 +70,45 @@ public class UI {
             // TODO drawMenu();
         } else if (gamePanel.gameState == gamePanel.pauseScreen) {
             drawPause();
+        } else if (gamePanel.gameState == gamePanel.dialogueScreen) {
+            drawDialogue();
         }
     }
 
     private void drawPause() {
         g.setFont(g.getFont().deriveFont(50.0f));
         g.drawString("PAUSED", gamePanel.screenWidth / 2 - 100, gamePanel.screenHeight / 2);
+    }
+
+    private void drawDialogue() {
+        g.setFont(g.getFont().deriveFont(23.0f));
+        int x = 72;
+        int y = gamePanel.tileSize * 8;
+        int width = gamePanel.screenWidth - gamePanel.tileSize * 3;
+        int height = gamePanel.tileSize * 3;
+        drawWindow(x, y, width, height);
+
+        x += gamePanel.tileSize;
+        y += gamePanel.tileSize;
+        for (String line : dialogueText.split("\n")) {
+            g.drawString(line, x, y);
+            y += 24;
+        }
+        // g.drawString(dialogueText, x, y);
+    }
+
+    private void drawWindow(int x, int y, int width, int height) {
+        g.setColor(new Color(0, 0, 0, 200));
+        g.fillRoundRect(x, y, width, height, 20, 20);
+        g.setColor(Color.WHITE);
+        int thickness = 3; // Change this to change the border thickness
+        g.setColor(Color.WHITE);
+        for (int i = 0; i < thickness; i++) {
+            g.drawRoundRect(x + i, y + i, width - 2 * i, height - 2 * i, 20, 20);
+        }
+    }
+
+    public void setDialogue(String dialogues) {
+        dialogueText = dialogues;
     }
 }

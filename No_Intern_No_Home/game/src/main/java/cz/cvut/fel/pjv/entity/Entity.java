@@ -19,6 +19,7 @@ public abstract class Entity {
     public int screenX, screenY;
     public int speed;
 
+    public String name;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public String direction;
     public int spriteCounter = 0;
@@ -29,10 +30,11 @@ public abstract class Entity {
     public boolean collision = false;
 
     protected int actionCounter = 0;
-
     protected static final int ACTION_DELAY = 120;
-
     protected static Logger logger;
+
+    protected String dialogues[] = new String[30];
+    protected int dialogueIndex = 0;
 
     public static void getGamePanelInstance(GamePanel gP) {
         gamePanel = gP;
@@ -43,6 +45,8 @@ public abstract class Entity {
 
         collision = false;
         gamePanel.collisionManager.checkTile(this);
+        gamePanel.collisionManager.checkObjectCollision(this, false);
+        gamePanel.collisionManager.checkEntityToPlayerCollision(this);
 
         if (!collision) {
 
@@ -115,6 +119,34 @@ public abstract class Entity {
             worldX -= speed;
         } else if (direction.equals("right")) {
             worldX += speed;
+        }
+    }
+
+    public void talk() {
+        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
+        dialogueIndex++;
+        this.turnEntity(gamePanel.player.direction);
+        if (dialogues[dialogueIndex] == null) {
+            dialogueIndex = 0;
+        }
+    }
+
+    protected void turnEntity(String dir) {
+        switch (dir) {
+            case "up":
+                this.direction = "down";
+                break;
+            case "down":
+                this.direction = "up";
+                break;
+            case "left":
+                this.direction = "right";
+                break;
+            case "right":
+                this.direction = "left";
+                break;
+            default:
+                break;
         }
     }
 

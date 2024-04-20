@@ -130,6 +130,9 @@ public class Player extends Entity {
             int objectIndex = gamePanel.collisionManager.checkObjectCollision(this, true);
             pickUp(objectIndex);
 
+            int npcIndex = gamePanel.collisionManager.checkEntityCollision(this, gamePanel.entities);
+            interactWithNPC(npcIndex);
+
             if (!collision) {
 
                 switch (direction) {
@@ -194,19 +197,33 @@ public class Player extends Entity {
                     gamePanel.objects[objectIndex] = null;
                     break;
                 case "door":
+
                     break;
                 case "vodka":
-                    System.out.println("Vodka");
                     if (gamePanel.objects[objectIndex] instanceof Vodka) {
                         this.playerLuck = ((Vodka) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
                         System.out.println(this.playerLuck);
                         logger.info(String.format("Player's luck increased to %f", this.playerLuck));
+                        gamePanel.levelManager.checkLevelFinished();
                     }
                     gamePanel.objects[objectIndex] = null;
                     break;
                 default:
                     break;
             }
+        }
+    }
+
+    /*
+     * Interact with an NPC
+     */
+    public void interactWithNPC(int npcIndex) {
+        if (npcIndex != 69) {
+            if (gamePanel.keyHandler.interact) {
+                gamePanel.gameState = gamePanel.dialogueScreen;
+                gamePanel.entities[npcIndex].talk();
+            }
+            gamePanel.keyHandler.interact = false;
         }
     }
 

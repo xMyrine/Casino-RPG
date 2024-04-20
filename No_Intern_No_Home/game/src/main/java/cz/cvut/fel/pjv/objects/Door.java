@@ -26,7 +26,7 @@ public class Door extends Object implements InteractableObject {
     public void changeState(boolean check) {
         if (check) {
             try {
-                image = ImageIO.read(getClass().getResourceAsStream("/objects/bomb_f1.png"));
+                image = ImageIO.read(getClass().getResourceAsStream("/objects/door_open.png"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

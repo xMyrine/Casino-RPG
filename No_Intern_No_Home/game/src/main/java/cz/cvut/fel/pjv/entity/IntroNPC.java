@@ -19,22 +19,26 @@ public class IntroNPC extends Entity implements NPC {
     GamePanel gamePanel;
 
     public IntroNPC(GamePanel panel) {
+        this.name = "IntroNPC";
         this.gamePanel = panel;
         this.speed = 1;
         this.direction = "down";
         this.worldX = 10;
         this.worldY = 10;
 
+        setDialogueMessage();
         getNPCImage();
     }
 
     public IntroNPC(GamePanel panel, int x, int y) {
+        this.name = "IntroNPC";
         this.gamePanel = panel;
         this.speed = 1;
         this.direction = "down";
         this.worldX = x;
         this.worldY = y;
 
+        setDialogueMessage();
         getNPCImage();
     }
 
@@ -90,8 +94,14 @@ public class IntroNPC extends Entity implements NPC {
 
     @Override
     public void talk() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'talk'");
+        super.talk();
+    }
+
+    public void setDialogueMessage() {
+        dialogues[0] = "Ayo, you are new around here. \n Haven't seen you before.";
+        dialogues[1] = "This place is fcked up. You need to get \n out of here. You need to gamble\n your way out.";
+        dialogues[2] = "You will need to finish a task in the room to get a chance \nto challenge the room master.";
+        dialogues[3] = "You will need to beat the room master to advance.";
     }
 
     @Override

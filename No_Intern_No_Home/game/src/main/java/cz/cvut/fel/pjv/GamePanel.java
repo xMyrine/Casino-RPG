@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     protected int fps = 60;
 
-    transient KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
     transient Thread gameThread;
     public Player player = new Player(this, keyHandler);
     public CollisionManager collisionManager = new CollisionManager(this);
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
     public ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
     public Sound sound = new Sound();
     public LevelManager levelManager = new LevelManager(this);
-    protected UI ui = new UI(this);
+    public UI ui = new UI(this);
     public NPCManager npcManager = new NPCManager(this);
 
     private Logger logger = Logger.getLogger(GamePanel.class.getName());
@@ -49,11 +49,12 @@ public class GamePanel extends JPanel implements Runnable {
     public Object objects[] = new Object[50];
     public Entity entities[] = new Entity[20];
 
-    // Game State
+    // ! Game State
     public int gameState;
-    protected final int menuScreen = 0;
-    protected final int gameScreen = 1;
-    protected final int pauseScreen = 2;
+    protected static final int menuScreen = 0;
+    protected static final int gameScreen = 1;
+    protected static final int pauseScreen = 2;
+    public static final int dialogueScreen = 3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -75,6 +76,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public int getGameState() {
+        return gameState;
     }
 
     /*
@@ -146,13 +151,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
 
-        ui.draw(g2);
-
         for (int i = 0; i < entities.length; i++) {
             if (entities[i] != null) {
                 entities[i].draw(g2);
             }
         }
+
+        ui.draw(g2);
 
         g2.dispose();
 
@@ -172,11 +177,12 @@ public class GamePanel extends JPanel implements Runnable {
         return count;
     }
 
-    protected void changeGameState() {
-        if (gameState == gameScreen) {
-            gameState = pauseScreen;
-        } else if (gameState == pauseScreen) {
-            gameState = gameScreen;
-        }
+    protected void changeGameState(int i) {
+        // if (gameState == gameScreen) {
+        // gameState = i;
+        // } else if (gameState == pauseScreen) {
+        // gameState = i;
+        // }
+        gameState = i;
     }
 }

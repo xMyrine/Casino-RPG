@@ -10,6 +10,7 @@ public class LevelManager {
     private FirstLevel firstLevel;
     public GamePanel gamePanel;
     private boolean firstLevelMessage = false;
+    private boolean secondLevelMessage = false;
     public boolean levelInProgress = true;
     private static int levelNumber = 1;
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
@@ -24,6 +25,7 @@ public class LevelManager {
      * Check if the first level is finished
      */
     public boolean checkLevelFinished() {
+        System.out.println("Level number: " + levelNumber);
         if (levelNumber == 1) {
             if (firstLevel.checkLevelFinished() && !firstLevelMessage) {
                 gamePanel.ui.setAnnounceMessage("First Level finished");
@@ -33,6 +35,18 @@ public class LevelManager {
                 openDoors();
                 logger.warning("Level number: " + levelNumber);
                 return firstLevel.checkLevelFinished();
+            }
+        } else if (levelNumber == 2) {
+            SecondLevel secondLevel = new SecondLevel(gamePanel);
+            levelInProgress = true;
+            if (secondLevel.checkLevelFinished() && !secondLevelMessage) {
+                gamePanel.ui.setAnnounceMessage("Second Level finished");
+                secondLevelMessage = true;
+                levelInProgress = false;
+                levelNumber++;
+                openDoors();
+                logger.warning("Level number: " + levelNumber);
+                return secondLevel.checkLevelFinished();
             }
         }
         return false;
