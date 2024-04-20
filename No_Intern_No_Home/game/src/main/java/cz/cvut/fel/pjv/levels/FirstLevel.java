@@ -3,17 +3,19 @@ package cz.cvut.fel.pjv.levels;
 import java.util.logging.Logger;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.minigames.Roulette;
 
 public class FirstLevel extends Level {
     private int finishedSlotMachineCount;
     private boolean miniGameFinished;
     private int playerSlotMachineCount;
     private GamePanel gamePanel;
+    public Roulette roulette;
 
     public FirstLevel(int playerSlotMachineCount, int totalSlotMachineCount, GamePanel gamePanel) {
         this.finishedSlotMachineCount = totalSlotMachineCount;
         this.playerSlotMachineCount = playerSlotMachineCount;
-        this.miniGameFinished = true; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
+        this.miniGameFinished = false; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
         this.levelFinished = false;
         logger = Logger.getLogger(FirstLevel.class.getName());
         this.gamePanel = gamePanel;
@@ -34,6 +36,8 @@ public class FirstLevel extends Level {
 
     public void setMiniGameFinished(boolean miniGameFinished) {
         this.miniGameFinished = miniGameFinished;
+        gamePanel.levelManager.checkLevelFinished();
+        System.out.println("Mini game finished: " + miniGameFinished);
     }
 
     @Override

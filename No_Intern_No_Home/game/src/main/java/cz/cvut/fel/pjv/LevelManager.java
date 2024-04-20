@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class LevelManager {
-    private FirstLevel firstLevel;
+    public FirstLevel firstLevel;
     public GamePanel gamePanel;
     private boolean firstLevelMessage = false;
     private boolean secondLevelMessage = false;

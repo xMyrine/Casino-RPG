@@ -57,10 +57,15 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_Y) {
                 yes = true;
-                System.out.println(yes);
+                switch (LevelManager.getLevelNumber()) {
+                    case 1:
+                        gamePanel.levelManager.firstLevel.setMiniGameFinished(true);
+                        break;
+                    default:
+                        break;
+                }
             } else if (code == KeyEvent.VK_N) {
                 yes = false;
-                System.out.println(yes);
             }
         }
 

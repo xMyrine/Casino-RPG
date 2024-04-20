@@ -55,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     protected static final int gameScreen = 1;
     protected static final int pauseScreen = 2;
     public static final int dialogueScreen = 3;
+    public static final int MINIGAMESCREEN = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));

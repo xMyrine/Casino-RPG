@@ -60,6 +60,10 @@ public class Player extends Entity {
         return chipCount;
     }
 
+    public void setChipCount(int chipCount) {
+        this.chipCount = chipCount;
+    }
+
     public void setPlayerLuck(float playerLuck) {
         if (playerLuck < 0) {
             this.playerLuck = 0;
