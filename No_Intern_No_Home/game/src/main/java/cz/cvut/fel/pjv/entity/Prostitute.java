@@ -1,37 +1,22 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.LevelManager;
 import cz.cvut.fel.pjv.Toolbox;
 
+import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import javax.imageio.ImageIO;
 
-public class Worker extends Entity implements NPC {
+public class Prostitute extends Entity implements NPC {
 
-    GamePanel gamePanel;
-
-    public Worker(GamePanel panel) {
-        this.name = "Worker";
+    public Prostitute(GamePanel panel, int x, int y) {
+        this.name = "Whore";
         this.gamePanel = panel;
-        this.speed = 0;
-        this.direction = "left";
-        this.worldX = 10;
-        this.worldY = 10;
-
-        setDialogueMessage();
-        getNPCImage();
-    }
-
-    public Worker(GamePanel panel, int x, int y) {
-        this.name = "Worker";
-        this.gamePanel = panel;
-        this.speed = 0;
-        this.direction = "left";
+        this.speed = 1;
+        this.direction = "down";
         this.worldX = x;
         this.worldY = y;
 
@@ -41,14 +26,14 @@ public class Worker extends Entity implements NPC {
 
     public void getNPCImage() {
 
-        up1 = assignImage("/npc/guy_up_1");
-        up2 = assignImage("/npc/guy_up_1");
-        down1 = assignImage("/npc/guy_down_1");
-        down2 = assignImage("/npc/guy_down_1");
-        left1 = assignImage("/npc/wizard_left_1");
-        left2 = assignImage("/npc/wizard_left_1");
-        right1 = assignImage("/npc/wizard_right_1");
-        right2 = assignImage("/npc/wizard_right_1");
+        up1 = assignImage("/npc/prost_up_1");
+        up2 = assignImage("/npc/prost_up_2");
+        down1 = assignImage("/npc/prost_down_1");
+        down2 = assignImage("/npc/prost_down_2");
+        left1 = assignImage("/npc/prost_left_1");
+        left2 = assignImage("/npc/prost_left_2");
+        right1 = assignImage("/npc/prost_right_1");
+        right2 = assignImage("/npc/prost_right_2");
 
     }
 
@@ -59,6 +44,8 @@ public class Worker extends Entity implements NPC {
             image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            System.out.println("Assigning image successful" + path + ".png");
         }
         return image;
 
@@ -87,33 +74,43 @@ public class Worker extends Entity implements NPC {
         }
     }
 
-    public void setDialogueMessage() {
-        if (LevelManager.getLevelNumber() == 1) {
-            System.out.println("Dialogue for Level 1");
-            dialogues[0] = "See the slot machines around here? \n If you put enough chips into them,\n they will eventually pay out.";
-            dialogues[1] = "Come back challenge me when you are ready.";
-            dialogues[2] = "Are you ready to take me on? (Y/N)";
-        } else if (LevelManager.getLevelNumber() == 2) {
-            System.out.println("Dialogue for Level 2");
-            dialogues[0] = "I see you have made it this far. \n I am impressed.";
-            dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
-            dialogues[2] = "Well, just get laid and come back to me.";
-        }
-    }
-
     @Override
     public void talk() {
-        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
-        this.turnEntity(gamePanel.player.direction);
-        dialogueIndex++;
-        if (dialogues[dialogueIndex] == null) {
-            dialogueIndex = 0;
-        }
+        super.talk();
+    }
+
+    public void setDialogueMessage() {
+        dialogues[0] = "Hello there. I am a prostitute. \n I can help you with your needs.";
+        dialogues[1] = "This place is fcked up. You need to get \n out of here. You need to gamble\n your way out.";
+        dialogues[2] = "You will need to finish a task in the room to get a chance \nto challenge the room master.";
+        dialogues[3] = "You will need to beat the room master to advance.";
     }
 
     @Override
     public void move() {
-        actionCounter = 0;
+        int i;
+
+        if (actionCounter < ACTION_DELAY) {
+            actionCounter++;
+
+        } else {
+            i = Entity.random.nextInt(4);
+
+            if (i == 0) {
+                direction = "up";
+                worldY -= speed;
+            } else if (i == 1) {
+                direction = "down";
+                worldY += speed;
+            } else if (i == 2) {
+                direction = "left";
+                worldX -= speed;
+            } else if (i == 3) {
+                direction = "right";
+                worldX += speed;
+            }
+            actionCounter = 0;
+        }
     }
 
 }

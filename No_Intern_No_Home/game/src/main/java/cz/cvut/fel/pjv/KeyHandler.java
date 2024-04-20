@@ -49,6 +49,7 @@ public class KeyHandler implements KeyListener {
             }
         } else if (gamePanel.getGameState() == GamePanel.dialogueScreen) {
             if (code == KeyEvent.VK_ESCAPE) {
+                interact = false;
                 gamePanel.changeGameState(GamePanel.gameScreen);
             }
             if (code == KeyEvent.VK_E) {

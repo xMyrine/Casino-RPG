@@ -129,6 +129,7 @@ public class GamePanel extends JPanel implements Runnable {
                     entities[i].update();
                 }
             }
+            npcManager.update();
         } else if (gameState == pauseScreen) {
             // do nothing
         }
