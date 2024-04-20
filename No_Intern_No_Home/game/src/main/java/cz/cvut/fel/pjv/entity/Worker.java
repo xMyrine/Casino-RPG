@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 public class Worker extends Entity implements NPC {
 
     GamePanel gamePanel;
+    private int convIndex = 3;
 
     public Worker(GamePanel panel) {
         this.name = "Worker";
@@ -89,11 +90,23 @@ public class Worker extends Entity implements NPC {
     public void setDialogueMessage() {
         dialogues[0] = "See the slot machines around here? \n If you put enough chips into them,\n they will eventually pay out.";
         dialogues[1] = "Come back challenge me when you are ready.";
+        dialogues[2] = "Are you ready to take me on? (Y/N)";
+        dialogues[3] = "Good luck!";
     }
 
     @Override
     public void talk() {
-        super.talk();
+        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
+        // dialogueIndex++;
+        this.turnEntity(gamePanel.player.direction);
+        if (gamePanel.keyHandler.yes) {
+            convIndex = 4;
+            System.out.println("Yes pressed and convIndex is: " + convIndex);
+        }
+        dialogueIndex++;
+        if (dialogueIndex == convIndex) {
+            dialogueIndex = 0;
+        }
     }
 
     @Override

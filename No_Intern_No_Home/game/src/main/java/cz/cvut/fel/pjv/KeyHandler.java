@@ -53,11 +53,14 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_E) {
                 interact = true;
+                gamePanel.entities[gamePanel.player.npcIndex].talk();
             }
             if (code == KeyEvent.VK_Y) {
                 yes = true;
+                System.out.println(yes);
             } else if (code == KeyEvent.VK_N) {
                 yes = false;
+                System.out.println(yes);
             }
         }
 

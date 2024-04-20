@@ -32,6 +32,8 @@ public class Player extends Entity {
     public final int screenY;
     private float playerLuck = 1f;
 
+    public int npcIndex = 69;
+
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
@@ -130,7 +132,7 @@ public class Player extends Entity {
             int objectIndex = gamePanel.collisionManager.checkObjectCollision(this, true);
             pickUp(objectIndex);
 
-            int npcIndex = gamePanel.collisionManager.checkEntityCollision(this, gamePanel.entities);
+            npcIndex = gamePanel.collisionManager.checkEntityCollision(this, gamePanel.entities);
             interactWithNPC(npcIndex);
 
             if (!collision) {
