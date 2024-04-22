@@ -226,7 +226,7 @@ public class Player extends Entity {
     public void interactWithNPC(int npcIndex) {
         if (npcIndex != 69) {
             if (gamePanel.keyHandler.interact) {
-                gamePanel.gameState = gamePanel.dialogueScreen;
+                gamePanel.gameState = GamePanel.DIALOGUESCREEN;
                 gamePanel.entities[npcIndex].talk();
             }
             gamePanel.keyHandler.interact = false;

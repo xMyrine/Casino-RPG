@@ -13,7 +13,7 @@ public class Sound {
     public Sound() {
 
         try {
-            soundURL[0] = getClass().getResource("/sounds/bg_music.wav");
+            soundURL[0] = getClass().getResource("/sounds/bg_music_1.wav");
             soundURL[1] = getClass().getResource("/sounds/coin.wav");
             soundURL[2] = getClass().getResource("/sounds/drinking_beer.wav");
             soundURL[3] = getClass().getResource("/sounds/slot_machine.wav");

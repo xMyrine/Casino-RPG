@@ -14,7 +14,7 @@ public class SecondLevel extends Level {
     }
 
     private boolean isLuckSexyAndChipsBlaze() {
-        return true; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
+        return false; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
     }
 
     @Override

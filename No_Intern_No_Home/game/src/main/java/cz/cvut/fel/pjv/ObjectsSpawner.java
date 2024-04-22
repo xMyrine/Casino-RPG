@@ -37,8 +37,8 @@ public class ObjectsSpawner {
         // gamePanel.objects[9] = new SlotMachine(gamePanel.tileSize * 19,
         // gamePanel.tileSize * 6);
         //
-        // gamePanel.objects[10] = new SlotMachine(gamePanel.tileSize * 21,
-        // gamePanel.tileSize * 6);
+        gamePanel.objects[10] = new SlotMachine(gamePanel.tileSize * 21,
+                gamePanel.tileSize * 6);
         //
         // gamePanel.objects[11] = new SlotMachine(gamePanel.tileSize * 23,
         // gamePanel.tileSize * 6);
@@ -46,14 +46,14 @@ public class ObjectsSpawner {
         // gamePanel.objects[12] = new SlotMachine(gamePanel.tileSize * 17,
         // gamePanel.tileSize * 9);
         //
-        // gamePanel.objects[13] = new SlotMachine(gamePanel.tileSize * 19,
-        // gamePanel.tileSize * 9);
+        gamePanel.objects[13] = new SlotMachine(gamePanel.tileSize * 19,
+                gamePanel.tileSize * 9);
         //
         // gamePanel.objects[14] = new SlotMachine(gamePanel.tileSize * 21,
         // gamePanel.tileSize * 9);
         //
-        // gamePanel.objects[15] = new SlotMachine(gamePanel.tileSize * 23,
-        // gamePanel.tileSize * 9);
+        gamePanel.objects[15] = new SlotMachine(gamePanel.tileSize * 23,
+                gamePanel.tileSize * 9);
 
         gamePanel.objects[28] = new Beer(gamePanel.tileSize * 5, gamePanel.tileSize * 5);
 

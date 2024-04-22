@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.levels.*;
+import cz.cvut.fel.pjv.minigames.Roulette;
 import cz.cvut.fel.pjv.objects.*;
 
 import java.util.logging.Logger;
@@ -14,11 +15,14 @@ public class LevelManager {
     public boolean levelInProgress = true;
     private static int levelNumber = 1;
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
+    public Roulette roulette;
 
     public LevelManager(GamePanel gamePanel) {
-        this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 2, gamePanel);
+        this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
         this.gamePanel = gamePanel;
         logger.setLevel(Level.WARNING);
+        roulette = new Roulette(gamePanel);
+
     }
 
     /*
@@ -33,6 +37,7 @@ public class LevelManager {
                 levelInProgress = false;
                 levelNumber++;
                 openDoors();
+                gamePanel.gameState = GamePanel.GAMESCREEN;
                 logger.warning("Level number: " + levelNumber);
                 return firstLevel.checkLevelFinished();
             }

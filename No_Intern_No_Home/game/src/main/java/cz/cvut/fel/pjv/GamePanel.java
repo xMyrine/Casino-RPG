@@ -51,10 +51,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     // ! Game State
     public int gameState;
-    protected static final int menuScreen = 0;
-    protected static final int gameScreen = 1;
-    protected static final int pauseScreen = 2;
-    public static final int dialogueScreen = 3;
+    public static final int MENUSCREEN = 0;
+    public static final int GAMESCREEN = 1;
+    public static final int PAUSESCREEN = 2;
+    public static final int DIALOGUESCREEN = 3;
     public static final int MINIGAMESCREEN = 4;
 
     public GamePanel() {
@@ -69,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setUpGame() {
         objectsSpawner.spawnObjects();
         sound.playMusic();
-        gameState = gameScreen;
+        gameState = MENUSCREEN;
         npcManager.spawnNPC();
         Entity.getGamePanelInstance(this);
     }
@@ -121,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable {
      * 
      */
     public void update() {
-        if (gameState == gameScreen) {
+        if (gameState == GAMESCREEN) {
             player.update();
             objectsSpawner.update();
             for (int i = 0; i < entities.length; i++) {
@@ -130,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
             npcManager.update();
-        } else if (gameState == pauseScreen) {
+        } else if (gameState == PAUSESCREEN) {
             // do nothing
         }
 
@@ -142,24 +142,29 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        if (gameState == MENUSCREEN) {
+            ui.draw(g2);
+        } else {
+
+            tileManager.draw(g2);
+
+            for (int i = 0; i < objects.length; i++) {
+                if (objects[i] != null) {
+                    objects[i].draw(g2, this);
+                }
+            }
+
+            player.draw(g2);
+
+            for (int i = 0; i < entities.length; i++) {
+                if (entities[i] != null) {
+                    entities[i].draw(g2);
+                }
+            }
+
+            ui.draw(g2);
+        }
         // draw the game
-        tileManager.draw(g2);
-
-        for (int i = 0; i < objects.length; i++) {
-            if (objects[i] != null) {
-                objects[i].draw(g2, this);
-            }
-        }
-
-        player.draw(g2);
-
-        for (int i = 0; i < entities.length; i++) {
-            if (entities[i] != null) {
-                entities[i].draw(g2);
-            }
-        }
-
-        ui.draw(g2);
 
         g2.dispose();
 

@@ -15,7 +15,7 @@ public class FirstLevel extends Level {
     public FirstLevel(int playerSlotMachineCount, int totalSlotMachineCount, GamePanel gamePanel) {
         this.finishedSlotMachineCount = totalSlotMachineCount;
         this.playerSlotMachineCount = playerSlotMachineCount;
-        this.miniGameFinished = false; // !TO BE CHANGED BECASE I DONT HAVE MINIGAME YET
+        this.miniGameFinished = false;
         this.levelFinished = false;
         logger = Logger.getLogger(FirstLevel.class.getName());
         this.gamePanel = gamePanel;
@@ -37,7 +37,6 @@ public class FirstLevel extends Level {
     public void setMiniGameFinished(boolean miniGameFinished) {
         this.miniGameFinished = miniGameFinished;
         gamePanel.levelManager.checkLevelFinished();
-        System.out.println("Mini game finished: " + miniGameFinished);
     }
 
     @Override
