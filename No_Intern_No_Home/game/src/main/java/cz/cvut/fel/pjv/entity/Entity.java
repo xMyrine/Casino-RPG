@@ -33,7 +33,7 @@ public abstract class Entity {
     protected static final int ACTION_DELAY = 120;
     protected static Logger logger;
 
-    protected String dialogues[] = new String[30];
+    protected String dialogues[] = new String[20];
     protected int dialogueIndex = 0;
 
     public static void getGamePanelInstance(GamePanel gP) {

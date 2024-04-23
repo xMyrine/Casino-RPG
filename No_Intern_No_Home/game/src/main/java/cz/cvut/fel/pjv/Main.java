@@ -28,7 +28,7 @@ public class Main {
         window.add(gamePanel);
         int desiredWidth = gamePanel.screenWidth;
         int desiredHeight = gamePanel.screenHeight;
-        window.pack(); // so I can see the game
+        window.pack(); // so I can see the gam e
         window.setLocationRelativeTo(null);
         window.setSize(desiredWidth, desiredHeight);
         window.setVisible(true);

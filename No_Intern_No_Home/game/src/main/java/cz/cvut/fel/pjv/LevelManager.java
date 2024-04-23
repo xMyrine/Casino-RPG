@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 public class LevelManager {
     public FirstLevel firstLevel;
+    public SecondLevel secondLevel;
     public GamePanel gamePanel;
     private boolean firstLevelMessage = false;
     private boolean secondLevelMessage = false;
@@ -19,6 +20,7 @@ public class LevelManager {
 
     public LevelManager(GamePanel gamePanel) {
         this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
+        this.secondLevel = new SecondLevel(gamePanel);
         this.gamePanel = gamePanel;
         logger.setLevel(Level.WARNING);
         roulette = new Roulette(gamePanel);
@@ -42,7 +44,6 @@ public class LevelManager {
                 return firstLevel.checkLevelFinished();
             }
         } else if (levelNumber == 2) {
-            SecondLevel secondLevel = new SecondLevel(gamePanel);
             levelInProgress = true;
             if (secondLevel.checkLevelFinished() && !secondLevelMessage) {
                 gamePanel.ui.setAnnounceMessage("Second Level finished");

@@ -22,7 +22,7 @@ public class TileManager {
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
-        InputStream in = getClass().getResourceAsStream("/maps/data_test.txt");
+        InputStream in = getClass().getResourceAsStream("/maps/data_test2.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
         String line;

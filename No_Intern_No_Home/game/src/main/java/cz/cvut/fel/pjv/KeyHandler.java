@@ -1,6 +1,9 @@
 package cz.cvut.fel.pjv;
 
 import java.awt.event.KeyListener;
+
+import cz.cvut.fel.pjv.entity.Prostitute;
+
 import java.awt.event.KeyEvent;
 
 public class KeyHandler implements KeyListener {
@@ -8,7 +11,6 @@ public class KeyHandler implements KeyListener {
     public boolean up, down, left, right;
     private GamePanel gamePanel;
     public boolean interact;
-    public boolean yes;
 
     public KeyHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -43,7 +45,6 @@ public class KeyHandler implements KeyListener {
                 System.exit(0);
             } else if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 2) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
-                gamePanel.ui.command = 0;
             }
 
         } else if (gamePanel.getGameState() == GamePanel.GAMESCREEN) {
@@ -61,6 +62,7 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.PAUSESCREEN);
+                gamePanel.ui.command = 0;
             }
             if (code == KeyEvent.VK_E) {
                 interact = true;
@@ -69,9 +71,25 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
-            if (code == KeyEvent.VK_ENTER) {
+            if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 0) {
                 gamePanel.changeGameState(GamePanel.MENUSCREEN);
             }
+            if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 1) {
+                System.exit(0);
+            }
+            if (code == KeyEvent.VK_W) {
+                gamePanel.ui.command--;
+                if (gamePanel.ui.command < 0) {
+                    gamePanel.ui.command = 1;
+                }
+                gamePanel.ui.command = gamePanel.ui.command % 2;
+            }
+            if (code == KeyEvent.VK_S) {
+                gamePanel.ui.command++;
+                gamePanel.ui.command = gamePanel.ui.command % 2;
+
+            }
+
         } else if (gamePanel.getGameState() == GamePanel.DIALOGUESCREEN) {
             if (code == KeyEvent.VK_ESCAPE) {
                 interact = false;
@@ -81,8 +99,16 @@ public class KeyHandler implements KeyListener {
                 interact = true;
                 gamePanel.entities[gamePanel.player.npcIndex].talk();
             }
-            if (code == KeyEvent.VK_Y) {
+            // ROOM MASTERS
+            if (code == KeyEvent.VK_Y && (gamePanel.player.npcIndex == 1 || gamePanel.player.npcIndex == 2)) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
+                // PROSTITUTE
+            } else if (code == KeyEvent.VK_Y && gamePanel.player.npcIndex == 3) {
+                ((Prostitute) gamePanel.entities[gamePanel.player.npcIndex]).increaseReputation();
+                gamePanel.entities[gamePanel.player.npcIndex].talk();
+            } else if (code == KeyEvent.VK_X && gamePanel.player.npcIndex == 3) {
+                ((Prostitute) gamePanel.entities[gamePanel.player.npcIndex]).decreaseReputation();
+                gamePanel.entities[gamePanel.player.npcIndex].talk();
             } else if (code == KeyEvent.VK_N) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }

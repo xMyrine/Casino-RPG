@@ -22,23 +22,15 @@ public class NPCManager {
 
     private void spawnLevelTwoNPC() {
         gamePanel.entities[2] = new Worker2(this.gamePanel, gamePanel.tileSize * 37, gamePanel.tileSize * 23);
-        gamePanel.entities[3] = new Prostitute(this.gamePanel, gamePanel.tileSize * 36, gamePanel.tileSize * 23);
+        gamePanel.entities[3] = new Prostitute(this.gamePanel, gamePanel.tileSize * 43, gamePanel.tileSize * 23);
     }
 
     public void update() {
         if (LevelManager.getLevelNumber() > currentNPCLevel) {
-            // for (int i = 0; i < gamePanel.entities.length; i++) {
-            // if (gamePanel.entities[i] != null && (!(gamePanel.entities[i] instanceof
-            // IntroNPC)
-            // || !(gamePanel.entities[i] instanceof Worker))) {
-            // gamePanel.entities[i] = null;
-            // }
-            // }
             gamePanel.gameState = GamePanel.GAMESCREEN;
             currentNPCLevel++;
             if (LevelManager.getLevelNumber() == 2 && !level2NPCSpawned) {
                 spawnLevelTwoNPC();
-                System.out.println("Level 2 NPC spawned");
                 level2NPCSpawned = true;
             }
             gamePanel.levelManager.levelInProgress = true;

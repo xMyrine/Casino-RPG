@@ -202,7 +202,14 @@ public class Player extends Entity {
                     }
                     gamePanel.objects[objectIndex] = null;
                     break;
-                case "door":
+                case "chest":
+                    if (gamePanel.objects[objectIndex] instanceof Chest && gamePanel.keyHandler.interact) {
+                        if (((Chest) gamePanel.objects[objectIndex]).open()) {
+                            chipCount += 50;
+                            gamePanel.keyHandler.interact = false;
+                            gamePanel.sound.playMusic(5);
+                        }
+                    }
 
                     break;
                 case "vodka":

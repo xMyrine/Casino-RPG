@@ -43,8 +43,8 @@ public class Worker extends Entity implements NPC {
 
         up1 = assignImage("/npc/guy_up_1");
         up2 = assignImage("/npc/guy_up_1");
-        down1 = assignImage("/npc/guy_down_1");
-        down2 = assignImage("/npc/guy_down_1");
+        down1 = assignImage("/npc/worker");
+        down2 = assignImage("/npc/worker");
         left1 = assignImage("/npc/wizard_left_1");
         left2 = assignImage("/npc/wizard_left_1");
         right1 = assignImage("/npc/wizard_right_1");

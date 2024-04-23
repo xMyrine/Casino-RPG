@@ -80,27 +80,7 @@ public class UI {
                 }
             }
         } else {
-            g.setFont(defaultFont);
-            g.setColor(Color.WHITE);
-            g.drawImage(chipImage, 0, 0, 40, 40, null);
-            g.drawString("" + gamePanel.player.getChipCount(), xStatsTextOffset,
-                    yStatsTextOffset);
-            g.drawString("Luck: " + gamePanel.player.getPlayerLuck() * 100 + "%", 0,
-                    yStatsTextOffset * 2);
-
-            if (announceMessage) {
-                g.setFont(g.getFont().deriveFont(50.0f));
-                g.drawString(message, gamePanel.screenWidth / 2 - 100, gamePanel.screenHeight
-                        / 2);
-
-                displayMessageCounter++;
-
-                if (displayMessageCounter > announceMessageDuration) {
-                    announceMessage = false;
-                    displayMessageCounter = 0;
-                    message = "";
-                }
-            }
+            drawStats();
 
         }
     }
@@ -276,11 +256,36 @@ public class UI {
             g.drawImage(chipImage, gamePanel.tileSize * 8 - 110, gamePanel.tileSize * 6 - 25, 30, 30, null);
         }
 
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 20.0f));
+        g.setColor(Color.BLACK);
+        g.drawString("Disclaimer: Gambling can be addictive. Please play responsibly.", gamePanel.tileSize * 2,
+                gamePanel.tileSize * 11);
+
     }
 
     private void drawPause() {
+        g.setColor(new Color(0, 0, 0, 200));
+        g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
+        g.setFont(g.getFont().deriveFont(80.0f));
+        g.setColor(Color.WHITE);
+        g.drawString("GAME PAUSED", gamePanel.tileSize * 2 + 30, gamePanel.tileSize * 3);
+        g.setFont(g.getFont().deriveFont(20.0f));
+        g.drawString("Press ESC to resume", 0, gamePanel.tileSize);
+
         g.setFont(g.getFont().deriveFont(50.0f));
-        g.drawString("PAUSED", gamePanel.screenWidth / 2, gamePanel.screenHeight / 2);
+        if (command == 0) {
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.WHITE);
+        }
+        g.drawString("Main Menu", gamePanel.tileSize * 5 + 24, gamePanel.tileSize * 4 + 20);
+        if (command == 1) {
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.WHITE);
+        }
+        g.drawString("Exit", gamePanel.tileSize * 7, gamePanel.tileSize * 5 + 20);
+
     }
 
     private void drawDialogue() {
