@@ -24,7 +24,7 @@ public class Player extends Entity {
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
-    private int chipCount = 100;
+    private int chipCount = 500;
     private int slotMachineCount = 0;
     private Random random = new Random();
 

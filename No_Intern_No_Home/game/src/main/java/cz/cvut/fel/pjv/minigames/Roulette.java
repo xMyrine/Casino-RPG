@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.minigames;
 
 import cz.cvut.fel.pjv.GamePanel;
 
-public class Roulette extends Minigame {
+public class Roulette {
 
     private int winningNumber;
     public int playersNumber;
@@ -24,7 +24,6 @@ public class Roulette extends Minigame {
         spin(bettingNumber);
     }
 
-    @Override
     public boolean end() {
         gamePanel.levelManager.firstLevel.setMiniGameFinished(completed);
         return completed;
@@ -54,13 +53,16 @@ public class Roulette extends Minigame {
         if (playersNumber == RED && winningNumber % 2 == 0) {
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * bet);
             completed = true;
+            gamePanel.ui.setAnnounceMessage("You won " + 2 * bet + " chips");
             end();
         } else if (playersNumber == BLACK && winningNumber % 2 != 0) {
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * bet);
             completed = true;
+            gamePanel.ui.setAnnounceMessage("You won " + 2 * bet + " chips");
             end();
         } else if (playersNumber == winningNumber) {
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 36 * bet);
+            gamePanel.ui.setAnnounceMessage("You won " + 36 * bet + " chips");
             completed = true;
             end();
         }
@@ -92,12 +94,6 @@ public class Roulette extends Minigame {
 
     public void setPlayersNumber(int playersNumber) {
         this.playersNumber = playersNumber;
-    }
-
-    @Override
-    public void start() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'start'");
     }
 
 }

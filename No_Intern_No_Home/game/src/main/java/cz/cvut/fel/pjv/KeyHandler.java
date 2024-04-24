@@ -28,22 +28,22 @@ public class KeyHandler implements KeyListener {
 
         if (gamePanel.getGameState() == GamePanel.MENUSCREEN) {
             if (code == KeyEvent.VK_W) {
-                gamePanel.ui.command--;
-                if (gamePanel.ui.command < 0) {
-                    gamePanel.ui.command = 2;
+                UI.command--;
+                if (UI.command < 0) {
+                    UI.command = 2;
                 }
-                gamePanel.ui.command = gamePanel.ui.command % 3;
+                UI.command = UI.command % 3;
             }
             if (code == KeyEvent.VK_S) {
-                gamePanel.ui.command++;
-                gamePanel.ui.command = gamePanel.ui.command % 3;
+                UI.command++;
+                UI.command = UI.command % 3;
 
             }
-            if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 0) {
+            if (code == KeyEvent.VK_ENTER && UI.command == 0) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
-            } else if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 1) {
+            } else if (code == KeyEvent.VK_ENTER && UI.command == 1) {
                 System.exit(0);
-            } else if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 2) {
+            } else if (code == KeyEvent.VK_ENTER && UI.command == 2) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
             }
 
@@ -62,7 +62,7 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.PAUSESCREEN);
-                gamePanel.ui.command = 0;
+                UI.command = 0;
             }
             if (code == KeyEvent.VK_E) {
                 interact = true;
@@ -71,22 +71,22 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
-            if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 0) {
+            if (code == KeyEvent.VK_ENTER && UI.command == 0) {
                 gamePanel.changeGameState(GamePanel.MENUSCREEN);
             }
-            if (code == KeyEvent.VK_ENTER && gamePanel.ui.command == 1) {
+            if (code == KeyEvent.VK_ENTER && UI.command == 1) {
                 System.exit(0);
             }
             if (code == KeyEvent.VK_W) {
-                gamePanel.ui.command--;
-                if (gamePanel.ui.command < 0) {
-                    gamePanel.ui.command = 1;
+                UI.command--;
+                if (UI.command < 0) {
+                    UI.command = 1;
                 }
-                gamePanel.ui.command = gamePanel.ui.command % 2;
+                UI.command = UI.command % 2;
             }
             if (code == KeyEvent.VK_S) {
-                gamePanel.ui.command++;
-                gamePanel.ui.command = gamePanel.ui.command % 2;
+                UI.command++;
+                UI.command = UI.command % 2;
 
             }
 
@@ -113,35 +113,54 @@ public class KeyHandler implements KeyListener {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
             // ROULETTE
-        } else if (gamePanel.getGameState() == GamePanel.MINIGAMESCREEN
-                && gamePanel.levelManager.getLevelNumber() >= 1 && gamePanel.player.npcIndex == 1) {
+        } else if (gamePanel.getGameState() == GamePanel.MINIGAMESCREEN) {
+            if (gamePanel.levelManager.getLevelNumber() >= 1 && gamePanel.player.npcIndex == 1) {
+                if (code == KeyEvent.VK_W) {
+                    UI.command--;
+                    if (UI.command < 0) {
+                        UI.command = 38;
+
+                    }
+                }
+                if (code == KeyEvent.VK_S) {
+                    UI.command++;
+                    UI.command = UI.command % 38;
+                }
+                if (code == KeyEvent.VK_E) {
+                    gamePanel.levelManager.roulette.bet();
+                }
+                if (code == KeyEvent.VK_Q) {
+                    gamePanel.levelManager.roulette.reduceBet();
+                }
+                if (code == KeyEvent.VK_ENTER
+                        && (gamePanel.levelManager.roulette.getBet() <= gamePanel.player.getChipCount())) {
+                    gamePanel.levelManager.roulette.startR(UI.command);
+                }
+
+            } else { // !Add blackjack statement
+                if (code == KeyEvent.VK_W) {
+                    UI.command--;
+                    if (UI.command < 0) {
+                        UI.command = 1;
+                    }
+                }
+                if (code == KeyEvent.VK_S) {
+                    UI.command++;
+                    UI.command = UI.command % 2;
+                }
+                if (code == KeyEvent.VK_ENTER && UI.command == 0
+                        && gamePanel.levelManager.blackjack.getHitEnabled()) {
+                    gamePanel.levelManager.blackjack.hit();
+                } else if (code == KeyEvent.VK_ENTER && UI.command == 1) {
+                    gamePanel.levelManager.blackjack.stand();
+                }
+                if (code == KeyEvent.VK_R) {
+                    gamePanel.levelManager.blackjack.reset();
+                }
+            }
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
-            if (code == KeyEvent.VK_W) {
-                gamePanel.ui.command--;
-                if (gamePanel.ui.command < 0) {
-                    gamePanel.ui.command = 38;
-                }
-            }
-            if (code == KeyEvent.VK_S) {
-                gamePanel.ui.command++;
-                if (gamePanel.ui.command > 38) {
-                    gamePanel.ui.command = 0;
-                }
-                System.out.println(gamePanel.ui.command);
-            }
-            if (code == KeyEvent.VK_E) {
-                gamePanel.levelManager.roulette.bet();
-            }
-            if (code == KeyEvent.VK_Q) {
-                gamePanel.levelManager.roulette.reduceBet();
-            }
-            if (code == KeyEvent.VK_ENTER
-                    && (gamePanel.levelManager.roulette.getBet() <= gamePanel.player.getChipCount())) {
-                gamePanel.levelManager.roulette.startR(gamePanel.ui.command);
-            }
-
         }
 
     }

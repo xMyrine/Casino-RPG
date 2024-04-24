@@ -24,7 +24,7 @@ public class SecondLevel extends Level {
 
     @Override
     public boolean checkLevelFinished() {
-        if (gotLaid && miniGameFinished) {
+        if (gotLaid && gamePanel.levelManager.blackjack.getFinished()) {
             return true;
         }
         return false;

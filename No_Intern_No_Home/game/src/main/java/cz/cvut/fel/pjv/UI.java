@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
+import cz.cvut.fel.pjv.minigames.assets.Card;
 import cz.cvut.fel.pjv.objects.*;
 
 public class UI {
@@ -18,13 +19,14 @@ public class UI {
     private int yStatsTextOffset = 33;
     private boolean announceMessage = false;
     public String message = "";
-    private static final int announceMessageDuration = 120;
+    private static final int ANNOUNCEMESSAGEDURATION = 120;
     private int displayMessageCounter = 0;
     private String dialogueText = "...";
     public static int command = 0;
 
     BufferedImage chipImage;
-    BufferedImage TitleImage;
+    BufferedImage titleImage;
+    BufferedImage crossedButton;
 
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -32,7 +34,8 @@ public class UI {
         Chip chip = new Chip();
         chipImage = chip.image;
         try {
-            TitleImage = ImageIO.read(getClass().getResourceAsStream("/icons/TitleImage.jpg"));
+            titleImage = ImageIO.read(getClass().getResourceAsStream("/icons/TitleImage.jpg"));
+            crossedButton = ImageIO.read(getClass().getResourceAsStream("/buttons/cross_button.png"));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error loading image");
@@ -67,22 +70,80 @@ public class UI {
         } else if (gamePanel.gameState == GamePanel.MINIGAMESCREEN) {
             drawMinigame();
             if (announceMessage) {
-                g.setFont(g.getFont().deriveFont(50.0f));
-                g.drawString(message, gamePanel.screenWidth / 2 - 100, gamePanel.screenHeight
-                        / 2);
-
-                displayMessageCounter++;
-
-                if (displayMessageCounter > announceMessageDuration) {
-                    announceMessage = false;
-                    displayMessageCounter = 0;
-                    message = "";
-                }
+                announceMessage();
             }
         } else {
             drawStats();
 
         }
+    }
+
+    private void drawBlackjack() {
+        g.setColor(new Color(123, 157, 134));
+        g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
+
+        g.drawImage(gamePanel.levelManager.blackjack.hitButton, gamePanel.tileSize * 3, gamePanel.tileSize * 9,
+                gamePanel.tileSize * 5, gamePanel.tileSize * 2, null);
+
+        g.drawImage(gamePanel.levelManager.blackjack.standButton, gamePanel.tileSize * 8, gamePanel.tileSize * 9,
+                gamePanel.tileSize * 5, gamePanel.tileSize * 2, null);
+
+        if (command == 0 && gamePanel.levelManager.blackjack.getHitEnabled()) {
+            g.drawImage(chipImage, gamePanel.tileSize * 3 + 10, gamePanel.tileSize * 9 + 10, 40, 40, null);
+        } else if (command == 1 && gamePanel.levelManager.blackjack.getStandEnabled()) {
+            g.drawImage(chipImage, gamePanel.tileSize * 8 + 10, gamePanel.tileSize * 9 + 10, 40, 40, null);
+        }
+
+        // crossing out the hit button if it is not enabled
+        if (!gamePanel.levelManager.blackjack.getHitEnabled()) {
+            g.drawImage(crossedButton, gamePanel.tileSize * 3, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
+                    gamePanel.tileSize * 2, null);
+        }
+        // crossing out the stand button if it is not enabled
+        if (!gamePanel.levelManager.blackjack.getStandEnabled()) {
+            g.drawImage(crossedButton, gamePanel.tileSize * 8, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
+                    gamePanel.tileSize * 2, null);
+        }
+        if (gamePanel.levelManager.blackjack.getStandEnabled()) {
+            g.drawImage(gamePanel.levelManager.blackjack.cardBack, gamePanel.tileSize * 1, 24,
+                    Card.cardWidth, Card.cardHeight, null);
+        } else {
+            try {
+                BufferedImage img = ImageIO.read(
+                        getClass().getResourceAsStream(gamePanel.levelManager.blackjack.hiddenCard.getImagePath()));
+                g.drawImage(img, gamePanel.tileSize * 1, 24, Card.cardWidth, Card.cardHeight, null);
+            } catch (Exception e) {
+                System.err.println("Error loading Card image");
+            }
+        }
+
+        try {
+            // Dealers Hand
+            for (int i = 0; i < gamePanel.levelManager.blackjack.dealerHand.size(); i++) {
+                Card card = gamePanel.levelManager.blackjack.dealerHand.get(i);
+                BufferedImage img = ImageIO.read(getClass().getResourceAsStream(card.getImagePath()));
+                g.drawImage(img, ((Card.cardWidth) * (i + 1)) + gamePanel.tileSize, 24, Card.cardWidth,
+                        Card.cardHeight,
+                        null);
+            }
+
+            // Players Hand
+            for (int i = 0; i < gamePanel.levelManager.blackjack.playerHand.size(); i++) {
+                Card card = gamePanel.levelManager.blackjack.playerHand.get(i);
+                BufferedImage img = ImageIO.read(getClass().getResourceAsStream(card.getImagePath()));
+                g.drawImage(img, ((Card.cardWidth) * (i)) + gamePanel.tileSize, gamePanel.tileSize * 5,
+                        Card.cardWidth, Card.cardHeight, null);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading Card image");
+        }
+
+        if (!gamePanel.levelManager.blackjack.getStandEnabled() && !gamePanel.levelManager.blackjack.getHitEnabled()) {
+            g.setColor(Color.WHITE);
+            g.setFont(g.getFont().deriveFont(Font.BOLD, 50.0f));
+            g.drawString("Press R to restart the game", gamePanel.tileSize * 1, gamePanel.tileSize * 8);
+        }
+
     }
 
     private void drawRoulette() {
@@ -189,6 +250,8 @@ public class UI {
         if (gamePanel.levelManager.getLevelNumber() >= 1
                 && gamePanel.player.npcIndex == 1) {
             drawRoulette();
+        } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
+            drawBlackjack();
         }
     }
 
@@ -200,16 +263,21 @@ public class UI {
         g.drawString("Luck: " + gamePanel.player.getPlayerLuck() * 100 + "%", 0, yStatsTextOffset * 2);
 
         if (announceMessage) {
-            g.setFont(g.getFont().deriveFont(50.0f));
-            g.drawString(message, gamePanel.screenWidth / 2 - 100, gamePanel.screenHeight / 2);
+            announceMessage();
+        }
+    }
 
-            displayMessageCounter++;
+    private void announceMessage() {
+        g.setColor(Color.YELLOW);
+        g.setFont(g.getFont().deriveFont(50.0f));
+        g.drawString(message, gamePanel.screenWidth / 2 - 100, gamePanel.screenHeight / 2);
 
-            if (displayMessageCounter > announceMessageDuration) {
-                announceMessage = false;
-                displayMessageCounter = 0;
-                message = "";
-            }
+        displayMessageCounter++;
+
+        if (displayMessageCounter > ANNOUNCEMESSAGEDURATION) {
+            announceMessage = false;
+            displayMessageCounter = 0;
+            message = "";
         }
     }
 
@@ -229,7 +297,7 @@ public class UI {
         g.setColor(Color.decode("#DC143C"));
         g.drawString(title, x, gamePanel.tileSize * 2);
 
-        g.drawImage(TitleImage, gamePanel.tileSize * 2, gamePanel.screenHeight / 2 - 100,
+        g.drawImage(titleImage, gamePanel.tileSize * 2, gamePanel.screenHeight / 2 - 100,
                 gamePanel.tileSize * 3, gamePanel.tileSize * 3, null);
 
         g.setFont(g.getFont().deriveFont(Font.BOLD, 70.0f));
