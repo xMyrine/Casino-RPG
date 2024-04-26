@@ -17,7 +17,7 @@ public class Worker2 extends Entity implements NPC {
     public Worker2(GamePanel panel) {
         this.name = "Worker";
         this.gamePanel = panel;
-        this.speed = 0;
+        this.speed = 1;
         this.direction = "left";
         this.worldX = 10;
         this.worldY = 10;
@@ -29,7 +29,7 @@ public class Worker2 extends Entity implements NPC {
     public Worker2(GamePanel panel, int x, int y) {
         this.name = "Worker";
         this.gamePanel = panel;
-        this.speed = 0;
+        this.speed = 1;
         this.direction = "left";
         this.worldX = x;
         this.worldY = y;
@@ -40,14 +40,14 @@ public class Worker2 extends Entity implements NPC {
 
     public void getNPCImage() {
 
-        up1 = assignImage("/npc/guy_up_1");
-        up2 = assignImage("/npc/guy_up_1");
-        down1 = assignImage("/npc/guy_down_1");
-        down2 = assignImage("/npc/guy_down_1");
-        left1 = assignImage("/npc/wizard_left_1");
-        left2 = assignImage("/npc/wizard_left_1");
-        right1 = assignImage("/npc/wizard_right_1");
-        right2 = assignImage("/npc/wizard_right_1");
+        up1 = assignImage("/npc/worker2_up_1");
+        up2 = assignImage("/npc/worker2_up_2");
+        down1 = assignImage("/npc/worker2_down_1");
+        down2 = assignImage("/npc/worker2_down_2");
+        left1 = assignImage("/npc/worker2_left_1");
+        left2 = assignImage("/npc/worker2_left_2");
+        right1 = assignImage("/npc/worker2_right_1");
+        right2 = assignImage("/npc/worker2_right_2");
 
     }
 
@@ -87,17 +87,12 @@ public class Worker2 extends Entity implements NPC {
     }
 
     public void setDialogueMessage() {
-        if (LevelManager.getLevelNumber() == 1) {
-            System.out.println("Dialogue for Level 1");
-            dialogues[0] = "See the slot machines around here? \n If you put enough chips into them,\n they will eventually pay out.";
-            dialogues[1] = "Come back challenge me when you are ready.";
-            dialogues[2] = "Are you ready to take me on? (Y/N)";
-        } else if (LevelManager.getLevelNumber() == 2) {
-            System.out.println("Dialogue for Level 2");
-            dialogues[0] = "I see you have made it this far. \n I am impressed.";
-            dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
-            dialogues[2] = "Well, just get laid and come back to me.";
-        }
+
+        System.out.println("Dialogue for Level 2");
+        dialogues[0] = "I see you have made it this far. \n I am impressed.";
+        dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
+        dialogues[2] = "Well, just get laid and come back to me.";
+
     }
 
     @Override
@@ -112,6 +107,30 @@ public class Worker2 extends Entity implements NPC {
 
     @Override
     public void move() {
-        actionCounter = 0;
+
+        int i;
+
+        if (actionCounter < ACTION_DELAY) {
+            actionCounter++;
+
+        } else {
+            i = Entity.random.nextInt(4);
+
+            if (i == 0) {
+                direction = "up";
+                worldY -= speed;
+            } else if (i == 1) {
+                direction = "down";
+                worldY += speed;
+            } else if (i == 2) {
+                direction = "left";
+                worldX -= speed;
+            } else if (i == 3) {
+                direction = "right";
+                worldX += speed;
+            }
+            actionCounter = 0;
+
+        }
     }
 }

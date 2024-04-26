@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.Inventory;
 import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.LevelManager;
 import cz.cvut.fel.pjv.Toolbox;
@@ -24,6 +25,9 @@ public class Player extends Entity {
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
+    public Inventory inventory;
+    private boolean showInventory = false;
+
     private int chipCount = 500;
     private int slotMachineCount = 0;
     private Random random = new Random();
@@ -45,11 +49,22 @@ public class Player extends Entity {
         collisionAreaDefaultX = collisionArea.x;
         collisionAreaDefaultY = collisionArea.y;
 
+        inventory = new Inventory(this);
+
         logger = Logger.getLogger(Player.class.getName());
         logger.setLevel(Level.WARNING);
 
         setDefaultValues();
         getPlayerImage();
+    }
+
+    public void toggleInventory() {
+        showInventory = !showInventory;
+        System.out.println("Inventory is visible: " + showInventory);
+    }
+
+    public boolean isInventoryVisible() {
+        return showInventory;
     }
 
     public int getSlotMachineCount() {
@@ -81,8 +96,21 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gamePanel.tileSize * 2;
         worldY = gamePanel.tileSize * 2;
-        this.speed = 10;
+        this.speed = 15;
         direction = "down"; // default direction
+    }
+
+    public void setSpeed(int speed) {
+        if (speed < 0) {
+            this.speed = 0;
+        } else {
+            this.speed = speed;
+        }
+
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void getPlayerImage() {

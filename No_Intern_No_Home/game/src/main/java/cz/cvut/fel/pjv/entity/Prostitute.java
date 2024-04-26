@@ -46,8 +46,6 @@ public class Prostitute extends Entity implements NPC {
             image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            System.out.println("Assigning image successful" + path + ".png");
         }
         return image;
 
@@ -93,7 +91,7 @@ public class Prostitute extends Entity implements NPC {
             reputation = 0;
             System.out.println("Reputation reset to: " + reputation);
         }
-        if (dialogueIndex == 17) {
+        if (dialogueIndex == 16) {
             calculateRizz();
             if (rizz > 1.75) {
                 dialogueIndex++;

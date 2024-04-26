@@ -34,7 +34,6 @@ public class LevelManager {
      * Check if the first level is finished
      */
     public boolean checkLevelFinished() {
-        System.out.println("Level number: " + levelNumber);
         if (levelNumber == 1) {
             if (firstLevel.checkLevelFinished() && !firstLevelMessage) {
                 gamePanel.ui.setAnnounceMessage("First Level finished");

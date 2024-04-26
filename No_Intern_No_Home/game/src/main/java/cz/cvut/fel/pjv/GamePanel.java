@@ -56,6 +56,8 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int PAUSESCREEN = 2;
     public static final int DIALOGUESCREEN = 3;
     public static final int MINIGAMESCREEN = 4;
+    public static final int CONTROLSSCREEN = 5;
+    public static final int SHOPSCREEN = 6;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -184,12 +186,7 @@ public class GamePanel extends JPanel implements Runnable {
         return count;
     }
 
-    protected void changeGameState(int i) {
-        // if (gameState == gameScreen) {
-        // gameState = i;
-        // } else if (gameState == pauseScreen) {
-        // gameState = i;
-        // }
+    public void changeGameState(int i) {
         gameState = i;
     }
 }

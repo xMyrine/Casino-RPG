@@ -30,10 +30,6 @@ public class Roulette {
     }
 
     private void spin(int bettingNumber) {
-        // if (gamePanel.player.getChipCount() < bet) {
-        // validBet = false;
-        // return;
-        // }
         gamePanel.player.setChipCount(gamePanel.player.getChipCount() - bet);
         winningNumber = (int) (Math.random() * 37);
         validBet = true;

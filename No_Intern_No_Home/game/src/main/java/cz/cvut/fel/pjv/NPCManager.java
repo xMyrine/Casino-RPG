@@ -1,8 +1,5 @@
 package cz.cvut.fel.pjv;
 
-import cz.cvut.fel.pjv.entity.IntroNPC;
-import cz.cvut.fel.pjv.entity.Prostitute;
-import cz.cvut.fel.pjv.entity.Worker;
 import cz.cvut.fel.pjv.entity.*;
 
 public class NPCManager {
@@ -17,11 +14,12 @@ public class NPCManager {
 
     public void spawnNPC() {
         gamePanel.entities[0] = new IntroNPC(this.gamePanel, 100, 200);
-        gamePanel.entities[1] = new Worker(this.gamePanel, gamePanel.tileSize * 23, gamePanel.tileSize * 12);
+        gamePanel.entities[1] = new Worker(this.gamePanel, gamePanel.tileSize * 19, gamePanel.tileSize * 12);
+        gamePanel.entities[4] = new Shopkeeper(this.gamePanel, gamePanel.tileSize * 1, gamePanel.tileSize * 12);
     }
 
     private void spawnLevelTwoNPC() {
-        gamePanel.entities[2] = new Worker2(this.gamePanel, gamePanel.tileSize * 37, gamePanel.tileSize * 23);
+        gamePanel.entities[2] = new Worker2(this.gamePanel, gamePanel.tileSize * 36, gamePanel.tileSize * 20);
         gamePanel.entities[3] = new Prostitute(this.gamePanel, gamePanel.tileSize * 43, gamePanel.tileSize * 23);
     }
 

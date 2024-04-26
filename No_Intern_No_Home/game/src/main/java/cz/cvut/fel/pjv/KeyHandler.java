@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv;
 import java.awt.event.KeyListener;
 
 import cz.cvut.fel.pjv.entity.Prostitute;
+import cz.cvut.fel.pjv.entity.Shopkeeper;
 
 import java.awt.event.KeyEvent;
 
@@ -67,6 +68,9 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_E) {
                 interact = true;
             }
+            if (code == KeyEvent.VK_I) {
+                gamePanel.player.toggleInventory();
+            }
         } else if (gamePanel.getGameState() == GamePanel.PAUSESCREEN) {
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
@@ -75,18 +79,21 @@ public class KeyHandler implements KeyListener {
                 gamePanel.changeGameState(GamePanel.MENUSCREEN);
             }
             if (code == KeyEvent.VK_ENTER && UI.command == 1) {
+                gamePanel.changeGameState(GamePanel.CONTROLSSCREEN);
+            }
+            if (code == KeyEvent.VK_ENTER && UI.command == 2) {
                 System.exit(0);
             }
             if (code == KeyEvent.VK_W) {
                 UI.command--;
                 if (UI.command < 0) {
-                    UI.command = 1;
+                    UI.command = 2;
                 }
-                UI.command = UI.command % 2;
+                UI.command = UI.command % 3;
             }
             if (code == KeyEvent.VK_S) {
                 UI.command++;
-                UI.command = UI.command % 2;
+                UI.command = UI.command % 3;
 
             }
 
@@ -113,6 +120,30 @@ public class KeyHandler implements KeyListener {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
             // ROULETTE
+        } else if (gamePanel.getGameState() == GamePanel.SHOPSCREEN) {
+            if (code == KeyEvent.VK_W) {
+                UI.command--;
+                if (UI.command < 0) {
+                    UI.command = 2;
+                }
+                UI.command = UI.command % 3;
+            }
+            if (code == KeyEvent.VK_S) {
+                UI.command++;
+                UI.command = UI.command % 3;
+
+            }
+            if (code == KeyEvent.VK_ESCAPE) {
+                gamePanel.changeGameState(GamePanel.GAMESCREEN);
+            }
+            if (code == KeyEvent.VK_ENTER) {
+                ((Shopkeeper) gamePanel.entities[4]).executeCommand(UI.command);
+                System.out.println(UI.command);
+            }
+        } else if (gamePanel.getGameState() == GamePanel.CONTROLSSCREEN) {
+            if (code == KeyEvent.VK_ESCAPE) {
+                gamePanel.changeGameState(GamePanel.PAUSESCREEN);
+            }
         } else if (gamePanel.getGameState() == GamePanel.MINIGAMESCREEN) {
             if (gamePanel.levelManager.getLevelNumber() >= 1 && gamePanel.player.npcIndex == 1) {
                 if (code == KeyEvent.VK_W) {
@@ -137,7 +168,7 @@ public class KeyHandler implements KeyListener {
                     gamePanel.levelManager.roulette.startR(UI.command);
                 }
 
-            } else { // !Add blackjack statement
+            } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
                 if (code == KeyEvent.VK_W) {
                     UI.command--;
                     if (UI.command < 0) {
