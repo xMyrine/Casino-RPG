@@ -20,7 +20,7 @@ public class Shopkeeper extends Entity {
     public Shopkeeper(GamePanel panel) {
         this.name = "Shopkeeper";
         this.gamePanel = panel;
-        this.speed = 0;
+        this.speed = 1;
         this.direction = "left";
         this.worldX = 10;
         this.worldY = 10;
@@ -32,7 +32,7 @@ public class Shopkeeper extends Entity {
     public Shopkeeper(GamePanel panel, int x, int y) {
         this.name = "Shopkeeper";
         this.gamePanel = panel;
-        this.speed = 0;
+        this.speed = 1;
         this.direction = "left";
         this.worldX = x;
         this.worldY = y;
@@ -43,14 +43,14 @@ public class Shopkeeper extends Entity {
 
     public void getNPCImage() {
 
-        up1 = assignImage("/npc/worker1_up_1");
-        up2 = assignImage("/npc/worker1_up_2");
-        down1 = assignImage("/npc/worker1_down_1");
-        down2 = assignImage("/npc/worker1_down_2");
-        left1 = assignImage("/npc/worker1_left_1");
-        left2 = assignImage("/npc/worker1_left_2");
-        right1 = assignImage("/npc/worker1_right_1");
-        right2 = assignImage("/npc/worker1_right_2");
+        up1 = assignImage("/npc/shop_up_1");
+        up2 = assignImage("/npc/shop_up_2");
+        down1 = assignImage("/npc/shop_down_1");
+        down2 = assignImage("/npc/shop_down_2");
+        left1 = assignImage("/npc/shop_left_1");
+        left2 = assignImage("/npc/shop_left_2");
+        right1 = assignImage("/npc/shop_right_1");
+        right2 = assignImage("/npc/shop_right_2");
 
     }
 
@@ -100,7 +100,30 @@ public class Shopkeeper extends Entity {
 
     @Override
     public void move() {
-        actionCounter = 0;
+        int i;
+
+        if (actionCounter < ACTION_DELAY) {
+            actionCounter++;
+
+        } else {
+            i = Entity.random.nextInt(4);
+
+            if (i == 0) {
+                direction = "up";
+                worldY -= speed;
+            } else if (i == 1) {
+                direction = "down";
+                worldY += speed;
+            } else if (i == 2) {
+                direction = "left";
+                worldX -= speed;
+            } else if (i == 3) {
+                direction = "right";
+                worldX += speed;
+            }
+            actionCounter = 0;
+
+        }
 
     }
 

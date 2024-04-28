@@ -88,9 +88,16 @@ public class Worker extends Entity implements NPC {
     }
 
     public void setDialogueMessage() {
-        dialogues[0] = "I see you have made it this far. \n I am impressed.";
-        dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
-        dialogues[2] = "Well, just get laid and come back to me.";
+        dialogues[0] = "The slot machines around here could use some love.\n I'm not a programmer though.";
+        dialogues[1] = "Or if you want to you can just \ngamble with me first.";
+        dialogues[2] = "I'm not very good at it though. I always lose.";
+        dialogues[3] = "Once you are ready to challenge me\n just talk to me again.";
+        dialogues[4] = "We are gonna play roulette. Rules are as follows:\n You can bet on a number or a color.";
+        dialogues[5] = "If you bet on a number and it comes up\n you win 36 times your bet.";
+        dialogues[6] = "If you bet on a color and it comes up\n you win 2 times your bet.";
+        dialogues[7] = "You can adjust your bet with Q/E but beware,\n if you dont pay attention the bet\n might be rising on its own :)";
+        dialogues[8] = "Use W/S to navigate the roulette table and\n press ENTER to place your bet. Good luck!";
+        dialogues[9] = "(Do you wish to challenge this worker?) (Y/N)";
 
     }
 

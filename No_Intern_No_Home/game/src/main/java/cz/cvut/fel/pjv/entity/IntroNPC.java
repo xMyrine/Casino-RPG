@@ -99,9 +99,15 @@ public class IntroNPC extends Entity implements NPC {
 
     public void setDialogueMessage() {
         dialogues[0] = "Ayo, you are new around here. \n Haven't seen you before.";
-        dialogues[1] = "This place is fcked up. You need to get \n out of here. You need to gamble\n your way out.";
-        dialogues[2] = "You will need to finish a task in the room to get a chance \nto challenge the room master.";
-        dialogues[3] = "You will need to beat the room master to advance.";
+        dialogues[1] = "I assume finding work, did not age well for you. \n You are in the right place.";
+        dialogues[2] = "You can earn a hefty amount of money here \nif you play smart.But be careful, the house always wins.";
+        dialogues[3] = "Unless luck is on your side? If you open your \ninventory with I,you can see how much money you have\n and whether luck is on your side ";
+        dialogues[4] = "There are chest around here that you can open. \nThey might contain some money or items.";
+        dialogues[5] = "You can also buy items from the shopkeeper.\nShe is a nice lady, but she is always busy.\nShe has a crazy deal though. If you feel lucky";
+        dialogues[6] = "Craftsman is also around here. He can craft you items \nif you bring him the right materials or enough money.";
+        dialogues[7] = "To enter a new room and unlock more games,\n you need to beat the worker running around here.";
+        dialogues[8] = "He is a tough one, also he might tell you\n to do something around the room as well,\n so make sure to do that.";
+        dialogues[9] = "Oh, who am I? Hmm, Let's just say I am a friend. \nI am here to help you out.";
     }
 
     @Override

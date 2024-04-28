@@ -87,8 +87,6 @@ public class Worker2 extends Entity implements NPC {
     }
 
     public void setDialogueMessage() {
-
-        System.out.println("Dialogue for Level 2");
         dialogues[0] = "I see you have made it this far. \n I am impressed.";
         dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
         dialogues[2] = "Well, just get laid and come back to me.";
