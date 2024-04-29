@@ -18,8 +18,8 @@ import cz.cvut.fel.pjv.objects.Door;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN settings
-    final int originalTileSize = 16; // 16x16 pixels
-    final int scale = 3; // 3x scale
+    public final int originalTileSize = 16; // 16x16 pixels
+    public final int scale = 3; // 3x scale
 
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 16;
