@@ -42,3 +42,15 @@ wshop6.png
 true
 wshop7.png
 true
+wtable1.png
+true
+wtable2.png
+true
+wtable3.png
+true
+wtable4.png
+true
+wwbcarpet.png
+false
+wwcarpet.png
+false

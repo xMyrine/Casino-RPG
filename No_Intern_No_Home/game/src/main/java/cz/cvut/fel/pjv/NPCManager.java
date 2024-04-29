@@ -7,6 +7,7 @@ public class NPCManager {
     GamePanel gamePanel;
     private int currentNPCLevel = 1;
     private boolean level2NPCSpawned = false;
+    private boolean level3NPCSpawned = false;
 
     public NPCManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -23,6 +24,10 @@ public class NPCManager {
         gamePanel.entities[3] = new Prostitute(this.gamePanel, gamePanel.tileSize * 43, gamePanel.tileSize * 23);
     }
 
+    private void spawnLevelThreeNPC() {
+        gamePanel.entities[5] = new PokerManTrainer(this.gamePanel, gamePanel.tileSize * 36, gamePanel.tileSize * 40);
+    }
+
     public void update() {
         if (LevelManager.getLevelNumber() > currentNPCLevel) {
             gamePanel.gameState = GamePanel.GAMESCREEN;
@@ -30,6 +35,10 @@ public class NPCManager {
             if (LevelManager.getLevelNumber() == 2 && !level2NPCSpawned) {
                 spawnLevelTwoNPC();
                 level2NPCSpawned = true;
+            }
+            if (LevelManager.getLevelNumber() == 3 && !level3NPCSpawned) {
+                spawnLevelThreeNPC();
+                level3NPCSpawned = true;
             }
             gamePanel.levelManager.levelInProgress = true;
 
