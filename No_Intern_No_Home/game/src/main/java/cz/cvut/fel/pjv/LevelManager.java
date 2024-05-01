@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.levels.*;
 import cz.cvut.fel.pjv.minigames.Blackjack;
+import cz.cvut.fel.pjv.minigames.Pokermon;
 import cz.cvut.fel.pjv.minigames.Roulette;
 import cz.cvut.fel.pjv.objects.*;
 
@@ -19,6 +20,7 @@ public class LevelManager {
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
     public Roulette roulette;
     public Blackjack blackjack;
+    public Pokermon pokermon;
 
     public LevelManager(GamePanel gamePanel) {
         this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
@@ -27,7 +29,7 @@ public class LevelManager {
         logger.setLevel(Level.WARNING);
         roulette = new Roulette(gamePanel);
         blackjack = new Blackjack(gamePanel);
-
+        pokermon = new Pokermon(gamePanel);
     }
 
     /*

@@ -89,6 +89,9 @@ public class UI {
         }
     }
 
+    /*
+     * Draws the shop screen
+     */
     private void drawShop() {
         g.drawImage(shopScreen, 0, 0, gamePanel.screenWidth, gamePanel.screenHeight - 24, null);
         g.setFont(g.getFont().deriveFont(40.0f));
@@ -112,6 +115,9 @@ public class UI {
         }
     }
 
+    /*
+     * Draws the controls screen
+     */
     public void drawControls() {
         g.setColor(new Color(0, 0, 0, 200));
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
@@ -126,6 +132,9 @@ public class UI {
         g.drawString("Press I to toggle inventory", 0, gamePanel.tileSize * 7);
     }
 
+    /*
+     * Draws a window with a border
+     */
     public void drawInventory() {
         g.setColor(new Color(0, 0, 0, 200));
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
@@ -146,6 +155,81 @@ public class UI {
         g.drawString("Chips:" + gamePanel.player.getChipCount(), gamePanel.tileSize * 8, gamePanel.tileSize * 4);
         g.drawString("Speed:" + gamePanel.player.getSpeed(), gamePanel.tileSize * 8, gamePanel.tileSize * 5);
 
+    }
+
+    /*
+     * Draws a Pokermon minigame
+     */
+    private void drawPokermon() {
+        g.drawImage(gamePanel.levelManager.pokermon.getScreenImage(), 0, 0, gamePanel.screenWidth,
+                gamePanel.screenHeight - 36,
+                null);
+        if (gamePanel.levelManager.pokermon.getMode() == 1) {
+            g.drawImage(gamePanel.levelManager.pokermon.getAttackButtons(), 0, 0, gamePanel.screenWidth,
+                    gamePanel.screenHeight - 36,
+                    null);
+            g.setColor(new Color(0, 0, 0, 200));
+            g.fillRoundRect(gamePanel.tileSize * 1, gamePanel.tileSize * 3, 300, 100, 30, 30);
+            g.setColor(Color.WHITE);
+            g.drawRoundRect(gamePanel.tileSize * 1, gamePanel.tileSize * 3, 300, 100, 30, 30);
+            if (command == 0) {
+                g.drawString("Heals player for +2", gamePanel.tileSize + 24, gamePanel.tileSize * 4);
+            }
+            if (command == 1) {
+                g.drawString("Deals damage to enemy", gamePanel.tileSize + 24, gamePanel.tileSize * 4);
+            }
+            if (command == 2) {
+                g.drawString("Increases you damage +1", gamePanel.tileSize + 24, gamePanel.tileSize * 4);
+            }
+        }
+
+        if (command == 0) {
+            g.drawImage(chosenButton, gamePanel.tileSize, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
+                    gamePanel.tileSize * 2, null);
+        }
+        if (command == 1) {
+            g.drawImage(chosenButton, gamePanel.tileSize * 6, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
+                    gamePanel.tileSize * 2, null);
+        }
+        if (command == 2) {
+            g.drawImage(chosenButton, gamePanel.tileSize * 11, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
+                    gamePanel.tileSize * 2, null);
+        }
+
+        g.setColor(Color.BLACK);
+        g.setFont(g.getFont().deriveFont(30.0f));
+        g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getPlayerAttack()),
+                gamePanel.tileSize * 15 + 10,
+                gamePanel.tileSize * 6 + 30);
+
+        g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getEnemyAttack()), gamePanel.tileSize * 4,
+                gamePanel.tileSize);
+
+        for (int i = 0; i < gamePanel.levelManager.pokermon.getEnemyHealth(); i++) {
+            g.setColor(Color.RED);
+            g.fillRect(16 + (i * 21), gamePanel.tileSize * 1 + 10, 14, 14);
+            g.setColor(Color.BLACK);
+            g.drawRect(16 + (i * 21), gamePanel.tileSize * 1 + 10, 14, 14);
+        }
+
+        for (int i = 0; i < gamePanel.levelManager.pokermon.getPlayerHealth(); i++) {
+            g.setColor(Color.GREEN);
+            g.fillRect(gamePanel.tileSize * 11 + 16 + (i * 21), gamePanel.tileSize * 7, 14, 14);
+            g.setColor(Color.BLACK);
+            g.drawRect(gamePanel.tileSize * 11 + 16 + (i * 21), gamePanel.tileSize * 7, 14, 14);
+        }
+
+        // if (gamePanel.levelManager.pokermon.getMode() == 1) {
+        // g.drawImage(gamePanel.levelManager.pokermon.getAttackButtons(), 0, 0,
+        // gamePanel.screenWidth,
+        // gamePanel.screenHeight - 36,
+        // null);
+        // }
+        if (gamePanel.levelManager.pokermon.getMode() == 2) {
+            g.drawImage(gamePanel.levelManager.pokermon.getShootButton(), 0, 0, gamePanel.screenWidth,
+                    gamePanel.screenHeight - 36,
+                    null);
+        }
     }
 
     private void drawBlackjack() {
@@ -322,6 +406,8 @@ public class UI {
             drawRoulette();
         } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
             drawBlackjack();
+        } else {
+            drawPokermon();
         }
     }
 

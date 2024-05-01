@@ -167,6 +167,9 @@ public class KeyHandler implements KeyListener {
                         && (gamePanel.levelManager.roulette.getBet() <= gamePanel.player.getChipCount())) {
                     gamePanel.levelManager.roulette.startR(UI.command);
                 }
+                if (code == KeyEvent.VK_ESCAPE) {
+                    gamePanel.changeGameState(GamePanel.GAMESCREEN);
+                }
 
             } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
                 if (code == KeyEvent.VK_W) {
@@ -188,10 +191,34 @@ public class KeyHandler implements KeyListener {
                 if (code == KeyEvent.VK_R) {
                     gamePanel.levelManager.blackjack.reset();
                 }
+                if (code == KeyEvent.VK_ESCAPE) {
+                    gamePanel.changeGameState(GamePanel.GAMESCREEN);
+                }
+            } else { // ! DONT FORGET TO ADD POKERMON CONDITIONS
+                if (code == KeyEvent.VK_W) {
+                    UI.command--;
+                    if (UI.command < 0) {
+                        UI.command = 2;
+                    }
+                }
+                if (code == KeyEvent.VK_S) {
+                    UI.command++;
+                    UI.command = UI.command % 3;
+                }
+                if (code == KeyEvent.VK_ESCAPE) {
+                    gamePanel.levelManager.pokermon.setMode(0);
+                }
+                if (code == KeyEvent.VK_ENTER && gamePanel.levelManager.pokermon.getMode() == 0) {
+                    gamePanel.levelManager.pokermon.setMode(UI.command + 1);
+
+                }
+                if (code == KeyEvent.VK_ENTER && gamePanel.levelManager.pokermon.getMode() == 1) {
+                    gamePanel.levelManager.pokermon.executeCommand(UI.command);
+                }
             }
-            if (code == KeyEvent.VK_ESCAPE) {
-                gamePanel.changeGameState(GamePanel.GAMESCREEN);
-            }
+            // if (code == KeyEvent.VK_ESCAPE) {
+            // gamePanel.changeGameState(GamePanel.GAMESCREEN);
+            // }
         }
 
     }
