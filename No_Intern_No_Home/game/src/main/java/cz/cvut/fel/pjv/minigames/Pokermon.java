@@ -208,7 +208,10 @@ public class Pokermon {
         }
 
         if (enemyHealth <= 0 && cheatDeath) {
+            gamePanel.ui.setAnnounceMessage("You have defeated the enemy");
+            System.out.println("You have defeated the enemy");
             finished = true;
+            gamePanel.levelManager.checkLevelFinished();
         }
     }
 }

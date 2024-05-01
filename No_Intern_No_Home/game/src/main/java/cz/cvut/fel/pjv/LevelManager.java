@@ -12,9 +12,11 @@ import java.util.logging.Level;
 public class LevelManager {
     public FirstLevel firstLevel;
     public SecondLevel secondLevel;
+    public ThirdLevel thirdLevel;
     public GamePanel gamePanel;
     private boolean firstLevelMessage = false;
     private boolean secondLevelMessage = false;
+    private boolean thirdLevelmessage = false;
     public boolean levelInProgress = true;
     private static int levelNumber = 1; // ! Change to 1
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
@@ -25,6 +27,7 @@ public class LevelManager {
     public LevelManager(GamePanel gamePanel) {
         this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
         this.secondLevel = new SecondLevel(gamePanel);
+        this.thirdLevel = new ThirdLevel(gamePanel);
         this.gamePanel = gamePanel;
         logger.setLevel(Level.WARNING);
         roulette = new Roulette(gamePanel);
@@ -57,6 +60,19 @@ public class LevelManager {
                 openDoors();
                 logger.warning("Level number: " + levelNumber);
                 return secondLevel.checkLevelFinished();
+            }
+        } else if (levelNumber == 3) {
+            levelInProgress = true;
+            System.out.println(thirdLevel.checkLevelFinished());
+            if (thirdLevel.checkLevelFinished() && !thirdLevelmessage) {
+                System.out.println("Third Level finished");
+                gamePanel.ui.setAnnounceMessage("Third Level finished");
+                thirdLevelmessage = true;
+                levelInProgress = false;
+                levelNumber++;
+                openDoors();
+                logger.warning("Level number: " + levelNumber);
+                return thirdLevel.checkLevelFinished();
             }
         }
         return false;

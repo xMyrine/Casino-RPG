@@ -186,6 +186,9 @@ public class GamePanel extends JPanel implements Runnable {
         return count;
     }
 
+    /*
+     * Changes the game state
+     */
     public void changeGameState(int i) {
         gameState = i;
     }

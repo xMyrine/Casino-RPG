@@ -63,7 +63,7 @@ public class Sound {
 
             // Reduce the volume by 10 decibels
             float currentVolume = volume.getValue();
-            volume.setValue(currentVolume - 20.0f);
+            volume.setValue(currentVolume - 40.0f);
         }
         this.loopSound();
     }

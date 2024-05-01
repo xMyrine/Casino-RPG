@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.objects.alcohol;
+package cz.cvut.fel.pjv.objects.Alcohol;
 
 import cz.cvut.fel.pjv.Sound;
 import cz.cvut.fel.pjv.entity.Player;

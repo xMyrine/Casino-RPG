@@ -58,7 +58,6 @@ public class FirstLevel extends Level {
 
     public boolean checkSlotMachineCount() {
         fetchPlayerSlotMachineCount(gamePanel.player.getSlotMachineCount());
-        System.out.println("Player slot machine count: " + playerSlotMachineCount);
         if (finishedSlotMachineCount <= playerSlotMachineCount) {
             logger.config("Slot machines finished");
             return true;

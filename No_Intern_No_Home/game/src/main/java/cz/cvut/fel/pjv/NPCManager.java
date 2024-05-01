@@ -16,7 +16,7 @@ public class NPCManager {
     public void spawnNPC() {
         gamePanel.entities[0] = new IntroNPC(this.gamePanel, 100, 200);
         gamePanel.entities[1] = new Worker(this.gamePanel, gamePanel.tileSize * 19, gamePanel.tileSize * 12);
-        gamePanel.entities[4] = new Shopkeeper(this.gamePanel, gamePanel.tileSize * 1, gamePanel.tileSize * 12);
+        gamePanel.entities[4] = new Shopkeeper(this.gamePanel, gamePanel.tileSize * 22, gamePanel.tileSize * 22);
     }
 
     private void spawnLevelTwoNPC() {
@@ -25,7 +25,7 @@ public class NPCManager {
     }
 
     private void spawnLevelThreeNPC() {
-        gamePanel.entities[5] = new PokerManTrainer(this.gamePanel, gamePanel.tileSize * 36, gamePanel.tileSize * 40);
+        gamePanel.entities[5] = new PokerManTrainer(this.gamePanel, gamePanel.tileSize * 37, gamePanel.tileSize * 36);
     }
 
     public void update() {

@@ -138,6 +138,7 @@ public class TileManager {
 
             worldX = worldCol * gamePanel.tileSize;
             worldY = worldRow * gamePanel.tileSize;
+
             screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
             screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
 

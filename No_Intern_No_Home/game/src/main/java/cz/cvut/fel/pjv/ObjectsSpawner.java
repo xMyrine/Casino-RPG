@@ -1,7 +1,7 @@
 package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.objects.*;
-import cz.cvut.fel.pjv.objects.alcohol.*;
+import cz.cvut.fel.pjv.objects.Alcohol.*;
 
 public class ObjectsSpawner {
 
@@ -59,6 +59,11 @@ public class ObjectsSpawner {
 
     }
 
+    private void spawnLevelThreeObjects() {
+        gamePanel.objects[3] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 35);
+        gamePanel.objects[4] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 36);
+    }
+
     public int getCurrentObjectLevelSpawned() {
         return currentObjectLevelSpawned;
     }
@@ -78,6 +83,9 @@ public class ObjectsSpawner {
             currentObjectLevelSpawned++;
             if (LevelManager.getLevelNumber() == 2 && !gamePanel.levelManager.levelInProgress) {
                 spawnLevelTwoObjects();
+            }
+            if (LevelManager.getLevelNumber() == 3 && !gamePanel.levelManager.levelInProgress) {
+                spawnLevelThreeObjects();
             }
             gamePanel.levelManager.levelInProgress = true;
 

@@ -107,7 +107,8 @@ public class KeyHandler implements KeyListener {
                 gamePanel.entities[gamePanel.player.npcIndex].talk();
             }
             // ROOM MASTERS
-            if (code == KeyEvent.VK_Y && (gamePanel.player.npcIndex == 1 || gamePanel.player.npcIndex == 2)) {
+            if (code == KeyEvent.VK_Y && (gamePanel.player.npcIndex == 1 || gamePanel.player.npcIndex == 2
+                    || gamePanel.player.npcIndex == 5)) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
                 // PROSTITUTE
             } else if (code == KeyEvent.VK_Y && gamePanel.player.npcIndex == 3) {
@@ -194,7 +195,7 @@ public class KeyHandler implements KeyListener {
                 if (code == KeyEvent.VK_ESCAPE) {
                     gamePanel.changeGameState(GamePanel.GAMESCREEN);
                 }
-            } else { // ! DONT FORGET TO ADD POKERMON CONDITIONS
+            } else if (gamePanel.levelManager.getLevelNumber() >= 3 && gamePanel.player.npcIndex == 5) {
                 if (code == KeyEvent.VK_W) {
                     UI.command--;
                     if (UI.command < 0) {

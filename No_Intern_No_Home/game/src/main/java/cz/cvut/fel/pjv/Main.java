@@ -10,15 +10,26 @@ package cz.cvut.fel.pjv;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.nio.Buffer;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Main {
     public static void main(String[] args) {
 
-        Image icon = new ImageIcon("src/main/resources/icons/game_icon.png").getImage();
         JFrame window = new JFrame("No intern, No home");
-        window.setIconImage(icon);
+        try {
+            BufferedImage icon = ImageIO.read(Main.class.getResource("/icons/game_icon.png"));
+            window.setIconImage(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // window.setIconImage(icon);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         Logger logger = Logger.getLogger(Main.class.getName());
@@ -31,6 +42,7 @@ public class Main {
         window.pack(); // so I can see the gam e
         window.setLocationRelativeTo(null);
         window.setSize(desiredWidth, desiredHeight);
+        window.getContentPane().setBackground(Color.RED);
         window.setVisible(true);
 
         gamePanel.setUpGame();

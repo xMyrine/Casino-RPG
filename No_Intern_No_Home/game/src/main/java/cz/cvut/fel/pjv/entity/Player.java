@@ -6,7 +6,7 @@ import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.LevelManager;
 import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.*;
-import cz.cvut.fel.pjv.objects.alcohol.*;
+import cz.cvut.fel.pjv.objects.Alcohol.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

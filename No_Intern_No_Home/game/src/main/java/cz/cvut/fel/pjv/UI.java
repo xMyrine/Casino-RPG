@@ -6,6 +6,9 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import cz.cvut.fel.pjv.minigames.assets.Card;
 import cz.cvut.fel.pjv.objects.*;
@@ -47,6 +50,9 @@ public class UI {
         }
     }
 
+    /*
+     * Sets the message to be displayed on the screen
+     */
     public void setAnnounceMessage(String message) {
         this.message = message;
         announceMessage = true;
@@ -59,7 +65,6 @@ public class UI {
     /*
      * Draws the UI elements on the screen
      */
-
     public void draw(Graphics2D g) {
 
         this.g = g;
@@ -161,6 +166,30 @@ public class UI {
      * Draws a Pokermon minigame
      */
     private void drawPokermon() {
+
+        Timer timer = new Timer(100, null);
+        timer.addActionListener(new ActionListener() {
+            int counter = 0;
+            boolean isWhite = true;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (counter >= 20) {
+                    ((Timer) e.getSource()).stop();
+                } else {
+                    if (isWhite) {
+                        g.setColor(Color.WHITE);
+                    } else {
+                        g.setColor(Color.BLACK);
+                    }
+                    g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
+                    isWhite = !isWhite;
+                    counter++;
+                }
+            }
+        });
+        timer.start();
+
         g.drawImage(gamePanel.levelManager.pokermon.getScreenImage(), 0, 0, gamePanel.screenWidth,
                 gamePanel.screenHeight - 36,
                 null);
@@ -406,7 +435,7 @@ public class UI {
             drawRoulette();
         } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
             drawBlackjack();
-        } else {
+        } else if (gamePanel.levelManager.getLevelNumber() >= 3 && gamePanel.player.npcIndex == 5) {
             drawPokermon();
         }
     }
