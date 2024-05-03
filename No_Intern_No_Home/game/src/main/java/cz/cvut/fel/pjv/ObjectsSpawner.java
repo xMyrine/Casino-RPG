@@ -51,11 +51,11 @@ public class ObjectsSpawner {
 
         gamePanel.objects[2] = new Door(gamePanel.tileSize * 36, gamePanel.tileSize * 24);
 
-        gamePanel.objects[28] = new Vodka(gamePanel.tileSize * 45, gamePanel.tileSize * 3);
+        gamePanel.objects[28] = new DomPerignon(gamePanel.tileSize * 46, gamePanel.tileSize * 3);
 
-        gamePanel.objects[29] = new Vodka(gamePanel.tileSize * 45, gamePanel.tileSize * 4);
+        gamePanel.objects[29] = new Vodka(gamePanel.tileSize * 46, gamePanel.tileSize * 4);
 
-        gamePanel.objects[27] = new Beer(gamePanel.tileSize * 45, gamePanel.tileSize * 5);
+        gamePanel.objects[27] = new Beer(gamePanel.tileSize * 46, gamePanel.tileSize * 5);
 
     }
 

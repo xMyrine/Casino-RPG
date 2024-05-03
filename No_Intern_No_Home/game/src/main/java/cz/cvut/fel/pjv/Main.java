@@ -8,9 +8,6 @@
 package cz.cvut.fel.pjv;
 
 import javax.swing.JFrame;
-import javax.swing.ImageIcon;
-import java.awt.Image;
-import java.nio.Buffer;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.awt.Color;
@@ -29,7 +26,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // window.setIconImage(icon);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         Logger logger = Logger.getLogger(Main.class.getName());

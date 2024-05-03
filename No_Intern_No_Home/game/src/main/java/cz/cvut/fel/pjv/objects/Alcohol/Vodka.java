@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class Vodka extends Object implements Alcohol {
 
-    private static final float luck = 0.1f;
+    private static final float luck = 0.07f;
 
     public Vodka(int worldX, int worldY) {
         this.worldX = worldX;
@@ -20,7 +20,6 @@ public class Vodka extends Object implements Alcohol {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/vodka.png"));
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading image");
         }
     }
 
@@ -31,6 +30,7 @@ public class Vodka extends Object implements Alcohol {
         sound.playMusic(2);
         if (newLuck > 1) {
             newLuck = 0.3f;
+            Object.logger.info("Player's luck was now at maximum. Reseting to 0.3.");
         }
 
         return newLuck;

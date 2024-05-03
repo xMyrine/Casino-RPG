@@ -1,19 +1,37 @@
 package cz.cvut.fel.pjv.objects.Alcohol;
 
 import cz.cvut.fel.pjv.entity.Player;
+import cz.cvut.fel.pjv.objects.Object;
 
-public class DomPerignon implements Alcohol {
+import javax.imageio.ImageIO;
 
-    private final float luck = 0.5f;
+public class DomPerignon extends Object implements Alcohol {
 
-    public DomPerignon() {
+    private final float luck = 0.2f;
 
+    public DomPerignon(int worldX, int worldY) {
+        this.worldX = worldX;
+        this.worldY = worldY;
+        this.name = "domperignon";
+        this.collision = false;
+
+        try {
+            this.image = ImageIO.read(getClass().getResourceAsStream("/objects/dom_per.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public float increasePlayersLuck(Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'increasePlayersLuck'");
+        float newLuck = player.getPlayerLuck();
+        newLuck += luck;
+        sound.playMusic(2);
+        if (newLuck > 1) {
+            newLuck = 0.3f;
+        }
+
+        return newLuck;
     }
 
 }

@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity entities[] = new Entity[20];
 
     // ! Game State
-    public int gameState;
+    private int gameState;
     public static final int MENUSCREEN = 0;
     public static final int GAMESCREEN = 1;
     public static final int PAUSESCREEN = 2;

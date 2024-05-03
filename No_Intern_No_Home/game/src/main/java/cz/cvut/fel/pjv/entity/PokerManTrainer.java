@@ -56,6 +56,8 @@ public class PokerManTrainer extends Entity {
         dialogues[2] = "I am the best PokerMan Trainer in the world!\n And probably the only one...";
         dialogues[3] = "What do you mean you don't have a PokerMon?\n";
         dialogues[4] = "Well, I guess you can fight yourself then...\n Hopefully you have insurance.";
+        dialogues[5] = "Are you ready to fight? (Y/N)";
+        dialogues[6] = "";
 
     }
 

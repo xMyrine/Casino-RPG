@@ -128,6 +128,7 @@ public abstract class Entity {
         this.turnEntity(gamePanel.player.direction);
         if (dialogues[dialogueIndex] == null) {
             dialogueIndex = 0;
+            gamePanel.changeGameState(GamePanel.GAMESCREEN);
         }
     }
 

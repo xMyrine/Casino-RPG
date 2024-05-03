@@ -53,12 +53,10 @@ public class Prostitute extends Entity implements NPC {
 
     public void increaseReputation() {
         reputation++;
-        System.out.println("Reputation increased to: " + reputation);
     }
 
     public void decreaseReputation() {
         reputation--;
-        System.out.println("Reputation decreased to: " + reputation);
     }
 
     private Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
@@ -89,13 +87,13 @@ public class Prostitute extends Entity implements NPC {
         gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
         if (dialogueIndex == 0) {
             reputation = 0;
-            System.out.println("Reputation reset to: " + reputation);
         }
         if (dialogueIndex == 16) {
             calculateRizz();
-            if (rizz > 1.75) {
+            if (rizz > 2) {
                 dialogueIndex++;
                 gamePanel.levelManager.secondLevel.getLaid();
+                gamePanel.levelManager.checkLevelFinished();
             }
         }
         dialogueIndex++;
@@ -121,17 +119,15 @@ public class Prostitute extends Entity implements NPC {
         dialogues[12] = "Do you like to be choked?";
         dialogues[13] = "Do you like to choke?";
         dialogues[14] = "Do you like to be slapped?";
-        dialogues[15] = "Do you support LGBTQ+?";
-        dialogues[16] = "69?";
-        dialogues[17] = "Hmmmmm, let me think about it.";
-        dialogues[18] = "I am sorry, YOU SUCK";
-        dialogues[19] = "Alright, let's have some fun. <3";
-
+        dialogues[15] = "69?";
+        dialogues[16] = "Hmmmmm, let me think about it.";
+        dialogues[17] = "I am sorry, YOU SUCK";
+        dialogues[18] = "Alright, let's have some fun. <3";
+        dialogues[19] = "";
     }
 
     public void calculateRizz() {
         rizz = gamePanel.player.getPlayerLuck() * reputation;
-        System.out.println("Rizz: " + rizz);
     }
 
     @Override

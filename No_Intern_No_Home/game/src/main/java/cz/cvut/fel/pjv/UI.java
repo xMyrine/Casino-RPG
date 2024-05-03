@@ -71,20 +71,21 @@ public class UI {
 
         this.g.setFont(defaultFont);
         this.g.setColor(Color.WHITE);
-        if (gamePanel.gameState == GamePanel.MENUSCREEN) {
+        int state = gamePanel.getGameState();
+        if (state == GamePanel.MENUSCREEN) {
             drawMenu();
-        } else if (gamePanel.gameState == GamePanel.PAUSESCREEN) {
+        } else if (state == GamePanel.PAUSESCREEN) {
             drawPause();
-        } else if (gamePanel.gameState == GamePanel.DIALOGUESCREEN) {
+        } else if (state == GamePanel.DIALOGUESCREEN) {
             drawDialogue();
-        } else if (gamePanel.gameState == GamePanel.MINIGAMESCREEN) {
+        } else if (state == GamePanel.MINIGAMESCREEN) {
             drawMinigame();
             if (announceMessage) {
                 announceMessage();
             }
-        } else if (gamePanel.gameState == GamePanel.CONTROLSSCREEN) {
+        } else if (state == GamePanel.CONTROLSSCREEN) {
             drawControls();
-        } else if (gamePanel.gameState == GamePanel.SHOPSCREEN) {
+        } else if (state == GamePanel.SHOPSCREEN) {
             drawShop();
         } else {
             drawStats();

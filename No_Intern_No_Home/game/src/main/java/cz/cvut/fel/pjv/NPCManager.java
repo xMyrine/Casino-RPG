@@ -30,7 +30,7 @@ public class NPCManager {
 
     public void update() {
         if (LevelManager.getLevelNumber() > currentNPCLevel) {
-            gamePanel.gameState = GamePanel.GAMESCREEN;
+            gamePanel.changeGameState(GamePanel.GAMESCREEN);
             currentNPCLevel++;
             if (LevelManager.getLevelNumber() == 2 && !level2NPCSpawned) {
                 spawnLevelTwoNPC();

@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.LevelManager;
 import cz.cvut.fel.pjv.Toolbox;
 
 import java.awt.Graphics2D;
@@ -89,19 +88,25 @@ public class Worker2 extends Entity implements NPC {
     public void setDialogueMessage() {
         dialogues[0] = "I see you have made it this far. \n I am impressed.";
         dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
-        dialogues[2] = "Well, just get laid and come back to me.";
+        dialogues[2] = "Well, just get laid";
+        dialogues[3] = "Also if you want to challenge me,\n you better know what BlackJack is.\n I am the master of it.";
+        dialogues[4] = "(If you know the game press Y to start)\n (If you don't press E to learn the rules first)";
+        dialogues[5] = "According to the rules of blackjack,\nthe goal is to get a hand score\n(combined value of the cards you hold) that is as close to 21\nas possible without going over it.";
+        dialogues[6] = "Each card from 2 to 10 has a value equal to its number.\n Jack, Queen, and King all have a value of 10,\nwhile aces can be counted as either 1 or 11.";
+        dialogues[7] = "You are competing against the dealer,\nso whoever has a better score wins. Going over 21 is a “bust” or an automatic loss,\nwhile hitting exactly 21 is an automatic win.";
+        dialogues[8] = "";
 
     }
 
-    @Override
-    public void talk() {
-        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
-        this.turnEntity(gamePanel.player.direction);
-        dialogueIndex++;
-        if (dialogues[dialogueIndex] == null) {
-            dialogueIndex = 0;
-        }
-    }
+    // @Override
+    // public void talk() {
+    // gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
+    // this.turnEntity(gamePanel.player.direction);
+    // dialogueIndex++;
+    // if (dialogues[dialogueIndex] == null) {
+    // dialogueIndex = 0;
+    // }
+    // }
 
     @Override
     public void move() {

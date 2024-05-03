@@ -98,17 +98,8 @@ public class Worker extends Entity implements NPC {
         dialogues[7] = "You can adjust your bet with Q/E but beware,\n if you dont pay attention the bet\n might be rising on its own :)";
         dialogues[8] = "Use W/S to navigate the roulette table and\n press ENTER to place your bet. Good luck!";
         dialogues[9] = "(Do you wish to challenge this worker?) (Y/N)";
+        dialogues[10] = "";
 
-    }
-
-    @Override
-    public void talk() {
-        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
-        this.turnEntity(gamePanel.player.direction);
-        dialogueIndex++;
-        if (dialogues[dialogueIndex] == null) {
-            dialogueIndex = 0;
-        }
     }
 
     @Override

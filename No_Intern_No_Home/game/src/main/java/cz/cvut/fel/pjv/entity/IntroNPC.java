@@ -62,8 +62,6 @@ public class IntroNPC extends Entity implements NPC {
             image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            System.out.println("Assigning image successful" + path + ".png");
         }
         return image;
 
@@ -92,11 +90,6 @@ public class IntroNPC extends Entity implements NPC {
         }
     }
 
-    @Override
-    public void talk() {
-        super.talk();
-    }
-
     public void setDialogueMessage() {
         dialogues[0] = "Ayo, you are new around here. \n Haven't seen you before.";
         dialogues[1] = "I assume finding work, did not age well for you. \n You are in the right place.";
@@ -108,6 +101,7 @@ public class IntroNPC extends Entity implements NPC {
         dialogues[7] = "To enter a new room and unlock more games,\n you need to beat the worker running around here.";
         dialogues[8] = "He is a tough one, also he might tell you\n to do something around the room as well,\n so make sure to do that.";
         dialogues[9] = "Oh, who am I? Hmm, Let's just say I am a friend. \nI am here to help you out.";
+        dialogues[10] = "";
     }
 
     @Override

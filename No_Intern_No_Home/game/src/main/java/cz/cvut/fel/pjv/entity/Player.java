@@ -243,9 +243,14 @@ public class Player extends Entity {
                 case "vodka":
                     if (gamePanel.objects[objectIndex] instanceof Vodka) {
                         this.playerLuck = ((Vodka) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
-                        System.out.println(this.playerLuck);
                         logger.info(String.format("Player's luck increased to %f", this.playerLuck));
-                        gamePanel.levelManager.checkLevelFinished();
+                    }
+                    gamePanel.objects[objectIndex] = null;
+                    break;
+                case "domperignon":
+                    if (gamePanel.objects[objectIndex] instanceof DomPerignon) {
+                        this.playerLuck = ((DomPerignon) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+                        logger.info(String.format("Player's luck increased to %f", this.playerLuck));
                     }
                     gamePanel.objects[objectIndex] = null;
                     break;
@@ -261,7 +266,7 @@ public class Player extends Entity {
     public void interactWithNPC(int npcIndex) {
         if (npcIndex != 69) {
             if (gamePanel.keyHandler.interact) {
-                gamePanel.gameState = GamePanel.DIALOGUESCREEN;
+                gamePanel.changeGameState(GamePanel.DIALOGUESCREEN);
                 gamePanel.entities[npcIndex].talk();
             }
             gamePanel.keyHandler.interact = false;

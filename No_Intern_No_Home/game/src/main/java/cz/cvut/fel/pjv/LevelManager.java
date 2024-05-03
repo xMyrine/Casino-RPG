@@ -46,7 +46,7 @@ public class LevelManager {
                 levelInProgress = false;
                 levelNumber++;
                 openDoors();
-                gamePanel.gameState = GamePanel.GAMESCREEN;
+                gamePanel.changeGameState(GamePanel.GAMESCREEN);
                 logger.warning("Level number: " + levelNumber);
                 return firstLevel.checkLevelFinished();
             }

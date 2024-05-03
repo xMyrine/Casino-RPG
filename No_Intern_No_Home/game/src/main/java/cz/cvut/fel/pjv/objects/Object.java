@@ -21,7 +21,7 @@ public abstract class Object {
     public int collisionAreaDefaultX = 0;
     public int collisionAreaDefaultY = 0;
 
-    protected Logger logger = Logger.getLogger(Object.class.getName());
+    protected static Logger logger = Logger.getLogger(Object.class.getName());
     protected static Sound sound = new Sound();
 
     public void draw(Graphics2D g, GamePanel gamePanel) {
