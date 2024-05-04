@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import javax.swing.WindowConstants;
 
 import javax.imageio.ImageIO;
 
@@ -26,7 +27,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(false);
         Logger logger = Logger.getLogger(Main.class.getName());
         logger.setLevel(Level.WARNING);
@@ -35,7 +36,7 @@ public class Main {
         window.add(gamePanel);
         int desiredWidth = gamePanel.screenWidth;
         int desiredHeight = gamePanel.screenHeight;
-        window.pack(); // so I can see the gam e
+        window.pack(); // so I can see the game
         window.setLocationRelativeTo(null);
         window.setSize(desiredWidth, desiredHeight);
         window.getContentPane().setBackground(Color.RED);

@@ -2,9 +2,7 @@ package cz.cvut.fel.pjv.entity;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Supplier;
-
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -12,13 +10,10 @@ import java.awt.image.BufferedImage;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
 
-public class Shopkeeper extends Entity {
+public class Craftsman extends Entity {
 
-    private GamePanel gamePanel;
-    private static Random random = new Random();
-
-    public Shopkeeper(GamePanel panel) {
-        this.name = "Shopkeeper";
+    public Craftsman(GamePanel panel) {
+        this.name = "Craftsman";
         this.gamePanel = panel;
         this.speed = 1;
         this.direction = "left";
@@ -28,8 +23,8 @@ public class Shopkeeper extends Entity {
         getNPCImage();
     }
 
-    public Shopkeeper(GamePanel panel, int x, int y) {
-        this.name = "Shopkeeper";
+    public Craftsman(GamePanel panel, int x, int y) {
+        this.name = "Craftsman";
         this.gamePanel = panel;
         this.speed = 1;
         this.direction = "left";
@@ -40,15 +35,14 @@ public class Shopkeeper extends Entity {
     }
 
     public void getNPCImage() {
-
-        up1 = assignImage("/npc/shop_up_1");
-        up2 = assignImage("/npc/shop_up_2");
-        down1 = assignImage("/npc/shop_down_1");
-        down2 = assignImage("/npc/shop_down_2");
-        left1 = assignImage("/npc/shop_left_1");
-        left2 = assignImage("/npc/shop_left_2");
-        right1 = assignImage("/npc/shop_right_1");
-        right2 = assignImage("/npc/shop_right_2");
+        up1 = assignImage("/npc/craftsman_up_1");
+        up2 = assignImage("/npc/craftsman_up_2");
+        down1 = assignImage("/npc/craftsman_down_1");
+        down2 = assignImage("/npc/craftsman_down_2");
+        left1 = assignImage("/npc/craftsman_left_1");
+        left2 = assignImage("/npc/craftsman_left_2");
+        right1 = assignImage("/npc/craftsman_right_1");
+        right2 = assignImage("/npc/craftsman_right_2");
 
     }
 
@@ -89,7 +83,7 @@ public class Shopkeeper extends Entity {
 
     @Override
     public void talk() {
-        gamePanel.changeGameState(6);
+        gamePanel.changeGameState(GamePanel.CRAFTSCREEN);
     }
 
     @Override
@@ -121,52 +115,31 @@ public class Shopkeeper extends Entity {
 
     }
 
-    private void increasePlayersLuck() {
-        if (gamePanel.player.getChipCount() > 25) {
-            gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() + 0.05f);
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 25);
-            gamePanel.ui.setAnnounceMessage("You have increased your luck by 4%!");
+    /*
+     * Craftsman crafts special items for the player.
+     */
+    public void craft(int item) {
+        int cigarCount = gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR);
+        int gunCount = gamePanel.player.getSpecialItemsFragmentCount(Player.GUN);
+        int cardsCount = gamePanel.player.getSpecialItemsFragmentCount(Player.CARDS);
+
+        if (item == Player.CIGAR && cigarCount >= 3 && gamePanel.player.getChipCount() >= 50) {
+            gamePanel.player.setSpecialItemsFragmentCount(Player.CIGAR,
+                    gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR) - 3);
+            gamePanel.player.setSpecialItem(Player.CIGAR, gamePanel.player.getSpecialItem(Player.CIGAR) + 1);
+            gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 50);
+        } else if (item == Player.GUN && gunCount >= 3 && gamePanel.player.getChipCount() >= 250) {
+            gamePanel.player.setSpecialItemsFragmentCount(Player.GUN,
+                    gamePanel.player.getSpecialItemsFragmentCount(Player.GUN) - 3);
+            gamePanel.player.setSpecialItem(Player.GUN, gamePanel.player.getSpecialItem(Player.GUN) + 1);
+            gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 250);
+        } else if (item == Player.CARDS && cardsCount >= 3 && gamePanel.player.getChipCount() >= 100) {
+            gamePanel.player.setSpecialItemsFragmentCount(Player.CARDS,
+                    gamePanel.player.getSpecialItemsFragmentCount(Player.CARDS) - 3);
+            gamePanel.player.setSpecialItem(Player.CARDS, gamePanel.player.getSpecialItem(Player.CARDS) + 1);
+            gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 100);
         } else {
-            gamePanel.ui.setAnnounceMessage("You don't have enough chips!");
-        }
-    }
-
-    private void increasePlayersChips() {
-        gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 10);
-        gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() - 0.01f);
-        gamePanel.ui.setAnnounceMessage("You have received 5 chips!");
-    }
-
-    private void randomPlayerStats() {
-        while (true) {
-            if (random.nextFloat() < gamePanel.player.getPlayerLuck()) {
-                gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 10);
-                gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() + 0.01f);
-                gamePanel.ui.setAnnounceMessage("You have received 10 chips!");
-            } else {
-                gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() - 0.01f);
-                gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 10);
-                gamePanel.ui.setAnnounceMessage("You have lost 5% of your luck!");
-            }
-            if (random.nextFloat() < gamePanel.player.getPlayerLuck()) {
-                break;
-            }
-        }
-    }
-
-    public void executeCommand(int command) {
-        switch (command) {
-            case 0:
-                increasePlayersLuck();
-                break;
-            case 1:
-                increasePlayersChips();
-                break;
-            case 2:
-                randomPlayerStats();
-                break;
-            default:
-                break;
+            gamePanel.ui.setAnnounceMessage("Not enough fragments or unsufficient funds");
         }
     }
 }

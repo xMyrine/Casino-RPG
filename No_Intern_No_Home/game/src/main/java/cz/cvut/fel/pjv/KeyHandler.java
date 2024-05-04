@@ -2,8 +2,7 @@ package cz.cvut.fel.pjv;
 
 import java.awt.event.KeyListener;
 
-import cz.cvut.fel.pjv.entity.Prostitute;
-import cz.cvut.fel.pjv.entity.Shopkeeper;
+import cz.cvut.fel.pjv.entity.*;
 
 import java.awt.event.KeyEvent;
 
@@ -216,10 +215,32 @@ public class KeyHandler implements KeyListener {
                 if (code == KeyEvent.VK_ENTER && gamePanel.levelManager.pokermon.getMode() == 1) {
                     gamePanel.levelManager.pokermon.executeCommand(UI.command);
                 }
+                if (code == KeyEvent.VK_R) {
+                    gamePanel.levelManager.pokermon.reset();
+                }
             }
             // if (code == KeyEvent.VK_ESCAPE) {
             // gamePanel.changeGameState(GamePanel.GAMESCREEN);
             // }
+        } else if (gamePanel.getGameState() == GamePanel.CRAFTSCREEN) {
+            if (code == KeyEvent.VK_W) {
+                UI.command--;
+                if (UI.command < 0) {
+                    UI.command = 1;
+                }
+                UI.command = UI.command % 3;
+            }
+            if (code == KeyEvent.VK_S) {
+                UI.command++;
+                UI.command = UI.command % 3;
+
+            }
+            if (code == KeyEvent.VK_ESCAPE) {
+                gamePanel.changeGameState(GamePanel.GAMESCREEN);
+            }
+            if (code == KeyEvent.VK_ENTER) {
+                ((Craftsman) gamePanel.entities[6]).craft(UI.command);
+            }
         }
 
     }

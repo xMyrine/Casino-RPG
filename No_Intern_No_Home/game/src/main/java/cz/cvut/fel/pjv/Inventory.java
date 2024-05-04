@@ -1,30 +1,26 @@
 package cz.cvut.fel.pjv;
 
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.entity.Player;
 
 public class Inventory {
-
-    private final Player player;
     public BufferedImage InventoryImage;
     public BufferedImage[] inventoryItems;
 
     public Inventory(Player player) {
-        this.player = player;
         try {
             InventoryImage = Toolbox.scaleImage(
                     ImageIO.read(getClass().getResourceAsStream("/inventory/inventory.png")), 100,
                     100);
             inventoryItems = new BufferedImage[4];
-            inventoryItems[0] = Toolbox.scaleImage(
+            inventoryItems[2] = Toolbox.scaleImage(
                     ImageIO.read(getClass().getResourceAsStream("/inventory/card1.png")), 16, 16);
-            inventoryItems[1] = Toolbox.scaleImage(
+            inventoryItems[0] = Toolbox.scaleImage(
                     ImageIO.read(getClass().getResourceAsStream("/inventory/ciggarette.png")),
                     16, 16);
-            inventoryItems[2] = Toolbox.scaleImage(
+            inventoryItems[1] = Toolbox.scaleImage(
                     ImageIO.read(getClass().getResourceAsStream("/inventory/gun.png")),
                     16, 16);
         } catch (Exception e) {

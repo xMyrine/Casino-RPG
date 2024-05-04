@@ -10,11 +10,9 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.entity.Entity;
-import cz.cvut.fel.pjv.entity.IntroNPC;
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
 import cz.cvut.fel.pjv.objects.Object;
-import cz.cvut.fel.pjv.objects.Door;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN settings
@@ -58,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int MINIGAMESCREEN = 4;
     public static final int CONTROLSSCREEN = 5;
     public static final int SHOPSCREEN = 6;
+    public static final int CRAFTSCREEN = 7;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));

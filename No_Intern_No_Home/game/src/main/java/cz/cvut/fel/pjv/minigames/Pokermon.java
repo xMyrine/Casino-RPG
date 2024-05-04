@@ -19,9 +19,9 @@ public class Pokermon {
     private float luck;
 
     private BufferedImage screenImage;
-    private BufferedImage attackMenu;
     private BufferedImage shootButton;
     private BufferedImage attackButtons;
+    private BufferedImage winImage;
 
     private static Random RAND = new Random();
 
@@ -38,9 +38,9 @@ public class Pokermon {
 
         try {
             screenImage = ImageIO.read(getClass().getResourceAsStream("/screens/pokermonbattle.png"));
-            attackMenu = ImageIO.read(getClass().getResourceAsStream("/screens/attackbattle.png"));
             attackButtons = ImageIO.read(getClass().getResourceAsStream("/buttons/pokermonattack.png"));
             shootButton = ImageIO.read(getClass().getResourceAsStream("/buttons/pokerman_shoot.png"));
+            winImage = ImageIO.read(getClass().getResourceAsStream("/screens/pokermonbattlewin.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,10 +136,6 @@ public class Pokermon {
         return screenImage;
     }
 
-    public Image getAttackMenu() {
-        return attackMenu;
-    }
-
     public Image getAttackButtons() {
         return attackButtons;
     }
@@ -207,11 +203,31 @@ public class Pokermon {
             enemyAttack();
         }
 
+        if (playerHealth <= 0) {
+            gamePanel.ui.setAnnounceMessage("You have been defeated press R to start again");
+        }
+
         if (enemyHealth <= 0 && cheatDeath) {
             gamePanel.ui.setAnnounceMessage("You have defeated the enemy");
-            System.out.println("You have defeated the enemy");
             finished = true;
             gamePanel.levelManager.checkLevelFinished();
+            screenImage = winImage;
+            gamePanel.sound.playMusic(6);
+        }
+    }
+
+    public void reset() {
+        playerHealth = 10;
+        enemyHealth = 10;
+        playerAttack = 1;
+        enemyAttack = 0;
+        mode = 0;
+        cheatDeath = false;
+        finished = false;
+        try {
+            screenImage = ImageIO.read(getClass().getResourceAsStream("/screens/pokermonbattle.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

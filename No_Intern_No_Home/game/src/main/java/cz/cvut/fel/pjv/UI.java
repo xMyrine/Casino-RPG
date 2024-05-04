@@ -31,6 +31,7 @@ public class UI {
     private BufferedImage titleImage;
     private BufferedImage crossedButton;
     private BufferedImage shopScreen;
+    private BufferedImage craftingScreen;
     private BufferedImage chosenButton;
 
     public UI(GamePanel gamePanel) {
@@ -43,10 +44,9 @@ public class UI {
             crossedButton = ImageIO.read(getClass().getResourceAsStream("/buttons/cross_button.png"));
             shopScreen = ImageIO.read(getClass().getResourceAsStream("/screens/shop.png"));
             chosenButton = ImageIO.read(getClass().getResourceAsStream("/buttons/chosen_button.png"));
-
+            craftingScreen = ImageIO.read(getClass().getResourceAsStream("/screens/Crafting.png"));
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading image");
         }
     }
 
@@ -87,11 +87,35 @@ public class UI {
             drawControls();
         } else if (state == GamePanel.SHOPSCREEN) {
             drawShop();
+        } else if (state == GamePanel.CRAFTSCREEN) {
+            drawCrafting();
         } else {
             drawStats();
             if (gamePanel.player.isInventoryVisible()) {
                 drawInventory();
             }
+        }
+    }
+
+    private void drawCrafting() {
+        g.drawImage(craftingScreen, 0, 0, gamePanel.screenWidth, gamePanel.screenHeight - 24, null);
+        int x = 72;
+        int y = 24;
+        int width = gamePanel.screenWidth - gamePanel.tileSize * 3;
+        int height = gamePanel.tileSize;
+        drawWindow(x, y, width, height);
+        if (command == 0) {
+            g.drawImage(chosenButton, gamePanel.tileSize * 7, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
+                    gamePanel.tileSize * 2, null);
+            g.drawString("Craft Cigar for 3 cigar fragments", gamePanel.tileSize * 3, gamePanel.tileSize + 10);
+        } else if (command == 1) {
+            g.drawImage(chosenButton, gamePanel.tileSize * 12 + 24, gamePanel.tileSize * 9, gamePanel.tileSize * 3,
+                    gamePanel.tileSize * 2, null);
+            g.drawString("Craft Gun for 3 gun fragments", gamePanel.tileSize * 3, gamePanel.tileSize + 10);
+        } else if (command == 2) {
+            g.drawImage(chosenButton, gamePanel.tileSize * 12 + 24, gamePanel.tileSize * 7 + 24, gamePanel.tileSize * 3,
+                    gamePanel.tileSize * 2, null);
+            g.drawString("Craft Cards for 3 card fragments", gamePanel.tileSize * 3, gamePanel.tileSize + 10);
         }
     }
 
@@ -150,9 +174,11 @@ public class UI {
             if (gamePanel.player.inventory.inventoryItems[i] == null) {
                 break;
             }
-            g.drawImage(gamePanel.player.inventory.inventoryItems[i], gamePanel.tileSize * 4 + 30,
-                    (gamePanel.tileSize + 13) * (2 + i),
-                    gamePanel.tileSize, gamePanel.tileSize, null);
+            if (gamePanel.player.getSpecialItem(i) >= 1) {
+                g.drawImage(gamePanel.player.inventory.inventoryItems[i], gamePanel.tileSize * 4 + 30,
+                        (gamePanel.tileSize + 13) * (2 + i),
+                        gamePanel.tileSize, gamePanel.tileSize, null);
+            }
         }
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(30.0f));
@@ -160,7 +186,12 @@ public class UI {
                 gamePanel.tileSize * 3);
         g.drawString("Chips:" + gamePanel.player.getChipCount(), gamePanel.tileSize * 8, gamePanel.tileSize * 4);
         g.drawString("Speed:" + gamePanel.player.getSpeed(), gamePanel.tileSize * 8, gamePanel.tileSize * 5);
-
+        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(0), gamePanel.tileSize * 7,
+                gamePanel.tileSize * 9);
+        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(1), gamePanel.tileSize * 9,
+                gamePanel.tileSize * 9);
+        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(2), gamePanel.tileSize * 10 + 10,
+                gamePanel.tileSize * 9);
     }
 
     /*
@@ -431,12 +462,12 @@ public class UI {
     }
 
     private void drawMinigame() {
-        if (gamePanel.levelManager.getLevelNumber() >= 1
+        if (LevelManager.getLevelNumber() >= 1
                 && gamePanel.player.npcIndex == 1) {
             drawRoulette();
-        } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
+        } else if (LevelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
             drawBlackjack();
-        } else if (gamePanel.levelManager.getLevelNumber() >= 3 && gamePanel.player.npcIndex == 5) {
+        } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.npcIndex == 5) {
             drawPokermon();
         }
     }

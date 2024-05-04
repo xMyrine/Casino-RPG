@@ -2,14 +2,10 @@ package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
-import cz.cvut.fel.pjv.entity.Entity;
 
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
-
 import java.awt.Graphics2D;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;

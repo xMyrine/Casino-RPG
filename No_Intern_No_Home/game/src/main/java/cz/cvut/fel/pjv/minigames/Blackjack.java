@@ -68,11 +68,6 @@ public class Blackjack {
         dealerAceCount += card.isAce() ? 1 : 0;
         dealerHand.add(card);
 
-        System.out.println("Dealer's Hand: ");
-        System.out.println(dealerHand);
-        System.out.println(hiddenCard);
-        System.out.println("Dealer's Total: " + dealerHandValue);
-
         playerHand = new ArrayList<Card>();
         playerHandValue = 0;
         playerAceCount = 0;
@@ -83,10 +78,6 @@ public class Blackjack {
             playerAceCount += card.isAce() ? 1 : 0;
             playerHand.add(card);
         }
-
-        System.out.println("Player's Hand: ");
-        System.out.println(playerHand);
-        System.out.println("Player's Total: " + playerHandValue);
     }
 
     /*
@@ -184,10 +175,12 @@ public class Blackjack {
         } else if (dealerHandValue > 21) {
             gamePanel.ui.setAnnounceMessage("Dealer busted");
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * 25);
+            gamePanel.sound.playMusic(6);
             finished = true;
         } else if (playerHandValue > dealerHandValue) {
             gamePanel.ui.setAnnounceMessage("You won " + 2 * 25 + " chips");
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * 25);
+            gamePanel.sound.playMusic(6);
             finished = true;
         } else if (playerHandValue < dealerHandValue) {
             gamePanel.ui.setAnnounceMessage("You lost");

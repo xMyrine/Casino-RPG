@@ -50,16 +50,19 @@ public class Roulette {
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * bet);
             completed = true;
             gamePanel.ui.setAnnounceMessage("You won " + 2 * bet + " chips");
+            gamePanel.sound.playMusic(6);
             end();
         } else if (playersNumber == BLACK && winningNumber % 2 != 0) {
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * bet);
             completed = true;
             gamePanel.ui.setAnnounceMessage("You won " + 2 * bet + " chips");
+            gamePanel.sound.playMusic(6);
             end();
         } else if (playersNumber == winningNumber) {
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 36 * bet);
             gamePanel.ui.setAnnounceMessage("You won " + 36 * bet + " chips");
             completed = true;
+            gamePanel.sound.playMusic(6);
             end();
         }
     }

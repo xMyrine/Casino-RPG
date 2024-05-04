@@ -17,6 +17,7 @@ public class NPCManager {
         gamePanel.entities[0] = new IntroNPC(this.gamePanel, 100, 200);
         gamePanel.entities[1] = new Worker(this.gamePanel, gamePanel.tileSize * 19, gamePanel.tileSize * 12);
         gamePanel.entities[4] = new Shopkeeper(this.gamePanel, gamePanel.tileSize * 22, gamePanel.tileSize * 22);
+        gamePanel.entities[6] = new Craftsman(this.gamePanel, gamePanel.tileSize * 20, gamePanel.tileSize * 22);
     }
 
     private void spawnLevelTwoNPC() {

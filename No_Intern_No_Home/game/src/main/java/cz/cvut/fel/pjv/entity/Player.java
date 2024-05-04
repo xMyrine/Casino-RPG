@@ -3,7 +3,6 @@ package cz.cvut.fel.pjv.entity;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Inventory;
 import cz.cvut.fel.pjv.KeyHandler;
-import cz.cvut.fel.pjv.LevelManager;
 import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.*;
 import cz.cvut.fel.pjv.objects.Alcohol.*;
@@ -37,10 +36,22 @@ public class Player extends Entity {
     private float playerLuck = 1f;
 
     public int npcIndex = 69;
+    private int specialItemsFragnments[] = { 0, 0, 0 };
+    private int cigar;
+    private int gun;
+    private int cards;
+
+    public static final int CIGAR = 0;
+    public static final int GUN = 1;
+    public static final int CARDS = 2;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+
+        cigar = 0;
+        gun = 0;
+        cards = 1;
 
         screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
         screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
@@ -60,7 +71,6 @@ public class Player extends Entity {
 
     public void toggleInventory() {
         showInventory = !showInventory;
-        System.out.println("Inventory is visible: " + showInventory);
     }
 
     public boolean isInventoryVisible() {
@@ -198,66 +208,90 @@ public class Player extends Entity {
     /*
      * Pick up an object
      */
+
     public void pickUp(int objectIndex) {
         if (objectIndex != 69) {
             String objectName = gamePanel.objects[objectIndex].name;
 
             switch (objectName) {
                 case "chip":
-                    chipCount++;
-                    gamePanel.objects[objectIndex] = null;
-                    gamePanel.sound.playMusic(1);
+                    pickUpChip(objectIndex);
                     break;
                 case "slotMachine":
-                    if (gamePanel.objects[objectIndex] instanceof SlotMachine &&
-                            !((SlotMachine) gamePanel.objects[objectIndex]).finished() &&
-                            chipCount > 0) {
-                        chipCount--;
-                        if (random.nextFloat() < playerLuck) {
-                            ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
-                            ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
-                            slotMachineCount++;
-                            gamePanel.levelManager.checkLevelFinished();
-                            gamePanel.sound.playMusic(3);
-                        }
-                        break;
-                    }
+                    pickUpSlotMachine(objectIndex);
                     break;
                 case "beer":
-                    if (gamePanel.objects[objectIndex] instanceof Beer) {
-                        this.playerLuck = ((Beer) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
-                        logger.info(String.format("Player's luck increased to %f", this.playerLuck));
-                    }
-                    gamePanel.objects[objectIndex] = null;
+                    pickUpBeer(objectIndex);
                     break;
                 case "chest":
-                    if (gamePanel.objects[objectIndex] instanceof Chest && gamePanel.keyHandler.interact) {
-                        if (((Chest) gamePanel.objects[objectIndex]).open()) {
-                            chipCount += 50;
-                            gamePanel.keyHandler.interact = false;
-                            gamePanel.sound.playMusic(5);
-                        }
-                    }
-
+                    pickUpChest(objectIndex);
                     break;
                 case "vodka":
-                    if (gamePanel.objects[objectIndex] instanceof Vodka) {
-                        this.playerLuck = ((Vodka) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
-                        logger.info(String.format("Player's luck increased to %f", this.playerLuck));
-                    }
-                    gamePanel.objects[objectIndex] = null;
+                    pickUpVodka(objectIndex);
                     break;
                 case "domperignon":
-                    if (gamePanel.objects[objectIndex] instanceof DomPerignon) {
-                        this.playerLuck = ((DomPerignon) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
-                        logger.info(String.format("Player's luck increased to %f", this.playerLuck));
-                    }
-                    gamePanel.objects[objectIndex] = null;
+                    pickUpDomPerignon(objectIndex);
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    private void pickUpChip(int objectIndex) {
+        chipCount++;
+        gamePanel.objects[objectIndex] = null;
+        gamePanel.sound.playMusic(1);
+    }
+
+    private void pickUpSlotMachine(int objectIndex) {
+        if (gamePanel.objects[objectIndex] instanceof SlotMachine &&
+                !((SlotMachine) gamePanel.objects[objectIndex]).finished() &&
+                chipCount > 0) {
+            chipCount--;
+            if (random.nextFloat() < playerLuck) {
+                ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
+                ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
+                slotMachineCount++;
+                gamePanel.levelManager.checkLevelFinished();
+                gamePanel.sound.playMusic(3);
+            }
+        }
+    }
+
+    private void pickUpBeer(int objectIndex) {
+        if (gamePanel.objects[objectIndex] instanceof Beer) {
+            this.playerLuck = ((Beer) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+            logger.info(String.format("Player's luck increased to %f", this.playerLuck));
+        }
+        gamePanel.objects[objectIndex] = null;
+    }
+
+    private void pickUpChest(int objectIndex) {
+        if (gamePanel.objects[objectIndex] instanceof Chest && gamePanel.keyHandler.interact
+                && ((Chest) gamePanel.objects[objectIndex]).open()) {
+            chipCount += 50;
+            int randomInt = random.nextInt(3);
+            specialItemsFragnments[randomInt]++;
+            gamePanel.keyHandler.interact = false;
+            gamePanel.sound.playMusic(5);
+        }
+    }
+
+    private void pickUpVodka(int objectIndex) {
+        if (gamePanel.objects[objectIndex] instanceof Vodka) {
+            this.playerLuck = ((Vodka) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+            logger.info(String.format("Player's luck increased to %f", this.playerLuck));
+        }
+        gamePanel.objects[objectIndex] = null;
+    }
+
+    private void pickUpDomPerignon(int objectIndex) {
+        if (gamePanel.objects[objectIndex] instanceof DomPerignon) {
+            this.playerLuck = ((DomPerignon) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+            logger.info(String.format("Player's luck increased to %f", this.playerLuck));
+        }
+        gamePanel.objects[objectIndex] = null;
     }
 
     /*
@@ -281,9 +315,68 @@ public class Player extends Entity {
         directionToImageMap.put("right", () -> (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : null);
     }
 
+    @Override
     public void draw(Graphics2D g) {
         BufferedImage img = directionToImageMap.getOrDefault(direction, () -> null).get();
         g.drawImage(img, screenX, screenY, null);
+    }
+
+    public int getSpecialItemsFragmentCount(int item) {
+        switch (item) {
+            case CIGAR:
+                return specialItemsFragnments[0];
+            case GUN:
+                return specialItemsFragnments[1];
+            case CARDS:
+                return specialItemsFragnments[2];
+            default:
+                return 0;
+        }
+    }
+
+    public void setSpecialItemsFragmentCount(int item, int count) {
+        switch (item) {
+            case CIGAR:
+                specialItemsFragnments[0] = count;
+                break;
+            case GUN:
+                specialItemsFragnments[1] = count;
+                break;
+            case CARDS:
+                specialItemsFragnments[2] = count;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void setSpecialItem(int item, int count) {
+        switch (item) {
+            case CIGAR:
+                cigar = count;
+                break;
+            case GUN:
+                gun = count;
+                break;
+            case CARDS:
+                cards = count;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public int getSpecialItem(int item) {
+        switch (item) {
+            case CIGAR:
+                return cigar;
+            case GUN:
+                return gun;
+            case CARDS:
+                return cards;
+            default:
+                return 0;
+        }
     }
 
 }
