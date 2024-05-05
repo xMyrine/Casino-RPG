@@ -150,6 +150,7 @@ public class Pokermon {
     private void enemyAttack() {
         int attack = RAND.nextInt(4);
         if (enemyHealth <= 0 && !cheatDeath) {
+            gamePanel.ui.setAnnounceMessage("Pickachu Used Cheat Death!");
             cheatDeath();
         }
         switch (attack) {

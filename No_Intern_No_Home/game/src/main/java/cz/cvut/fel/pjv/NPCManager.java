@@ -41,7 +41,7 @@ public class NPCManager {
                 spawnLevelThreeNPC();
                 level3NPCSpawned = true;
             }
-            gamePanel.levelManager.levelInProgress = true;
+            gamePanel.levelManager.setLevelInProgress(true);
 
         }
     }

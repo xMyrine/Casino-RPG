@@ -30,7 +30,7 @@ public class Main {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(false);
         Logger logger = Logger.getLogger(Main.class.getName());
-        logger.setLevel(Level.WARNING);
+        logger.setLevel(Level.FINE);
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

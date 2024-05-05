@@ -7,6 +7,7 @@ import cz.cvut.fel.pjv.minigames.Roulette;
 import cz.cvut.fel.pjv.objects.*;
 
 import java.util.logging.Logger;
+import java.util.Random;
 import java.util.logging.Level;
 
 public class LevelManager {
@@ -17,12 +18,13 @@ public class LevelManager {
     private boolean firstLevelMessage = false;
     private boolean secondLevelMessage = false;
     private boolean thirdLevelmessage = false;
-    public boolean levelInProgress = true;
+    private boolean levelInProgress = true;
     private static int levelNumber = 1; // ! Change to 1
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
     public Roulette roulette;
     public Blackjack blackjack;
     public Pokermon pokermon;
+    private Random rand = new Random();
 
     public LevelManager(GamePanel gamePanel) {
         this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
@@ -33,6 +35,14 @@ public class LevelManager {
         roulette = new Roulette(gamePanel);
         blackjack = new Blackjack(gamePanel);
         pokermon = new Pokermon(gamePanel);
+    }
+
+    public boolean isLevelInProgress() {
+        return levelInProgress;
+    }
+
+    public void setLevelInProgress(boolean levelInProgress) {
+        this.levelInProgress = levelInProgress;
     }
 
     /*
@@ -46,31 +56,30 @@ public class LevelManager {
                 levelInProgress = false;
                 levelNumber++;
                 openDoors();
+                rewardPlayer();
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
                 logger.warning("Level number: " + levelNumber);
                 return firstLevel.checkLevelFinished();
             }
         } else if (levelNumber == 2) {
-            levelInProgress = true;
             if (secondLevel.checkLevelFinished() && !secondLevelMessage) {
                 gamePanel.ui.setAnnounceMessage("Second Level finished");
                 secondLevelMessage = true;
                 levelInProgress = false;
                 levelNumber++;
                 openDoors();
+                rewardPlayer();
                 logger.warning("Level number: " + levelNumber);
                 return secondLevel.checkLevelFinished();
             }
         } else if (levelNumber == 3) {
-            levelInProgress = true;
-            System.out.println(thirdLevel.checkLevelFinished());
             if (thirdLevel.checkLevelFinished() && !thirdLevelmessage) {
-                System.out.println("Third Level finished");
                 gamePanel.ui.setAnnounceMessage("Third Level finished");
                 thirdLevelmessage = true;
                 levelInProgress = false;
                 levelNumber++;
                 openDoors();
+                rewardPlayer();
                 logger.warning("Level number: " + levelNumber);
                 return thirdLevel.checkLevelFinished();
             }
@@ -99,4 +108,9 @@ public class LevelManager {
         }
     }
 
+    private void rewardPlayer() {
+        int reward = rand.nextInt(3);
+        gamePanel.player.setSpecialItemsFragmentCount(reward,
+                gamePanel.player.getSpecialItemsFragmentCount(reward) + 1);
+    }
 }

@@ -23,19 +23,14 @@ public class ObjectsSpawner {
         gamePanel.objects[1] = new Chip(gamePanel.tileSize, gamePanel.tileSize * 3);
         gamePanel.objects[2] = new Chip(gamePanel.tileSize * 2, gamePanel.tileSize * 3);
         gamePanel.objects[3] = new Chip(gamePanel.tileSize * 2, gamePanel.tileSize * 2);
-
         gamePanel.objects[4] = new SlotMachine(gamePanel.tileSize * 17, gamePanel.tileSize * 3);
-
         gamePanel.objects[5] = new SlotMachine(gamePanel.tileSize * 19, gamePanel.tileSize * 3);
-
         gamePanel.objects[10] = new SlotMachine(gamePanel.tileSize * 21,
                 gamePanel.tileSize * 6);
         gamePanel.objects[13] = new SlotMachine(gamePanel.tileSize * 19,
                 gamePanel.tileSize * 9);
-
         gamePanel.objects[15] = new SlotMachine(gamePanel.tileSize * 23,
                 gamePanel.tileSize * 9);
-
         gamePanel.objects[6] = new Chest(gamePanel.tileSize * 1, gamePanel.tileSize * 23);
 
         gamePanel.objects[7] = new Chest(gamePanel.tileSize * 9, gamePanel.tileSize * 23);
@@ -54,23 +49,21 @@ public class ObjectsSpawner {
     }
 
     private void spawnLevelTwoObjects() {
+        logger.fine("Spawning level 2 objects");
         gamePanel.objects[0] = new Door(gamePanel.tileSize * 37, gamePanel.tileSize * 24);
-
         gamePanel.objects[1] = new Door(gamePanel.tileSize * 36, gamePanel.tileSize * 24);
-
         gamePanel.objects[10] = new Chest(gamePanel.tileSize * 47, gamePanel.tileSize * 1);
-
         gamePanel.objects[28] = new DomPerignon(gamePanel.tileSize * 46, gamePanel.tileSize * 3);
-
         gamePanel.objects[29] = new Vodka(gamePanel.tileSize * 46, gamePanel.tileSize * 4);
-
         gamePanel.objects[27] = new Beer(gamePanel.tileSize * 46, gamePanel.tileSize * 5);
-
+        gamePanel.levelManager.setLevelInProgress(true);
     }
 
-    private void spawnLevelThreeObjects() {
-        gamePanel.objects[2] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 35);
-        gamePanel.objects[3] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 36);
+    public void spawnLevelThreeObjects() { // ! CHANGE THIS ONCE FIXED
+        logger.fine("Spawning level 3 objects");
+        gamePanel.objects[32] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 35);
+        gamePanel.objects[33] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 36);
+        gamePanel.levelManager.setLevelInProgress(true);
     }
 
     public int getCurrentObjectLevelSpawned() {
@@ -81,7 +74,7 @@ public class ObjectsSpawner {
      * Updates the game
      */
     public void update() {
-        if (!gamePanel.levelManager.levelInProgress && LevelManager.getLevelNumber() > currentObjectLevelSpawned) {
+        if (!gamePanel.levelManager.isLevelInProgress() && LevelManager.getLevelNumber() > currentObjectLevelSpawned) {
             for (int i = 0; i < gamePanel.objects.length; i++) {
                 if (gamePanel.objects[i] != null && !gamePanel.objects[i].isSolid()
                         && !(gamePanel.objects[i] instanceof Door)) {
@@ -89,16 +82,16 @@ public class ObjectsSpawner {
                 }
 
             }
-            if (LevelManager.getLevelNumber() == 2 && !gamePanel.levelManager.levelInProgress) {
+            if (LevelManager.getLevelNumber() == 2 && !gamePanel.levelManager.isLevelInProgress()) {
                 spawnLevelTwoObjects();
                 logger.warning("Level 2 objects spawned");
             }
-            if (LevelManager.getLevelNumber() == 3 && !gamePanel.levelManager.levelInProgress) {
+            if (LevelManager.getLevelNumber() == 3 && !gamePanel.levelManager.isLevelInProgress()) {
                 spawnLevelThreeObjects();
                 logger.warning("Level 3 objects spawned");
             }
             currentObjectLevelSpawned++;
-            gamePanel.levelManager.levelInProgress = true;
+            gamePanel.levelManager.setLevelInProgress(true);
 
         }
     }

@@ -382,9 +382,4 @@ public class Player extends Entity {
         }
     }
 
-    public void increaseRandomItem() {
-        int randomInt = random.nextInt(3);
-        specialItemsFragnments[randomInt]++;
-    }
-
 }
