@@ -5,11 +5,9 @@ import cz.cvut.fel.pjv.Toolbox;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TileManager {
@@ -41,7 +39,6 @@ public class TileManager {
 
         mapTileNum = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
 
-        // getTileImage();
         loadMap("/maps/test.txt");
 
     }
@@ -50,10 +47,6 @@ public class TileManager {
      * Load the tile images.
      */
     public void getTileImage() {
-        // assignTiles(0, "floor", false);
-        // assignTiles(1, "wall", true);
-        // assignTiles(2, "carpet", false);
-
         String name;
         boolean collision;
 
@@ -85,7 +78,7 @@ public class TileManager {
             while (col < gamePanel.maxWorldCol && row < gamePanel.maxWorldRow) {
                 String line = br.readLine();
                 while (col < gamePanel.maxWorldCol) {
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
 
                     num = Integer.parseInt(numbers[col]);
 

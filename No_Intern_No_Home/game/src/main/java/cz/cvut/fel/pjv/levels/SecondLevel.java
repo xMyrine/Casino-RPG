@@ -5,7 +5,7 @@ import cz.cvut.fel.pjv.GamePanel;
 public class SecondLevel extends Level {
 
     private GamePanel gamePanel;
-    public boolean gotLaid;
+    private boolean gotLaid;
 
     public SecondLevel(GamePanel gamePanel) {
         this.levelFinished = false;
@@ -25,6 +25,10 @@ public class SecondLevel extends Level {
             return true;
         }
         return false;
+    }
+
+    public void setGotLaid(boolean gotLaid) {
+        this.gotLaid = gotLaid;
     }
 
 }

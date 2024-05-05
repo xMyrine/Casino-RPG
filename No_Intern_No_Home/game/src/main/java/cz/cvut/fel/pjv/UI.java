@@ -6,9 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import cz.cvut.fel.pjv.minigames.assets.Card;
 import cz.cvut.fel.pjv.objects.*;
@@ -26,6 +24,7 @@ public class UI {
     private int displayMessageCounter = 0;
     private String dialogueText = "...";
     public static int command = 0;
+    private static final Logger logger = Logger.getLogger(UI.class.getName());
 
     private BufferedImage chipImage;
     private BufferedImage titleImage;
@@ -199,29 +198,6 @@ public class UI {
      */
     private void drawPokermon() {
 
-        Timer timer = new Timer(100, null);
-        timer.addActionListener(new ActionListener() {
-            int counter = 0;
-            boolean isWhite = true;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (counter >= 20) {
-                    ((Timer) e.getSource()).stop();
-                } else {
-                    if (isWhite) {
-                        g.setColor(Color.WHITE);
-                    } else {
-                        g.setColor(Color.BLACK);
-                    }
-                    g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
-                    isWhite = !isWhite;
-                    counter++;
-                }
-            }
-        });
-        timer.start();
-
         g.drawImage(gamePanel.levelManager.pokermon.getScreenImage(), 0, 0, gamePanel.screenWidth,
                 gamePanel.screenHeight - 36,
                 null);
@@ -280,12 +256,6 @@ public class UI {
             g.drawRect(gamePanel.tileSize * 11 + 16 + (i * 21), gamePanel.tileSize * 7, 14, 14);
         }
 
-        // if (gamePanel.levelManager.pokermon.getMode() == 1) {
-        // g.drawImage(gamePanel.levelManager.pokermon.getAttackButtons(), 0, 0,
-        // gamePanel.screenWidth,
-        // gamePanel.screenHeight - 36,
-        // null);
-        // }
         if (gamePanel.levelManager.pokermon.getMode() == 2) {
             g.drawImage(gamePanel.levelManager.pokermon.getShootButton(), 0, 0, gamePanel.screenWidth,
                     gamePanel.screenHeight - 36,
@@ -328,7 +298,7 @@ public class UI {
                         getClass().getResourceAsStream(gamePanel.levelManager.blackjack.hiddenCard.getImagePath()));
                 g.drawImage(img, gamePanel.tileSize * 1, 24, Card.cardWidth, Card.cardHeight, null);
             } catch (Exception e) {
-                System.err.println("Error loading Card image");
+                logger.warning("Error loading Card image");
             }
         }
 
@@ -350,7 +320,7 @@ public class UI {
                         Card.cardWidth, Card.cardHeight, null);
             }
         } catch (Exception e) {
-            System.err.println("Error loading Card image");
+            logger.warning("Error loading Card image");
         }
 
         if (!gamePanel.levelManager.blackjack.getStandEnabled() && !gamePanel.levelManager.blackjack.getHitEnabled()) {
@@ -594,7 +564,6 @@ public class UI {
             g.drawString(line, x, y);
             y += 24;
         }
-        // g.drawString(dialogueText, x, y);
     }
 
     private void drawWindow(int x, int y, int width, int height) {

@@ -47,7 +47,7 @@ public class Blackjack {
             cardBack = ImageIO.read(getClass().getResourceAsStream("/cards/back_red_basic.png"));
 
         } catch (Exception e) {
-            System.err.println("Error loading button image");
+            e.printStackTrace();
         }
     }
 

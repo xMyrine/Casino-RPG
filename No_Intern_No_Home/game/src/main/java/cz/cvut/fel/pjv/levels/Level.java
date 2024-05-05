@@ -2,8 +2,6 @@ package cz.cvut.fel.pjv.levels;
 
 import java.util.logging.Logger;
 
-import cz.cvut.fel.pjv.GamePanel;
-
 public abstract class Level {
 
     protected boolean levelFinished;
@@ -18,11 +16,6 @@ public abstract class Level {
 
     public boolean checkLevelFinished() {
         return levelFinished;
-    }
-
-    private boolean isMiniGameFinished() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isMiniGameFinished'");
     }
 
 }

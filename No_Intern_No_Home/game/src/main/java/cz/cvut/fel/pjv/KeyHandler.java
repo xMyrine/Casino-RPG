@@ -212,7 +212,8 @@ public class KeyHandler implements KeyListener {
                     gamePanel.levelManager.pokermon.setMode(UI.command + 1);
 
                 }
-                if (code == KeyEvent.VK_ENTER && gamePanel.levelManager.pokermon.getMode() == 1) {
+                if (code == KeyEvent.VK_ENTER && (gamePanel.levelManager.pokermon.getMode() == 1)
+                        || (gamePanel.levelManager.pokermon.getMode() == 2)) {
                     gamePanel.levelManager.pokermon.executeCommand(UI.command);
                 }
                 if (code == KeyEvent.VK_R) {

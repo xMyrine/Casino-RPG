@@ -6,15 +6,18 @@ import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.*;
 import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.items.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
+
 import javax.imageio.ImageIO;
 import java.util.Random;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -50,8 +53,8 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
 
         cigar = 0;
-        gun = 0;
-        cards = 1;
+        gun = 1;
+        cards = 0;
 
         screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
         screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
@@ -377,6 +380,11 @@ public class Player extends Entity {
             default:
                 return 0;
         }
+    }
+
+    public void increaseRandomItem() {
+        int randomInt = random.nextInt(3);
+        specialItemsFragnments[randomInt]++;
     }
 
 }

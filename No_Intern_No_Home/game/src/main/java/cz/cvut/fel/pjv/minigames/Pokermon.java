@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.entity.Player;
 
 public class Pokermon {
     private int playerHealth;
@@ -181,26 +182,28 @@ public class Pokermon {
                     if (Pokermon.RAND.nextDouble() < luck) {
                         readAkla();
                     }
-                    // mode = 0;
                     break;
                 case 1:
                     taylorsSeries();
                     if (Pokermon.RAND.nextDouble() < luck) {
                         taylorsSeries();
                     }
-                    // mode = 0;
                     break;
                 case 2:
                     twoInches();
                     if (Pokermon.RAND.nextDouble() < luck) {
                         twoInches();
                     }
-                    // mode = 0;
                     break;
                 default:
                     break;
             }
             enemyAttack();
+        } else if (mode == 2) {
+            if (command == 0) {
+                shoot();
+                enemyAttack();
+            }
         }
 
         if (playerHealth <= 0) {
@@ -214,6 +217,19 @@ public class Pokermon {
             screenImage = winImage;
             gamePanel.sound.playMusic(6);
         }
+    }
+
+    public void shoot() {
+        if (gamePanel.player.getSpecialItem(Player.GUN) > 0) {
+            gamePanel.sound.playMusic(7);
+            enemyHealth -= 10;
+            gamePanel.player.setSpecialItem(Player.GUN, gamePanel.player.getSpecialItem(Player.GUN) - 1);
+            mode = 0;
+        } else {
+            gamePanel.ui.setAnnounceMessage("You don't have a gun");
+
+        }
+
     }
 
     public void reset() {
