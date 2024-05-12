@@ -25,16 +25,16 @@ public abstract class Object {
     protected static Sound sound = new Sound();
 
     public void draw(Graphics2D g, GamePanel gamePanel) {
-        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * gamePanel.tileSize - 24;
+        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * gamePanel.tileSize - 24;
+        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * GamePanel.TILE_SIZE - 24;
 
         // draw only objects that are in the screen
-        if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.screenWidth
-                && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.screenWidth
-                && worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.screenHeight
-                && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.screenHeight) {
-            g.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - gamePanel.screenWidth
+                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + gamePanel.screenWidth
+                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - gamePanel.screenHeight
+                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + gamePanel.screenHeight) {
+            g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }
 

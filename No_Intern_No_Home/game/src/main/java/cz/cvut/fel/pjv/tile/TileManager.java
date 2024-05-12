@@ -104,7 +104,7 @@ public class TileManager {
         try {
             tiles[index] = new Tile();
             tiles[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + path));
-            tiles[index].image = Toolbox.scaleImage(tiles[index].image, gamePanel.tileSize, gamePanel.tileSize);
+            tiles[index].image = Toolbox.scaleImage(tiles[index].image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
             tiles[index].collision = collision;
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,19 +129,20 @@ public class TileManager {
         while (worldCol < gamePanel.maxWorldCol && worldRow < gamePanel.maxWorldRow) {
             tileNum = mapTileNum[worldCol][worldRow];
 
-            worldX = worldCol * gamePanel.tileSize;
-            worldY = worldRow * gamePanel.tileSize;
+            worldX = worldCol * GamePanel.TILE_SIZE;
+            worldY = worldRow * GamePanel.TILE_SIZE;
 
             screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
             screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
 
-            int screenTilesWidth = gamePanel.screenWidth / gamePanel.tileSize;
-            int screenTilesHeight = gamePanel.screenHeight / gamePanel.tileSize;
+            int screenTilesWidth = gamePanel.screenWidth / GamePanel.TILE_SIZE;
+            int screenTilesHeight = gamePanel.screenHeight / GamePanel.TILE_SIZE;
 
-            if (worldX - screenTilesWidth * gamePanel.tileSize < gamePanel.player.worldX + gamePanel.tileSize
-                    && worldX + screenTilesWidth * gamePanel.tileSize > gamePanel.player.worldX - gamePanel.tileSize
-                    && worldY - screenTilesHeight * gamePanel.tileSize < gamePanel.player.worldY + gamePanel.tileSize
-                    && worldY + screenTilesHeight * gamePanel.tileSize > gamePanel.player.worldY - gamePanel.tileSize) {
+            if (worldX - screenTilesWidth * GamePanel.TILE_SIZE < gamePanel.player.worldX + GamePanel.TILE_SIZE
+                    && worldX + screenTilesWidth * GamePanel.TILE_SIZE > gamePanel.player.worldX - GamePanel.TILE_SIZE
+                    && worldY - screenTilesHeight * GamePanel.TILE_SIZE < gamePanel.player.worldY + GamePanel.TILE_SIZE
+                    && worldY + screenTilesHeight * GamePanel.TILE_SIZE > gamePanel.player.worldY
+                            - GamePanel.TILE_SIZE) {
 
                 g.drawImage(tiles[tileNum].image, screenX, screenY, null);
             }

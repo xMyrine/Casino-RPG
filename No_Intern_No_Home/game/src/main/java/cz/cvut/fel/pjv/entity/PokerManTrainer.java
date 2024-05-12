@@ -4,18 +4,14 @@ import javax.imageio.ImageIO;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
 
 public class PokerManTrainer extends Entity {
 
-    public PokerManTrainer(GamePanel panel, int x, int y) {
+    public PokerManTrainer(int x, int y) {
         this.name = "Trainer";
-        this.gamePanel = panel;
         this.speed = 0;
         this.direction = "up";
         this.worldX = x;
@@ -42,7 +38,7 @@ public class PokerManTrainer extends Entity {
         BufferedImage image = null;
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
+            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,32 +57,19 @@ public class PokerManTrainer extends Entity {
 
     }
 
-    private Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
-    {
-        directionToImageMap.put("up", () -> (spriteIndex == 1) ? up1 : (spriteIndex == 2) ? up2 : down1);
-        directionToImageMap.put("down", () -> (spriteIndex == 1) ? down1 : (spriteIndex == 2) ? down2 : down1);
-        directionToImageMap.put("left", () -> (spriteIndex == 1) ? left1 : (spriteIndex == 2) ? left2 : down1);
-        directionToImageMap.put("right", () -> (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : down1);
-    }
-
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
-        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * gamePanel.tileSize - 24;
+        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * gamePanel.tileSize - 24;
+        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * GamePanel.TILE_SIZE - 24;
         // draw only objects that are in the screen
-        if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.screenWidth
-                && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.screenWidth
-                && worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.screenHeight
-                && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.screenHeight) {
-            g.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - gamePanel.screenWidth
+                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + gamePanel.screenWidth
+                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - gamePanel.screenHeight
+                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + gamePanel.screenHeight) {
+            g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
-    }
-
-    @Override
-    public void talk() {
-        super.talk();
     }
 
     @Override

@@ -14,7 +14,7 @@ public class LevelManager {
     public FirstLevel firstLevel;
     public SecondLevel secondLevel;
     public ThirdLevel thirdLevel;
-    public GamePanel gamePanel;
+    private GamePanel gamePanel;
     private boolean firstLevelMessage = false;
     private boolean secondLevelMessage = false;
     private boolean thirdLevelmessage = false;
@@ -45,8 +45,13 @@ public class LevelManager {
         this.levelInProgress = levelInProgress;
     }
 
+    private static void increaseLevel() {
+        levelNumber++;
+        // rest of your code
+    }
+
     /*
-     * Check if the first level is finished
+     * Check if the first level is finished and increment the level number if it is
      */
     public boolean checkLevelFinished() {
         if (levelNumber == 1) {
@@ -54,7 +59,7 @@ public class LevelManager {
                 gamePanel.ui.setAnnounceMessage("First Level finished");
                 firstLevelMessage = true;
                 levelInProgress = false;
-                levelNumber++;
+                increaseLevel();
                 openDoors();
                 rewardPlayer();
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
@@ -66,7 +71,7 @@ public class LevelManager {
                 gamePanel.ui.setAnnounceMessage("Second Level finished");
                 secondLevelMessage = true;
                 levelInProgress = false;
-                levelNumber++;
+                increaseLevel();
                 openDoors();
                 rewardPlayer();
                 logger.warning("Level number: " + levelNumber);
@@ -77,10 +82,10 @@ public class LevelManager {
                 gamePanel.ui.setAnnounceMessage("Third Level finished");
                 thirdLevelmessage = true;
                 levelInProgress = false;
-                levelNumber++;
+                increaseLevel();
                 openDoors();
                 rewardPlayer();
-                logger.warning("Level number: " + levelNumber);
+                logger.warning(String.format("Level number: %d", levelNumber));
                 return thirdLevel.checkLevelFinished();
             }
         }

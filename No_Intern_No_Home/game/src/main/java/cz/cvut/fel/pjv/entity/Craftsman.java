@@ -1,8 +1,5 @@
 package cz.cvut.fel.pjv.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -12,9 +9,8 @@ import cz.cvut.fel.pjv.Toolbox;
 
 public class Craftsman extends Entity {
 
-    public Craftsman(GamePanel panel) {
+    public Craftsman() {
         this.name = "Craftsman";
-        this.gamePanel = panel;
         this.speed = 1;
         this.direction = "left";
         this.worldX = 10;
@@ -23,9 +19,8 @@ public class Craftsman extends Entity {
         getNPCImage();
     }
 
-    public Craftsman(GamePanel panel, int x, int y) {
+    public Craftsman(int x, int y) {
         this.name = "Craftsman";
-        this.gamePanel = panel;
         this.speed = 1;
         this.direction = "left";
         this.worldX = x;
@@ -50,7 +45,7 @@ public class Craftsman extends Entity {
         BufferedImage image = null;
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
+            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,26 +53,18 @@ public class Craftsman extends Entity {
 
     }
 
-    private Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
-    {
-        directionToImageMap.put("up", () -> (spriteIndex == 1) ? up1 : (spriteIndex == 2) ? up2 : down1);
-        directionToImageMap.put("down", () -> (spriteIndex == 1) ? down1 : (spriteIndex == 2) ? down2 : down1);
-        directionToImageMap.put("left", () -> (spriteIndex == 1) ? left1 : (spriteIndex == 2) ? left2 : down1);
-        directionToImageMap.put("right", () -> (spriteIndex == 1) ? right1 : (spriteIndex == 2) ? right2 : down1);
-    }
-
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
-        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * gamePanel.tileSize - 24;
+        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * gamePanel.tileSize - 24;
+        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * GamePanel.TILE_SIZE - 24;
         // draw only objects that are in the screen
-        if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.screenWidth
-                && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.screenWidth
-                && worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.screenHeight
-                && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.screenHeight) {
-            g.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - gamePanel.screenWidth
+                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + gamePanel.screenWidth
+                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - gamePanel.screenHeight
+                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + gamePanel.screenHeight) {
+            g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }
 
@@ -119,24 +106,26 @@ public class Craftsman extends Entity {
      * Craftsman crafts special items for the player.
      */
     public void craft(int item) {
-        int cigarCount = gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR);
-        int gunCount = gamePanel.player.getSpecialItemsFragmentCount(Player.GUN);
-        int cardsCount = gamePanel.player.getSpecialItemsFragmentCount(Player.CARDS);
+        int cigarCount = gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR_INDEX);
+        int gunIndex = gamePanel.player.getSpecialItemsFragmentCount(Player.GUN_INDEX);
+        int cardsIndex = gamePanel.player.getSpecialItemsFragmentCount(Player.CARDS_INDEX);
 
-        if (item == Player.CIGAR && cigarCount >= 3 && gamePanel.player.getChipCount() >= 50) {
-            gamePanel.player.setSpecialItemsFragmentCount(Player.CIGAR,
-                    gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR) - 3);
-            gamePanel.player.setSpecialItem(Player.CIGAR, gamePanel.player.getSpecialItem(Player.CIGAR) + 1);
+        if (item == Player.CIGAR_INDEX && cigarCount >= 3 && gamePanel.player.getChipCount() >= 50) {
+            gamePanel.player.setSpecialItemsFragmentCount(Player.CIGAR_INDEX,
+                    gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR_INDEX) - 3);
+            gamePanel.player.setSpecialItem(Player.CIGAR_INDEX,
+                    gamePanel.player.getSpecialItem(Player.CIGAR_INDEX) + 1);
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 50);
-        } else if (item == Player.GUN && gunCount >= 3 && gamePanel.player.getChipCount() >= 250) {
-            gamePanel.player.setSpecialItemsFragmentCount(Player.GUN,
-                    gamePanel.player.getSpecialItemsFragmentCount(Player.GUN) - 3);
-            gamePanel.player.setSpecialItem(Player.GUN, gamePanel.player.getSpecialItem(Player.GUN) + 1);
+        } else if (item == Player.GUN_INDEX && gunIndex >= 3 && gamePanel.player.getChipCount() >= 250) {
+            gamePanel.player.setSpecialItemsFragmentCount(Player.GUN_INDEX,
+                    gamePanel.player.getSpecialItemsFragmentCount(Player.GUN_INDEX) - 3);
+            gamePanel.player.setSpecialItem(Player.GUN_INDEX, gamePanel.player.getSpecialItem(Player.GUN_INDEX) + 1);
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 250);
-        } else if (item == Player.CARDS && cardsCount >= 3 && gamePanel.player.getChipCount() >= 100) {
-            gamePanel.player.setSpecialItemsFragmentCount(Player.CARDS,
-                    gamePanel.player.getSpecialItemsFragmentCount(Player.CARDS) - 3);
-            gamePanel.player.setSpecialItem(Player.CARDS, gamePanel.player.getSpecialItem(Player.CARDS) + 1);
+        } else if (item == Player.CARDS_INDEX && cardsIndex >= 3 && gamePanel.player.getChipCount() >= 100) {
+            gamePanel.player.setSpecialItemsFragmentCount(Player.CARDS_INDEX,
+                    gamePanel.player.getSpecialItemsFragmentCount(Player.CARDS_INDEX) - 3);
+            gamePanel.player.setSpecialItem(Player.CARDS_INDEX,
+                    gamePanel.player.getSpecialItem(Player.CARDS_INDEX) + 1);
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 100);
         } else {
             gamePanel.ui.setAnnounceMessage("Not enough fragments or unsufficient funds");

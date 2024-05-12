@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 
 public class DomPerignon extends Object implements Alcohol {
 
-    private final float luck = 0.2f;
+    private static final float LUCK = 0.2f;
 
     public DomPerignon(int worldX, int worldY) {
         this.worldX = worldX;
@@ -25,7 +25,7 @@ public class DomPerignon extends Object implements Alcohol {
     @Override
     public float increasePlayersLuck(Player player) {
         float newLuck = player.getPlayerLuck();
-        newLuck += luck;
+        newLuck += LUCK;
         sound.playMusic(2);
         if (newLuck > 1) {
             newLuck = 0.3f;

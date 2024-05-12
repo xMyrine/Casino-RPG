@@ -2,10 +2,12 @@ package cz.cvut.fel.pjv.entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-import cz.cvut.fel.pjv.CollisionManager;
 import cz.cvut.fel.pjv.GamePanel;
 
 import java.awt.Graphics2D;
@@ -38,6 +40,14 @@ public abstract class Entity {
 
     public static void getGamePanelInstance(GamePanel gP) {
         gamePanel = gP;
+    }
+
+    protected Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
+    {
+        directionToImageMap.put("up", () -> getSpriteImage(up1, up2));
+        directionToImageMap.put("down", () -> getSpriteImage(down1, down2));
+        directionToImageMap.put("left", () -> getSpriteImage(left1, left2));
+        directionToImageMap.put("right", () -> getSpriteImage(right1, right2));
     }
 
     public void update() {
@@ -129,6 +139,16 @@ public abstract class Entity {
         if (dialogues[dialogueIndex] == null) {
             dialogueIndex = 0;
             gamePanel.changeGameState(GamePanel.GAMESCREEN);
+        }
+    }
+
+    protected BufferedImage getSpriteImage(BufferedImage sprite1, BufferedImage sprite2) {
+        if (spriteIndex == 1) {
+            return sprite1;
+        } else if (spriteIndex == 2) {
+            return sprite2;
+        } else {
+            return down1;
         }
     }
 

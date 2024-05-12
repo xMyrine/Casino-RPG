@@ -100,21 +100,22 @@ public class UI {
         g.drawImage(craftingScreen, 0, 0, gamePanel.screenWidth, gamePanel.screenHeight - 24, null);
         int x = 72;
         int y = 24;
-        int width = gamePanel.screenWidth - gamePanel.tileSize * 3;
-        int height = gamePanel.tileSize;
+        int width = gamePanel.screenWidth - GamePanel.TILE_SIZE * 3;
+        int height = GamePanel.TILE_SIZE;
         drawWindow(x, y, width, height);
         if (command == 0) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 7, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
-                    gamePanel.tileSize * 2, null);
-            g.drawString("Craft Cigar for 3 cigar fragments", gamePanel.tileSize * 3, gamePanel.tileSize + 10);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 7, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
+                    GamePanel.TILE_SIZE * 2, null);
+            g.drawString("Craft Cigar for 3 cigar fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
         } else if (command == 1) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 12 + 24, gamePanel.tileSize * 9, gamePanel.tileSize * 3,
-                    gamePanel.tileSize * 2, null);
-            g.drawString("Craft Gun for 3 gun fragments", gamePanel.tileSize * 3, gamePanel.tileSize + 10);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 12 + 24, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 3,
+                    GamePanel.TILE_SIZE * 2, null);
+            g.drawString("Craft Gun for 3 gun fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
         } else if (command == 2) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 12 + 24, gamePanel.tileSize * 7 + 24, gamePanel.tileSize * 3,
-                    gamePanel.tileSize * 2, null);
-            g.drawString("Craft Cards for 3 card fragments", gamePanel.tileSize * 3, gamePanel.tileSize + 10);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 12 + 24, GamePanel.TILE_SIZE * 7 + 24,
+                    GamePanel.TILE_SIZE * 3,
+                    GamePanel.TILE_SIZE * 2, null);
+            g.drawString("Craft Cards for 3 card fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
         }
     }
 
@@ -125,22 +126,22 @@ public class UI {
         g.drawImage(shopScreen, 0, 0, gamePanel.screenWidth, gamePanel.screenHeight - 24, null);
         g.setFont(g.getFont().deriveFont(40.0f));
         int x = 72;
-        int y = gamePanel.tileSize * 6;
-        int width = gamePanel.screenWidth - gamePanel.tileSize * 3;
-        int height = gamePanel.tileSize * 2;
+        int y = GamePanel.TILE_SIZE * 6;
+        int width = gamePanel.screenWidth - GamePanel.TILE_SIZE * 3;
+        int height = GamePanel.TILE_SIZE * 2;
         drawWindow(x, y, width, height);
         if (command == 0) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 1 + 24, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
-                    gamePanel.tileSize * 2, null);
-            g.drawString("Buy 5 Luck for 25 chips", gamePanel.tileSize * 4, gamePanel.tileSize * 7);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 1 + 24, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 4,
+                    GamePanel.TILE_SIZE * 2, null);
+            g.drawString("Buy 5 Luck for 25 chips", GamePanel.TILE_SIZE * 4, GamePanel.TILE_SIZE * 7);
         } else if (command == 1) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 7, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
-                    gamePanel.tileSize * 2, null);
-            g.drawString("Buy 10 chips for 1 luck", gamePanel.tileSize * 4, gamePanel.tileSize * 7);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 7, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
+                    GamePanel.TILE_SIZE * 2, null);
+            g.drawString("Buy 10 chips for 1 luck", GamePanel.TILE_SIZE * 4, GamePanel.TILE_SIZE * 7);
         } else if (command == 2) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 12 + 24, gamePanel.tileSize * 9, gamePanel.tileSize * 3,
-                    gamePanel.tileSize * 2, null);
-            g.drawString("Jesus take the wheel", gamePanel.tileSize * 4, gamePanel.tileSize * 7);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 12 + 24, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 3,
+                    GamePanel.TILE_SIZE * 2, null);
+            g.drawString("Jesus take the wheel", GamePanel.TILE_SIZE * 4, GamePanel.TILE_SIZE * 7);
         }
     }
 
@@ -152,45 +153,46 @@ public class UI {
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(20.0f));
-        g.drawString("Press ESC to resume", 0, gamePanel.tileSize);
-        g.drawString("W/A/S/D to move", 0, gamePanel.tileSize * 2);
-        g.drawString("E to interact", 0, gamePanel.tileSize * 3);
-        g.drawString("Enter to confirm", 0, gamePanel.tileSize * 4);
-        g.drawString("Press Q/E to increase or decrease your bet", 0, gamePanel.tileSize * 5);
-        g.drawString("W/S to navigate around buttons during minigame", 0, gamePanel.tileSize * 6);
-        g.drawString("Press I to toggle inventory", 0, gamePanel.tileSize * 7);
+        g.drawString("Press ESC to resume", 0, GamePanel.TILE_SIZE);
+        g.drawString("W/A/S/D to move", 0, GamePanel.TILE_SIZE * 2);
+        g.drawString("E to interact", 0, GamePanel.TILE_SIZE * 3);
+        g.drawString("Enter to confirm", 0, GamePanel.TILE_SIZE * 4);
+        g.drawString("Press Q/E to increase or decrease your bet", 0, GamePanel.TILE_SIZE * 5);
+        g.drawString("W/S to navigate around buttons during minigame", 0, GamePanel.TILE_SIZE * 6);
+        g.drawString("Press I to toggle inventory", 0, GamePanel.TILE_SIZE * 7);
     }
 
     /*
      * Draws a window with a border
      */
     public void drawInventory() {
+        Inventory inventory = gamePanel.player.getInventory();
         g.setColor(new Color(0, 0, 0, 200));
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
-        g.drawImage(gamePanel.player.inventory.InventoryImage, gamePanel.tileSize * 4, gamePanel.tileSize * 2,
-                gamePanel.tileSize * 8, gamePanel.tileSize * 8, null);
-        for (int i = 0; i < gamePanel.player.inventory.inventoryItems.length; i++) {
-            if (gamePanel.player.inventory.inventoryItems[i] == null) {
+        g.drawImage(inventory.InventoryImage, GamePanel.TILE_SIZE * 4, GamePanel.TILE_SIZE * 2,
+                GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 8, null);
+        for (int i = 0; i < inventory.inventoryItems.length; i++) {
+            if (inventory.inventoryItems[i] == null) {
                 break;
             }
             if (gamePanel.player.getSpecialItem(i) >= 1) {
-                g.drawImage(gamePanel.player.inventory.inventoryItems[i], gamePanel.tileSize * 4 + 30,
-                        (gamePanel.tileSize + 13) * (2 + i),
-                        gamePanel.tileSize, gamePanel.tileSize, null);
+                g.drawImage(inventory.inventoryItems[i], GamePanel.TILE_SIZE * 4 + 30,
+                        (GamePanel.TILE_SIZE + 13) * (2 + i),
+                        GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
             }
         }
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(30.0f));
-        g.drawString("Luck:" + gamePanel.player.getPlayerLuck() * 100 + "%", gamePanel.tileSize * 8,
-                gamePanel.tileSize * 3);
-        g.drawString("Chips:" + gamePanel.player.getChipCount(), gamePanel.tileSize * 8, gamePanel.tileSize * 4);
-        g.drawString("Speed:" + gamePanel.player.getSpeed(), gamePanel.tileSize * 8, gamePanel.tileSize * 5);
-        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(0), gamePanel.tileSize * 7,
-                gamePanel.tileSize * 9);
-        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(1), gamePanel.tileSize * 9,
-                gamePanel.tileSize * 9);
-        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(2), gamePanel.tileSize * 10 + 10,
-                gamePanel.tileSize * 9);
+        g.drawString("Luck:" + gamePanel.player.getPlayerLuck() * 100 + "%", GamePanel.TILE_SIZE * 8,
+                GamePanel.TILE_SIZE * 3);
+        g.drawString("Chips:" + gamePanel.player.getChipCount(), GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 4);
+        g.drawString("Speed:" + gamePanel.player.getSpeed(), GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 5);
+        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(0), GamePanel.TILE_SIZE * 7,
+                GamePanel.TILE_SIZE * 9);
+        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(1), GamePanel.TILE_SIZE * 9,
+                GamePanel.TILE_SIZE * 9);
+        g.drawString("" + gamePanel.player.getSpecialItemsFragmentCount(2), GamePanel.TILE_SIZE * 10 + 10,
+                GamePanel.TILE_SIZE * 9);
     }
 
     /*
@@ -206,54 +208,54 @@ public class UI {
                     gamePanel.screenHeight - 36,
                     null);
             g.setColor(new Color(0, 0, 0, 200));
-            g.fillRoundRect(gamePanel.tileSize * 1, gamePanel.tileSize * 3, 300, 100, 30, 30);
+            g.fillRoundRect(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, 300, 100, 30, 30);
             g.setColor(Color.WHITE);
-            g.drawRoundRect(gamePanel.tileSize * 1, gamePanel.tileSize * 3, 300, 100, 30, 30);
+            g.drawRoundRect(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, 300, 100, 30, 30);
             if (command == 0) {
-                g.drawString("Heals player for +2", gamePanel.tileSize + 24, gamePanel.tileSize * 4);
+                g.drawString("Heals player for +2", GamePanel.TILE_SIZE + 24, GamePanel.TILE_SIZE * 4);
             }
             if (command == 1) {
-                g.drawString("Deals damage to enemy", gamePanel.tileSize + 24, gamePanel.tileSize * 4);
+                g.drawString("Deals damage to enemy", GamePanel.TILE_SIZE + 24, GamePanel.TILE_SIZE * 4);
             }
             if (command == 2) {
-                g.drawString("Increases you damage +1", gamePanel.tileSize + 24, gamePanel.tileSize * 4);
+                g.drawString("Increases you damage +1", GamePanel.TILE_SIZE + 24, GamePanel.TILE_SIZE * 4);
             }
         }
 
         if (command == 0) {
-            g.drawImage(chosenButton, gamePanel.tileSize, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
-                    gamePanel.tileSize * 2, null);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 4,
+                    GamePanel.TILE_SIZE * 2, null);
         }
         if (command == 1) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 6, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
-                    gamePanel.tileSize * 2, null);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 6, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 4,
+                    GamePanel.TILE_SIZE * 2, null);
         }
         if (command == 2) {
-            g.drawImage(chosenButton, gamePanel.tileSize * 11, gamePanel.tileSize * 9, gamePanel.tileSize * 4,
-                    gamePanel.tileSize * 2, null);
+            g.drawImage(chosenButton, GamePanel.TILE_SIZE * 11, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 4,
+                    GamePanel.TILE_SIZE * 2, null);
         }
 
         g.setColor(Color.BLACK);
         g.setFont(g.getFont().deriveFont(30.0f));
         g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getPlayerAttack()),
-                gamePanel.tileSize * 15 + 10,
-                gamePanel.tileSize * 6 + 30);
+                GamePanel.TILE_SIZE * 15 + 10,
+                GamePanel.TILE_SIZE * 6 + 30);
 
-        g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getEnemyAttack()), gamePanel.tileSize * 4,
-                gamePanel.tileSize);
+        g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getEnemyAttack()), GamePanel.TILE_SIZE * 4,
+                GamePanel.TILE_SIZE);
 
         for (int i = 0; i < gamePanel.levelManager.pokermon.getEnemyHealth(); i++) {
             g.setColor(Color.RED);
-            g.fillRect(16 + (i * 21), gamePanel.tileSize * 1 + 10, 14, 14);
+            g.fillRect(16 + (i * 21), GamePanel.TILE_SIZE * 1 + 10, 14, 14);
             g.setColor(Color.BLACK);
-            g.drawRect(16 + (i * 21), gamePanel.tileSize * 1 + 10, 14, 14);
+            g.drawRect(16 + (i * 21), GamePanel.TILE_SIZE * 1 + 10, 14, 14);
         }
 
         for (int i = 0; i < gamePanel.levelManager.pokermon.getPlayerHealth(); i++) {
             g.setColor(Color.GREEN);
-            g.fillRect(gamePanel.tileSize * 11 + 16 + (i * 21), gamePanel.tileSize * 7, 14, 14);
+            g.fillRect(GamePanel.TILE_SIZE * 11 + 16 + (i * 21), GamePanel.TILE_SIZE * 7, 14, 14);
             g.setColor(Color.BLACK);
-            g.drawRect(gamePanel.tileSize * 11 + 16 + (i * 21), gamePanel.tileSize * 7, 14, 14);
+            g.drawRect(GamePanel.TILE_SIZE * 11 + 16 + (i * 21), GamePanel.TILE_SIZE * 7, 14, 14);
         }
 
         if (gamePanel.levelManager.pokermon.getMode() == 2) {
@@ -267,36 +269,36 @@ public class UI {
         g.setColor(new Color(123, 157, 134));
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
 
-        g.drawImage(gamePanel.levelManager.blackjack.hitButton, gamePanel.tileSize * 3, gamePanel.tileSize * 9,
-                gamePanel.tileSize * 5, gamePanel.tileSize * 2, null);
+        g.drawImage(gamePanel.levelManager.blackjack.hitButton, GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 9,
+                GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 2, null);
 
-        g.drawImage(gamePanel.levelManager.blackjack.standButton, gamePanel.tileSize * 8, gamePanel.tileSize * 9,
-                gamePanel.tileSize * 5, gamePanel.tileSize * 2, null);
+        g.drawImage(gamePanel.levelManager.blackjack.standButton, GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 9,
+                GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 2, null);
 
         if (command == 0 && gamePanel.levelManager.blackjack.getHitEnabled()) {
-            g.drawImage(chipImage, gamePanel.tileSize * 3 + 10, gamePanel.tileSize * 9 + 10, 40, 40, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 3 + 10, GamePanel.TILE_SIZE * 9 + 10, 40, 40, null);
         } else if (command == 1 && gamePanel.levelManager.blackjack.getStandEnabled()) {
-            g.drawImage(chipImage, gamePanel.tileSize * 8 + 10, gamePanel.tileSize * 9 + 10, 40, 40, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 + 10, GamePanel.TILE_SIZE * 9 + 10, 40, 40, null);
         }
 
         // crossing out the hit button if it is not enabled
         if (!gamePanel.levelManager.blackjack.getHitEnabled()) {
-            g.drawImage(crossedButton, gamePanel.tileSize * 3, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
-                    gamePanel.tileSize * 2, null);
+            g.drawImage(crossedButton, GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
+                    GamePanel.TILE_SIZE * 2, null);
         }
         // crossing out the stand button if it is not enabled
         if (!gamePanel.levelManager.blackjack.getStandEnabled()) {
-            g.drawImage(crossedButton, gamePanel.tileSize * 8, gamePanel.tileSize * 9, gamePanel.tileSize * 5,
-                    gamePanel.tileSize * 2, null);
+            g.drawImage(crossedButton, GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
+                    GamePanel.TILE_SIZE * 2, null);
         }
         if (gamePanel.levelManager.blackjack.getStandEnabled()) {
-            g.drawImage(gamePanel.levelManager.blackjack.cardBack, gamePanel.tileSize * 1, 24,
+            g.drawImage(gamePanel.levelManager.blackjack.cardBack, GamePanel.TILE_SIZE * 1, 24,
                     Card.cardWidth, Card.cardHeight, null);
         } else {
             try {
                 BufferedImage img = ImageIO.read(
                         getClass().getResourceAsStream(gamePanel.levelManager.blackjack.hiddenCard.getImagePath()));
-                g.drawImage(img, gamePanel.tileSize * 1, 24, Card.cardWidth, Card.cardHeight, null);
+                g.drawImage(img, GamePanel.TILE_SIZE * 1, 24, Card.cardWidth, Card.cardHeight, null);
             } catch (Exception e) {
                 logger.warning("Error loading Card image");
             }
@@ -307,7 +309,7 @@ public class UI {
             for (int i = 0; i < gamePanel.levelManager.blackjack.dealerHand.size(); i++) {
                 Card card = gamePanel.levelManager.blackjack.dealerHand.get(i);
                 BufferedImage img = ImageIO.read(getClass().getResourceAsStream(card.getImagePath()));
-                g.drawImage(img, ((Card.cardWidth) * (i + 1)) + gamePanel.tileSize, 24, Card.cardWidth,
+                g.drawImage(img, ((Card.cardWidth) * (i + 1)) + GamePanel.TILE_SIZE, 24, Card.cardWidth,
                         Card.cardHeight,
                         null);
             }
@@ -316,7 +318,7 @@ public class UI {
             for (int i = 0; i < gamePanel.levelManager.blackjack.playerHand.size(); i++) {
                 Card card = gamePanel.levelManager.blackjack.playerHand.get(i);
                 BufferedImage img = ImageIO.read(getClass().getResourceAsStream(card.getImagePath()));
-                g.drawImage(img, ((Card.cardWidth) * (i)) + gamePanel.tileSize, gamePanel.tileSize * 5,
+                g.drawImage(img, ((Card.cardWidth) * (i)) + GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 5,
                         Card.cardWidth, Card.cardHeight, null);
             }
         } catch (Exception e) {
@@ -326,7 +328,7 @@ public class UI {
         if (!gamePanel.levelManager.blackjack.getStandEnabled() && !gamePanel.levelManager.blackjack.getHitEnabled()) {
             g.setColor(Color.WHITE);
             g.setFont(g.getFont().deriveFont(Font.BOLD, 50.0f));
-            g.drawString("Press R to restart the game", gamePanel.tileSize * 1, gamePanel.tileSize * 8);
+            g.drawString("Press R to restart the game", GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 8);
         }
 
     }
@@ -337,33 +339,33 @@ public class UI {
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
         // Squares
         g.setColor(Color.RED);
-        g.fillRoundRect(gamePanel.tileSize * 1, gamePanel.tileSize * 1, gamePanel.tileSize * 3, 60, 30, 30);
+        g.fillRoundRect(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, 60, 30, 30);
         g.setColor(Color.BLACK);
-        g.drawRoundRect(gamePanel.tileSize * 1, gamePanel.tileSize * 1, gamePanel.tileSize * 3, 60, 30, 30);
+        g.drawRoundRect(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, 60, 30, 30);
 
-        g.fillRoundRect(gamePanel.tileSize * 5, gamePanel.tileSize * 1, gamePanel.tileSize * 3, 60, 30, 30);
+        g.fillRoundRect(GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, 60, 30, 30);
         g.setColor(Color.RED);
-        g.drawRoundRect(gamePanel.tileSize * 5, gamePanel.tileSize * 1, gamePanel.tileSize * 3, 60, 30, 30);
+        g.drawRoundRect(GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, 60, 30, 30);
         if (command == 0) {
-            g.drawImage(chipImage, gamePanel.tileSize * 1 + 10, gamePanel.tileSize * 2, 40, 40, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 1 + 10, GamePanel.TILE_SIZE * 2, 40, 40, null);
         } else if (command == 1) {
-            g.drawImage(chipImage, gamePanel.tileSize * 5 + 10, gamePanel.tileSize * 2, 40, 40, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 5 + 10, GamePanel.TILE_SIZE * 2, 40, 40, null);
         }
 
         // Text
         g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
-        g.drawString("BLACK", gamePanel.tileSize * 5 + 10, gamePanel.tileSize * 2);
+        g.drawString("BLACK", GamePanel.TILE_SIZE * 5 + 10, GamePanel.TILE_SIZE * 2);
         g.setColor(Color.BLACK);
-        g.drawString("RED", gamePanel.tileSize * 1 + 30, gamePanel.tileSize * 2);
+        g.drawString("RED", GamePanel.TILE_SIZE * 1 + 30, GamePanel.TILE_SIZE * 2);
 
         // Drawing 0
         g.setColor(Color.GREEN);
-        g.fillOval(gamePanel.tileSize * 3 + 5, gamePanel.tileSize * 3, 150, 75);
+        g.fillOval(GamePanel.TILE_SIZE * 3 + 5, GamePanel.TILE_SIZE * 3, 150, 75);
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 50.0f));
-        g.drawString("0", gamePanel.tileSize * 4 + 17, gamePanel.tileSize * 4);
+        g.drawString("0", GamePanel.TILE_SIZE * 4 + 17, GamePanel.TILE_SIZE * 4);
         if (command == 2) {
-            g.drawImage(chipImage, gamePanel.tileSize * 3 + 10, gamePanel.tileSize * 4, 40, 40, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 3 + 10, GamePanel.TILE_SIZE * 4, 40, 40, null);
         }
         // Numbers
         g.setFont(g.getFont().deriveFont(Font.BOLD, 30.0f));
@@ -377,13 +379,13 @@ public class UI {
                 } else {
                     g.setColor(Color.BLACK);
                 }
-                g.fillOval(gamePanel.tileSize * x + 25, gamePanel.tileSize * y - 13, 50, 37);
+                g.fillOval(GamePanel.TILE_SIZE * x + 25, GamePanel.TILE_SIZE * y - 13, 50, 37);
                 g.setColor(Color.WHITE);
-                g.drawString(String.valueOf(number), gamePanel.tileSize * x + 30, gamePanel.tileSize * y + 15);
+                g.drawString(String.valueOf(number), GamePanel.TILE_SIZE * x + 30, GamePanel.TILE_SIZE * y + 15);
                 number++;
 
                 if (command == number + 1) {
-                    g.drawImage(chipImage, gamePanel.tileSize * x + 10, gamePanel.tileSize * y - 10, 40, 40, null);
+                    g.drawImage(chipImage, GamePanel.TILE_SIZE * x + 10, GamePanel.TILE_SIZE * y - 10, 40, 40, null);
                 }
 
             }
@@ -392,8 +394,8 @@ public class UI {
         // Drawing Bet
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 70.0f));
-        g.drawString("BET:" + gamePanel.levelManager.roulette.getBet(), gamePanel.tileSize * 10,
-                gamePanel.tileSize * 1 + 24);
+        g.drawString("BET:" + gamePanel.levelManager.roulette.getBet(), GamePanel.TILE_SIZE * 10,
+                GamePanel.TILE_SIZE * 1 + 24);
 
         // Winning number
 
@@ -404,40 +406,40 @@ public class UI {
         } else {
             g.setColor(Color.BLACK);
         }
-        g.fillRoundRect(gamePanel.tileSize * 10 - 18, gamePanel.tileSize * 3, 250, 300, 30, 30);
+        g.fillRoundRect(GamePanel.TILE_SIZE * 10 - 18, GamePanel.TILE_SIZE * 3, 250, 300, 30, 30);
         g.setColor(Color.BLACK);
-        g.drawRoundRect(gamePanel.tileSize * 10 - 18, gamePanel.tileSize * 3, 250, 300, 30, 30);
+        g.drawRoundRect(GamePanel.TILE_SIZE * 10 - 18, GamePanel.TILE_SIZE * 3, 250, 300, 30, 30);
 
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 150.0f));
-        g.drawString("" + gamePanel.levelManager.roulette.getWinningNumber(), gamePanel.tileSize * 10,
-                gamePanel.tileSize * 8);
+        g.drawString("" + gamePanel.levelManager.roulette.getWinningNumber(), GamePanel.TILE_SIZE * 10,
+                GamePanel.TILE_SIZE * 8);
 
         // Current Balance
         g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
-        g.drawString("BALANCE: " + gamePanel.player.getChipCount(), gamePanel.tileSize * 10 - 20,
-                gamePanel.tileSize * 10 + 24);
-        g.drawImage(chipImage, gamePanel.tileSize * 10 - 70, gamePanel.tileSize * 10 - 10, 50, 50, null);
+        g.drawString("BALANCE: " + gamePanel.player.getChipCount(), GamePanel.TILE_SIZE * 10 - 20,
+                GamePanel.TILE_SIZE * 10 + 24);
+        g.drawImage(chipImage, GamePanel.TILE_SIZE * 10 - 70, GamePanel.TILE_SIZE * 10 - 10, 50, 50, null);
 
         if (!gamePanel.levelManager.roulette.validBet) {
             g.setColor(Color.RED);
             g.setFont(g.getFont().deriveFont(Font.BOLD, 80.0f));
-            g.drawString("Not enough chips", gamePanel.tileSize * 1,
-                    gamePanel.tileSize * 5);
+            g.drawString("Not enough chips", GamePanel.TILE_SIZE * 1,
+                    GamePanel.TILE_SIZE * 5);
             g.setColor(Color.BLACK);
-            g.drawString("Not enough chips", gamePanel.tileSize * 1 + 5,
-                    gamePanel.tileSize * 5 + 5);
+            g.drawString("Not enough chips", GamePanel.TILE_SIZE * 1 + 5,
+                    GamePanel.TILE_SIZE * 5 + 5);
         }
 
     }
 
     private void drawMinigame() {
         if (LevelManager.getLevelNumber() >= 1
-                && gamePanel.player.npcIndex == 1) {
+                && gamePanel.player.getNpcIndex() == 1) {
             drawRoulette();
-        } else if (LevelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
+        } else if (LevelManager.getLevelNumber() >= 2 && gamePanel.player.getNpcIndex() == 2) {
             drawBlackjack();
-        } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.npcIndex == 5) {
+        } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 5) {
             drawPokermon();
         }
     }
@@ -479,42 +481,42 @@ public class UI {
 
         // Shadow
         g.setColor(Color.BLACK);
-        g.drawString(title, x + 4, gamePanel.tileSize * 2 + 4);
+        g.drawString(title, x + 4, GamePanel.TILE_SIZE * 2 + 4);
 
         g.setColor(Color.decode("#DC143C"));
-        g.drawString(title, x, gamePanel.tileSize * 2);
+        g.drawString(title, x, GamePanel.TILE_SIZE * 2);
 
-        g.drawImage(titleImage, gamePanel.tileSize * 2, gamePanel.screenHeight / 2 - 100,
-                gamePanel.tileSize * 3, gamePanel.tileSize * 3, null);
+        g.drawImage(titleImage, GamePanel.TILE_SIZE * 2, gamePanel.screenHeight / 2 - 100,
+                GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 3, null);
 
         g.setFont(g.getFont().deriveFont(Font.BOLD, 70.0f));
         title = "PLAY";
         g.setColor(Color.WHITE);
-        g.drawString(title, gamePanel.tileSize * 8 - 100, gamePanel.tileSize * 4);
+        g.drawString(title, GamePanel.TILE_SIZE * 8 - 100, GamePanel.TILE_SIZE * 4);
         if (command == 0) {
-            g.drawImage(chipImage, gamePanel.tileSize * 8 - 150, gamePanel.tileSize * 4 - 40, 50, 50, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 150, GamePanel.TILE_SIZE * 4 - 40, 50, 50, null);
         }
 
         title = "EXIT";
         g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
         g.setColor(Color.WHITE);
-        g.drawString(title, gamePanel.tileSize * 8 - 65, gamePanel.tileSize * 5);
+        g.drawString(title, GamePanel.TILE_SIZE * 8 - 65, GamePanel.TILE_SIZE * 5);
         if (command == 1) {
-            g.drawImage(chipImage, gamePanel.tileSize * 8 - 110, gamePanel.tileSize * 5 - 25, 30, 30, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 110, GamePanel.TILE_SIZE * 5 - 25, 30, 30, null);
         }
 
         title = "TEST";
         g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
         g.setColor(Color.WHITE);
-        g.drawString(title, gamePanel.tileSize * 8 - 65, gamePanel.tileSize * 6);
+        g.drawString(title, GamePanel.TILE_SIZE * 8 - 65, GamePanel.TILE_SIZE * 6);
         if (command == 2) {
-            g.drawImage(chipImage, gamePanel.tileSize * 8 - 110, gamePanel.tileSize * 6 - 25, 30, 30, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 110, GamePanel.TILE_SIZE * 6 - 25, 30, 30, null);
         }
 
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20.0f));
         g.setColor(Color.BLACK);
-        g.drawString("Disclaimer: Gambling can be addictive. Please play responsibly.", gamePanel.tileSize * 2,
-                gamePanel.tileSize * 11);
+        g.drawString("Disclaimer: Gambling can be addictive. Please play responsibly.", GamePanel.TILE_SIZE * 2,
+                GamePanel.TILE_SIZE * 11);
 
     }
 
@@ -523,9 +525,9 @@ public class UI {
         g.fillRect(0, 0, gamePanel.screenWidth, gamePanel.screenHeight);
         g.setFont(g.getFont().deriveFont(80.0f));
         g.setColor(Color.WHITE);
-        g.drawString("GAME PAUSED", gamePanel.tileSize * 2 + 30, gamePanel.tileSize * 3);
+        g.drawString("GAME PAUSED", GamePanel.TILE_SIZE * 2 + 30, GamePanel.TILE_SIZE * 3);
         g.setFont(g.getFont().deriveFont(20.0f));
-        g.drawString("Press ESC to resume", 0, gamePanel.tileSize);
+        g.drawString("Press ESC to resume", 0, GamePanel.TILE_SIZE);
 
         g.setFont(g.getFont().deriveFont(50.0f));
         if (command == 0) {
@@ -533,33 +535,33 @@ public class UI {
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("Main Menu", gamePanel.tileSize * 5 + 24, gamePanel.tileSize * 4 + 20);
+        g.drawString("Main Menu", GamePanel.TILE_SIZE * 5 + 24, GamePanel.TILE_SIZE * 4 + 20);
         if (command == 1) {
             g.setColor(Color.RED);
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("Controls", gamePanel.tileSize * 7, gamePanel.tileSize * 5 + 20);
+        g.drawString("Controls", GamePanel.TILE_SIZE * 7, GamePanel.TILE_SIZE * 5 + 20);
 
         if (command == 2) {
             g.setColor(Color.RED);
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("Exit", gamePanel.tileSize * 8 + 24, gamePanel.tileSize * 6 + 20);
+        g.drawString("Exit", GamePanel.TILE_SIZE * 8 + 24, GamePanel.TILE_SIZE * 6 + 20);
 
     }
 
     private void drawDialogue() {
         g.setFont(g.getFont().deriveFont(23.0f));
         int x = 72;
-        int y = gamePanel.tileSize * 8;
-        int width = gamePanel.screenWidth - gamePanel.tileSize * 3;
-        int height = gamePanel.tileSize * 3;
+        int y = GamePanel.TILE_SIZE * 8;
+        int width = gamePanel.screenWidth - GamePanel.TILE_SIZE * 3;
+        int height = GamePanel.TILE_SIZE * 3;
         drawWindow(x, y, width, height);
 
-        x += gamePanel.tileSize;
-        y += gamePanel.tileSize;
+        x += GamePanel.TILE_SIZE;
+        y += GamePanel.TILE_SIZE;
         for (String line : dialogueText.split("\n")) {
             g.drawString(line, x, y);
             y += 24;

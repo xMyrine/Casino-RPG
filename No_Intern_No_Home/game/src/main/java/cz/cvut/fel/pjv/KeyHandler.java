@@ -103,19 +103,19 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_E) {
                 interact = true;
-                gamePanel.entities[gamePanel.player.npcIndex].talk();
+                gamePanel.entities[gamePanel.player.getNpcIndex()].talk();
             }
             // ROOM MASTERS
-            if (code == KeyEvent.VK_Y && (gamePanel.player.npcIndex == 1 || gamePanel.player.npcIndex == 2
-                    || gamePanel.player.npcIndex == 5)) {
+            if (code == KeyEvent.VK_Y && (gamePanel.player.getNpcIndex() == 1 || gamePanel.player.getNpcIndex() == 2
+                    || gamePanel.player.getNpcIndex() == 5)) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
                 // PROSTITUTE
-            } else if (code == KeyEvent.VK_Y && gamePanel.player.npcIndex == 3) {
-                ((Prostitute) gamePanel.entities[gamePanel.player.npcIndex]).increaseReputation();
-                gamePanel.entities[gamePanel.player.npcIndex].talk();
-            } else if (code == KeyEvent.VK_X && gamePanel.player.npcIndex == 3) {
-                ((Prostitute) gamePanel.entities[gamePanel.player.npcIndex]).decreaseReputation();
-                gamePanel.entities[gamePanel.player.npcIndex].talk();
+            } else if (code == KeyEvent.VK_Y && gamePanel.player.getNpcIndex() == 3) {
+                ((Prostitute) gamePanel.entities[gamePanel.player.getNpcIndex()]).increaseReputation();
+                gamePanel.entities[gamePanel.player.getNpcIndex()].talk();
+            } else if (code == KeyEvent.VK_X && gamePanel.player.getNpcIndex() == 3) {
+                ((Prostitute) gamePanel.entities[gamePanel.player.getNpcIndex()]).decreaseReputation();
+                gamePanel.entities[gamePanel.player.getNpcIndex()].talk();
             } else if (code == KeyEvent.VK_N) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
@@ -145,7 +145,7 @@ public class KeyHandler implements KeyListener {
                 gamePanel.changeGameState(GamePanel.PAUSESCREEN);
             }
         } else if (gamePanel.getGameState() == GamePanel.MINIGAMESCREEN) {
-            if (gamePanel.levelManager.getLevelNumber() >= 1 && gamePanel.player.npcIndex == 1) {
+            if (gamePanel.levelManager.getLevelNumber() >= 1 && gamePanel.player.getNpcIndex() == 1) {
                 if (code == KeyEvent.VK_W) {
                     UI.command--;
                     if (UI.command < 0) {
@@ -171,7 +171,7 @@ public class KeyHandler implements KeyListener {
                     gamePanel.changeGameState(GamePanel.GAMESCREEN);
                 }
 
-            } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.npcIndex == 2) {
+            } else if (gamePanel.levelManager.getLevelNumber() >= 2 && gamePanel.player.getNpcIndex() == 2) {
                 if (code == KeyEvent.VK_W) {
                     UI.command--;
                     if (UI.command < 0) {
@@ -194,7 +194,7 @@ public class KeyHandler implements KeyListener {
                 if (code == KeyEvent.VK_ESCAPE) {
                     gamePanel.changeGameState(GamePanel.GAMESCREEN);
                 }
-            } else if (gamePanel.levelManager.getLevelNumber() >= 3 && gamePanel.player.npcIndex == 5) {
+            } else if (gamePanel.levelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 5) {
                 if (code == KeyEvent.VK_W) {
                     UI.command--;
                     if (UI.command < 0) {
@@ -234,7 +234,6 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_S) {
                 UI.command++;
                 UI.command = UI.command % 3;
-
             }
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);

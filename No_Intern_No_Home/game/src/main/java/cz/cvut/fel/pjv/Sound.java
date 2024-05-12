@@ -7,8 +7,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
 
 public class Sound {
-    Clip clip;
-    URL soundURL[] = new URL[20];
+    private Clip clip;
+    private URL[] soundURL = new URL[20];
 
     public Sound() {
 
@@ -58,23 +58,27 @@ public class Sound {
         this.declareFile(0);
         this.playSound();
 
-        // Check if the audio system supports volume control
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            // Get the volume control
             FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-
-            // Reduce the volume by 10 decibels
             float currentVolume = volume.getValue();
-            volume.setValue(currentVolume - 40.0f);
+            volume.setValue(currentVolume - 30.0f);
         }
         this.loopSound();
     }
 
     /*
      * Plays sound based on the index
+     * 
+     * @param i - index of the sound
      * 1 - chip
      * 2 - beer
      * 3 - slot machine
+     * 4 - door
+     * 5 - chest
+     * 6 - victory
+     * 7 - shooting
+     * 8 - lose
+     * 9 - win
      */
 
     public void playMusic(int i) {
@@ -83,6 +87,11 @@ public class Sound {
         } else {
             this.declareFile(i);
             this.playSound();
+        }
+
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-10.0f);
         }
     }
 }

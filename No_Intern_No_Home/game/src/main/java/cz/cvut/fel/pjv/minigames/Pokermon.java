@@ -24,7 +24,7 @@ public class Pokermon {
     private BufferedImage attackButtons;
     private BufferedImage winImage;
 
-    private static Random RAND = new Random();
+    private static Random rand = new Random();
 
     private GamePanel gamePanel;
 
@@ -84,7 +84,7 @@ public class Pokermon {
             }
         } else {
             smash();
-            if (Pokermon.RAND.nextDouble() < 0.1) {
+            if (Pokermon.rand.nextDouble() < 0.1) {
                 smash();
             }
         }
@@ -148,7 +148,7 @@ public class Pokermon {
     // Enemy attack
 
     private void enemyAttack() {
-        int attack = RAND.nextInt(4);
+        int attack = rand.nextInt(4);
         if (enemyHealth <= 0 && !cheatDeath) {
             gamePanel.ui.setAnnounceMessage("Pickachu Used Cheat Death!");
             cheatDeath();
@@ -156,13 +156,13 @@ public class Pokermon {
         switch (attack) {
             case 0:
                 lifesteal();
-                if (Pokermon.RAND.nextDouble() < 0.1) {
+                if (Pokermon.rand.nextDouble() < 0.1) {
                     smash();
                 }
                 break;
             case 1:
                 smash();
-                if (Pokermon.RAND.nextDouble() < 0.1) {
+                if (Pokermon.rand.nextDouble() < 0.1) {
                     smash();
                 }
                 break;
@@ -177,40 +177,46 @@ public class Pokermon {
 
     public void executeCommand(int command) {
         if (mode == 1) {
-            switch (command) {
-                case 0:
-                    readAkla();
-                    if (Pokermon.RAND.nextDouble() < luck) {
-                        readAkla();
-                    }
-                    break;
-                case 1:
-                    taylorsSeries();
-                    if (Pokermon.RAND.nextDouble() < luck) {
-                        taylorsSeries();
-                    }
-                    break;
-                case 2:
-                    twoInches();
-                    if (Pokermon.RAND.nextDouble() < luck) {
-                        twoInches();
-                    }
-                    break;
-                default:
-                    break;
-            }
+            executeModeOneCommand(command);
             enemyAttack();
-        } else if (mode == 2) {
-            if (command == 0) {
-                shoot();
-                enemyAttack();
-            }
+        } else if (mode == 2 && command == 0) {
+            shoot();
+            enemyAttack();
         }
+        checkPlayerHealth();
+        checkEnemyHealth();
+    }
 
+    private void executeModeOneCommand(int command) {
+        switch (command) {
+            case 0:
+                executeWithLuck(this::readAkla);
+                break;
+            case 1:
+                executeWithLuck(this::taylorsSeries);
+                break;
+            case 2:
+                executeWithLuck(this::twoInches);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void executeWithLuck(Runnable command) {
+        command.run();
+        if (Pokermon.rand.nextDouble() < luck) {
+            command.run();
+        }
+    }
+
+    private void checkPlayerHealth() {
         if (playerHealth <= 0) {
             gamePanel.ui.setAnnounceMessage("You have been defeated press R to start again");
         }
+    }
 
+    private void checkEnemyHealth() {
         if (enemyHealth <= 0 && cheatDeath) {
             gamePanel.ui.setAnnounceMessage("You have defeated the enemy");
             finished = true;
@@ -221,10 +227,10 @@ public class Pokermon {
     }
 
     public void shoot() {
-        if (gamePanel.player.getSpecialItem(Player.GUN) > 0) {
+        if (gamePanel.player.getSpecialItem(Player.GUN_INDEX) > 0) {
             gamePanel.sound.playMusic(7);
             enemyHealth -= 10;
-            gamePanel.player.setSpecialItem(Player.GUN, gamePanel.player.getSpecialItem(Player.GUN) - 1);
+            gamePanel.player.setSpecialItem(Player.GUN_INDEX, gamePanel.player.getSpecialItem(Player.GUN_INDEX) - 1);
             mode = 0;
         } else {
             gamePanel.ui.setAnnounceMessage("You don't have a gun");

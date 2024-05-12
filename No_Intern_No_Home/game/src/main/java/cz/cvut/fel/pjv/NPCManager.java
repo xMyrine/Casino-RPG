@@ -15,18 +15,18 @@ public class NPCManager {
 
     public void spawnNPC() {
         gamePanel.entities[0] = new IntroNPC(this.gamePanel, 100, 200);
-        gamePanel.entities[1] = new Worker(this.gamePanel, gamePanel.tileSize * 19, gamePanel.tileSize * 12);
-        gamePanel.entities[4] = new Shopkeeper(this.gamePanel, gamePanel.tileSize * 22, gamePanel.tileSize * 22);
-        gamePanel.entities[6] = new Craftsman(this.gamePanel, gamePanel.tileSize * 20, gamePanel.tileSize * 22);
+        gamePanel.entities[1] = new Worker(this.gamePanel, GamePanel.TILE_SIZE * 19, GamePanel.TILE_SIZE * 12);
+        gamePanel.entities[4] = new Shopkeeper(this.gamePanel, GamePanel.TILE_SIZE * 22, GamePanel.TILE_SIZE * 22);
+        gamePanel.entities[6] = new Craftsman(GamePanel.TILE_SIZE * 20, GamePanel.TILE_SIZE * 22);
     }
 
     private void spawnLevelTwoNPC() {
-        gamePanel.entities[2] = new Worker2(this.gamePanel, gamePanel.tileSize * 36, gamePanel.tileSize * 20);
-        gamePanel.entities[3] = new Prostitute(this.gamePanel, gamePanel.tileSize * 43, gamePanel.tileSize * 23);
+        gamePanel.entities[2] = new Worker2(this.gamePanel, GamePanel.TILE_SIZE * 36, GamePanel.TILE_SIZE * 20);
+        gamePanel.entities[3] = new Prostitute(GamePanel.TILE_SIZE * 43, GamePanel.TILE_SIZE * 23);
     }
 
     private void spawnLevelThreeNPC() {
-        gamePanel.entities[5] = new PokerManTrainer(this.gamePanel, gamePanel.tileSize * 37, gamePanel.tileSize * 36);
+        gamePanel.entities[5] = new PokerManTrainer(GamePanel.TILE_SIZE * 37, GamePanel.TILE_SIZE * 36);
     }
 
     public void update() {

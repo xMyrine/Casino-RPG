@@ -16,17 +16,17 @@ import cz.cvut.fel.pjv.objects.Object;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN settings
-    public final int originalTileSize = 16; // 16x16 pixels
-    public final int scale = 3; // 3x scale
+    public static final int originalTileSize = 16; // 16x16 pixels
+    public static final int scale = 3; // 3x scale
 
-    public final int tileSize = originalTileSize * scale;
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol;
-    public final int screenHeight = tileSize * maxScreenRow;
+    public static final int TILE_SIZE = originalTileSize * scale;
+    public static final int MAX_SCREEN_COL = 16;
+    public static final int MAX_SCREEN_ROW = 12;
+    public final int screenWidth = TILE_SIZE * MAX_SCREEN_COL;
+    public final int screenHeight = TILE_SIZE * MAX_SCREEN_ROW;
 
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public static final int maxWorldCol = 50;
+    public static final int maxWorldRow = 50;
 
     protected int fps = 60;
 
@@ -110,7 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1000000000) { // if a second has passed
-                logger.info(String.format("FPS: %d", drawCount)); // print the draw count
+                logger.log(Level.INFO, "FPS: {0}", drawCount); // print the draw count
                 drawCount = 0; // reset the draw count
                 timer = 0; // reset the timer
             }
@@ -177,7 +177,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (Object obj : objects) {
             if (obj != null && obj.getClass().equals(clazz)) {
                 count++;
-                logger.finest(String.format("Object of class %s found", clazz.getName()));
+                logger.log(Level.FINEST, "Object of class {0} found", clazz.getName());
             }
         }
         return count;

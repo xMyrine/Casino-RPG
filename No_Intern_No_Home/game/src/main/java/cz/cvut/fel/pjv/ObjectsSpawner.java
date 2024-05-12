@@ -19,50 +19,50 @@ public class ObjectsSpawner {
      * Spawns objects in the game
      */
     public void spawnObjects() {
-        gamePanel.objects[0] = new Chip(gamePanel.tileSize * 1, gamePanel.tileSize * 2);
-        gamePanel.objects[1] = new Chip(gamePanel.tileSize, gamePanel.tileSize * 3);
-        gamePanel.objects[2] = new Chip(gamePanel.tileSize * 2, gamePanel.tileSize * 3);
-        gamePanel.objects[3] = new Chip(gamePanel.tileSize * 2, gamePanel.tileSize * 2);
-        gamePanel.objects[4] = new SlotMachine(gamePanel.tileSize * 17, gamePanel.tileSize * 3);
-        gamePanel.objects[5] = new SlotMachine(gamePanel.tileSize * 19, gamePanel.tileSize * 3);
-        gamePanel.objects[10] = new SlotMachine(gamePanel.tileSize * 21,
-                gamePanel.tileSize * 6);
-        gamePanel.objects[13] = new SlotMachine(gamePanel.tileSize * 19,
-                gamePanel.tileSize * 9);
-        gamePanel.objects[15] = new SlotMachine(gamePanel.tileSize * 23,
-                gamePanel.tileSize * 9);
-        gamePanel.objects[6] = new Chest(gamePanel.tileSize * 1, gamePanel.tileSize * 23);
+        gamePanel.objects[0] = new Chip(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 2);
+        gamePanel.objects[1] = new Chip(GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 3);
+        gamePanel.objects[2] = new Chip(GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 3);
+        gamePanel.objects[3] = new Chip(GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 2);
+        gamePanel.objects[4] = new SlotMachine(GamePanel.TILE_SIZE * 17, GamePanel.TILE_SIZE * 3);
+        gamePanel.objects[5] = new SlotMachine(GamePanel.TILE_SIZE * 19, GamePanel.TILE_SIZE * 3);
+        gamePanel.objects[10] = new SlotMachine(GamePanel.TILE_SIZE * 21,
+                GamePanel.TILE_SIZE * 6);
+        gamePanel.objects[13] = new SlotMachine(GamePanel.TILE_SIZE * 19,
+                GamePanel.TILE_SIZE * 9);
+        gamePanel.objects[15] = new SlotMachine(GamePanel.TILE_SIZE * 23,
+                GamePanel.TILE_SIZE * 9);
+        gamePanel.objects[6] = new Chest(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 23);
 
-        gamePanel.objects[7] = new Chest(gamePanel.tileSize * 9, gamePanel.tileSize * 23);
+        gamePanel.objects[7] = new Chest(GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 23);
 
-        gamePanel.objects[8] = new Chest(gamePanel.tileSize * 2, gamePanel.tileSize * 23);
+        gamePanel.objects[8] = new Chest(GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 23);
 
-        gamePanel.objects[9] = new Chest(gamePanel.tileSize * 8, gamePanel.tileSize * 23);
+        gamePanel.objects[9] = new Chest(GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 23);
 
-        gamePanel.objects[28] = new Beer(gamePanel.tileSize * 5, gamePanel.tileSize * 5);
+        gamePanel.objects[28] = new Beer(GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 5);
 
-        gamePanel.objects[29] = new Beer(gamePanel.tileSize * 6, gamePanel.tileSize * 5);
+        gamePanel.objects[29] = new Beer(GamePanel.TILE_SIZE * 6, GamePanel.TILE_SIZE * 5);
 
-        gamePanel.objects[30] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 13);
+        gamePanel.objects[30] = new Door(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 13);
 
-        gamePanel.objects[31] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 14);
+        gamePanel.objects[31] = new Door(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 14);
     }
 
     private void spawnLevelTwoObjects() {
         logger.fine("Spawning level 2 objects");
-        gamePanel.objects[0] = new Door(gamePanel.tileSize * 37, gamePanel.tileSize * 24);
-        gamePanel.objects[1] = new Door(gamePanel.tileSize * 36, gamePanel.tileSize * 24);
-        gamePanel.objects[10] = new Chest(gamePanel.tileSize * 47, gamePanel.tileSize * 1);
-        gamePanel.objects[28] = new DomPerignon(gamePanel.tileSize * 46, gamePanel.tileSize * 3);
-        gamePanel.objects[29] = new Vodka(gamePanel.tileSize * 46, gamePanel.tileSize * 4);
-        gamePanel.objects[27] = new Beer(gamePanel.tileSize * 46, gamePanel.tileSize * 5);
+        gamePanel.objects[0] = new Door(GamePanel.TILE_SIZE * 37, GamePanel.TILE_SIZE * 24);
+        gamePanel.objects[1] = new Door(GamePanel.TILE_SIZE * 36, GamePanel.TILE_SIZE * 24);
+        gamePanel.objects[10] = new Chest(GamePanel.TILE_SIZE * 47, GamePanel.TILE_SIZE * 1);
+        gamePanel.objects[28] = new DomPerignon(GamePanel.TILE_SIZE * 46, GamePanel.TILE_SIZE * 3);
+        gamePanel.objects[29] = new Vodka(GamePanel.TILE_SIZE * 46, GamePanel.TILE_SIZE * 4);
+        gamePanel.objects[27] = new Beer(GamePanel.TILE_SIZE * 46, GamePanel.TILE_SIZE * 5);
         gamePanel.levelManager.setLevelInProgress(true);
     }
 
     public void spawnLevelThreeObjects() { // ! CHANGE THIS ONCE FIXED
         logger.fine("Spawning level 3 objects");
-        gamePanel.objects[32] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 35);
-        gamePanel.objects[33] = new Door(gamePanel.tileSize * 24, gamePanel.tileSize * 36);
+        gamePanel.objects[32] = new Door(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 35);
+        gamePanel.objects[33] = new Door(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 36);
         gamePanel.levelManager.setLevelInProgress(true);
     }
 

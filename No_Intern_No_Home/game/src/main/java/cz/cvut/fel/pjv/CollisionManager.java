@@ -25,10 +25,10 @@ public class CollisionManager {
         int entityTopWorldY = entity.worldY + entity.collisionArea.y;
         int entityBottomWorldY = entity.worldY + entity.collisionArea.y + entity.collisionArea.height;
 
-        int entityLeftTileX = entityLeftWorldX / gamePanel.tileSize;
-        int entityRightTileX = entityRightWorldX / gamePanel.tileSize;
-        int entityTopTileY = entityTopWorldY / gamePanel.tileSize;
-        int entityBottomTileY = entityBottomWorldY / gamePanel.tileSize;
+        int entityLeftTileX = entityLeftWorldX / GamePanel.TILE_SIZE;
+        int entityRightTileX = entityRightWorldX / GamePanel.TILE_SIZE;
+        int entityTopTileY = entityTopWorldY / GamePanel.TILE_SIZE;
+        int entityBottomTileY = entityBottomWorldY / GamePanel.TILE_SIZE;
 
         switch (entity.direction) {
             case "up":
@@ -47,23 +47,23 @@ public class CollisionManager {
     }
 
     private void checkTileUp(Entity entity, int entityLeftTileX, int entityRightTileX, int entityTopWorldY) {
-        int entityTopTileY = (entityTopWorldY - entity.speed) / gamePanel.tileSize;
+        int entityTopTileY = (entityTopWorldY - entity.speed) / GamePanel.TILE_SIZE;
         checkCollision(entity, entityLeftTileX, entityRightTileX, entityTopTileY);
     }
 
     private void checkTileDown(Entity entity, int entityLeftTileX, int entityRightTileX, int entityBottomWorldY) {
-        int entityBottomTileY = (entityBottomWorldY + entity.speed) / gamePanel.tileSize;
+        int entityBottomTileY = (entityBottomWorldY + entity.speed) / GamePanel.TILE_SIZE;
         checkCollision(entity, entityLeftTileX, entityRightTileX, entityBottomTileY);
     }
 
     private void checkTileLeft(Entity entity, int entityLeftTileX, int entityTopTileY, int entityBottomTileY) {
-        entityLeftTileX = (entity.worldX + entity.collisionArea.x - entity.speed) / gamePanel.tileSize;
+        entityLeftTileX = (entity.worldX + entity.collisionArea.x - entity.speed) / GamePanel.TILE_SIZE;
         checkCollision(entity, entityLeftTileX, entityTopTileY, entityBottomTileY);
     }
 
     private void checkTileRight(Entity entity, int entityRightTileX, int entityTopTileY, int entityBottomTileY) {
         entityRightTileX = (entity.worldX + entity.collisionArea.x + entity.collisionArea.width + entity.speed)
-                / gamePanel.tileSize;
+                / GamePanel.TILE_SIZE;
         checkCollision(entity, entityRightTileX, entityTopTileY, entityBottomTileY);
     }
 

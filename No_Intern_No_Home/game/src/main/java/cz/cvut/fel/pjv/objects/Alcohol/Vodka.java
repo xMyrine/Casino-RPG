@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.objects.Alcohol;
 
-import cz.cvut.fel.pjv.Sound;
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.objects.Object;
 
@@ -8,7 +7,7 @@ import javax.imageio.ImageIO;
 
 public class Vodka extends Object implements Alcohol {
 
-    private static final float luck = 0.07f;
+    private static final float LUCK = 0.07f;
 
     public Vodka(int worldX, int worldY) {
         this.worldX = worldX;
@@ -26,7 +25,7 @@ public class Vodka extends Object implements Alcohol {
     @Override
     public float increasePlayersLuck(Player player) {
         float newLuck = player.getPlayerLuck();
-        newLuck += luck;
+        newLuck += LUCK;
         sound.playMusic(2);
         if (newLuck > 1) {
             newLuck = 0.3f;
