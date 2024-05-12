@@ -459,7 +459,7 @@ public class UI {
     private void announceMessage() {
         g.setColor(Color.YELLOW);
         g.setFont(g.getFont().deriveFont(50.0f));
-        g.drawString(message, gamePanel.screenWidth / 2 - 100, gamePanel.screenHeight / 2);
+        g.drawString(message, GamePanel.TILE_SIZE, gamePanel.screenHeight / 2);
 
         displayMessageCounter++;
 

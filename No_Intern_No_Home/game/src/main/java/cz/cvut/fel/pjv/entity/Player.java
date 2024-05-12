@@ -6,12 +6,15 @@ import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.*;
 import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.items.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -31,7 +34,7 @@ public class Player extends Entity {
     private float playerLuck = 1f;
 
     private int npcIndex = 69;
-    private int[] specialItemsFragnments = { 0, 0, 0 };
+    private int[] specialItemsFragnments = { 3, 3, 3 };
     private int cigar;
     private int gun;
     private int cards;
@@ -39,6 +42,8 @@ public class Player extends Entity {
     public static final int CIGAR_INDEX = 0;
     public static final int GUN_INDEX = 1;
     public static final int CARDS_INDEX = 2;
+
+    private ArrayList<Items> items;
 
     private static final String PLAYER_LUCK_MESSAGE = "Player''s luck increased to {0}";
 
@@ -61,6 +66,10 @@ public class Player extends Entity {
 
         logger = Logger.getLogger(Player.class.getName());
         logger.setLevel(Level.WARNING);
+
+        items = new ArrayList<>();
+        // !REMOVE THIS LATER
+        items.add(new Cigarette(this));
 
         setDefaultValues();
         getPlayerImage();
@@ -166,6 +175,16 @@ public class Player extends Entity {
             checkCollisions();
             movePlayer();
             updateSprite();
+            canSmoke();
+        }
+    }
+
+    private void canSmoke() {
+        if (worldY <= 270 && worldX >= 2100) {
+            gamePanel.ui.setAnnounceMessage("You can smoke here (E)");
+            if (keyHandler.interact) {
+                useCigarette();
+            }
         }
     }
 
@@ -387,4 +406,54 @@ public class Player extends Entity {
         }
     }
 
+    public void addItems(Items item) {
+        items.add(item);
+    }
+
+    public Gun getFirstGun() {
+        for (Items item : items) {
+            if (item instanceof Gun) {
+                return (Gun) item;
+            }
+        }
+        return null;
+    }
+
+    public void removeFirstGun() {
+        for (Items item : items) {
+            if (item instanceof Gun) {
+                items.remove(item);
+                break;
+            }
+        }
+    }
+
+    public Cigarette getFirstCigarette() {
+        for (Items item : items) {
+            if (item instanceof Cigarette) {
+                return (Cigarette) item;
+            }
+        }
+        return null;
+    }
+
+    public void removeFirstCigarette() {
+        for (Items item : items) {
+            if (item instanceof Cigarette) {
+                items.remove(item);
+                break;
+            }
+        }
+    }
+
+    public void useCigarette() {
+        Cigarette cigarette = getFirstCigarette();
+        if (cigarette != null) {
+            cigarette.use();
+            removeFirstCigarette();
+        } else {
+            logger.log(Level.WARNING, "No cigarette found in inventory");
+            gamePanel.ui.setAnnounceMessage("You don't have a cigarette");
+        }
+    }
 }

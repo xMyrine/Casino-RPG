@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
+import cz.cvut.fel.pjv.items.*;
 
 public class Craftsman extends Entity {
 
@@ -113,13 +114,14 @@ public class Craftsman extends Entity {
         if (item == Player.CIGAR_INDEX && cigarCount >= 3 && gamePanel.player.getChipCount() >= 50) {
             gamePanel.player.setSpecialItemsFragmentCount(Player.CIGAR_INDEX,
                     gamePanel.player.getSpecialItemsFragmentCount(Player.CIGAR_INDEX) - 3);
-            gamePanel.player.setSpecialItem(Player.CIGAR_INDEX,
-                    gamePanel.player.getSpecialItem(Player.CIGAR_INDEX) + 1);
+            Cigarette cigar = new Cigarette(gamePanel.player);
+            gamePanel.player.addItems(cigar);
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 50);
         } else if (item == Player.GUN_INDEX && gunIndex >= 3 && gamePanel.player.getChipCount() >= 250) {
             gamePanel.player.setSpecialItemsFragmentCount(Player.GUN_INDEX,
                     gamePanel.player.getSpecialItemsFragmentCount(Player.GUN_INDEX) - 3);
-            gamePanel.player.setSpecialItem(Player.GUN_INDEX, gamePanel.player.getSpecialItem(Player.GUN_INDEX) + 1);
+            Gun gun = new Gun(gamePanel.levelManager.pokermon);
+            gamePanel.player.addItems(gun);
             gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 250);
         } else if (item == Player.CARDS_INDEX && cardsIndex >= 3 && gamePanel.player.getChipCount() >= 100) {
             gamePanel.player.setSpecialItemsFragmentCount(Player.CARDS_INDEX,
