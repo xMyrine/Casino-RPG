@@ -181,6 +181,12 @@ public class UI {
                         GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
             }
         }
+
+        if (gamePanel.player.isCigaretteInInventory()) {
+            g.drawImage(inventory.inventoryItems[0], GamePanel.TILE_SIZE * 4 + 30, (GamePanel.TILE_SIZE + 13) * 2,
+                    GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
+        }
+
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(30.0f));
         g.drawString("Luck:" + gamePanel.player.getPlayerLuck() * 100 + "%", GamePanel.TILE_SIZE * 8,

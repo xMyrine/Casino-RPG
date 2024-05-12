@@ -456,4 +456,13 @@ public class Player extends Entity {
             gamePanel.ui.setAnnounceMessage("You don't have a cigarette");
         }
     }
+
+    public boolean isCigaretteInInventory() {
+        for (Items item : items) {
+            if (item instanceof Cigarette) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
