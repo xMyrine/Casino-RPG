@@ -53,7 +53,7 @@ public class UI {
         }
     }
 
-    /*
+    /**
      * Sets the message to be displayed on the screen
      */
     public void setAnnounceMessage(String message) {
@@ -65,11 +65,21 @@ public class UI {
         return announceMessage;
     }
 
+    /**
+     * Sets the dialogue text to be displayed on the scree
+     * 
+     * @param mod the number of commands
+     */
     public static void increaseCommand(int mod) {
         command++;
         command = command % mod;
     }
 
+    /**
+     * Decreases the command
+     * 
+     * @param mod the number of commands
+     */
     public static void decreaseCommand(int mod) {
         command--;
         if (command < 0) {
@@ -81,6 +91,13 @@ public class UI {
         return command;
     }
 
+    /**
+     * Sets the command
+     * Command is used to navigate through the UI
+     * Command cannot be negative
+     * 
+     * @param code the command
+     */
     public static void setCommand(int code) {
         if (command < 0) {
             command = 0;
@@ -88,7 +105,7 @@ public class UI {
         command = code;
     }
 
-    /*
+    /**
      * Draws the UI elements on the screen
      */
     public void draw(Graphics2D g) {
@@ -121,7 +138,7 @@ public class UI {
         }
     }
 
-    /*
+    /**
      * Draw craftsman screen
      */
     private void drawCrafting() {
@@ -147,7 +164,7 @@ public class UI {
         }
     }
 
-    /*
+    /**
      * Draws the shop screen
      */
     private void drawShop() {
@@ -173,7 +190,7 @@ public class UI {
         }
     }
 
-    /*
+    /**
      * Draws the controls screen
      */
     public void drawControls() {
@@ -191,7 +208,7 @@ public class UI {
         g.drawString("Press F1 to mute the sound", 0, GamePanel.TILE_SIZE * 8);
     }
 
-    /*
+    /**
      * Draws a window with a border
      */
     public void drawInventory() {
@@ -230,7 +247,7 @@ public class UI {
                 GamePanel.TILE_SIZE * 9);
     }
 
-    /*
+    /**
      * Draws a Pokermon minigame
      */
     private void drawPokermon() {
@@ -300,6 +317,9 @@ public class UI {
         }
     }
 
+    /**
+     * draws dice minigame
+     */
     private void drawDices() {
         g.setColor(new Color(123, 157, 134));
         g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
@@ -327,7 +347,7 @@ public class UI {
         g.drawImage(lowButton, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 9, 80 * 3, 32 * 3, null);
     }
 
-    /*
+    /**
      * Draws Blackjack minigame
      */
     private void drawBlackjack() {
@@ -399,7 +419,7 @@ public class UI {
 
     }
 
-    /*
+    /**
      * Draws the Roulette minigame
      */
     private void drawRoulette() {
@@ -502,6 +522,9 @@ public class UI {
 
     }
 
+    /**
+     * Draws minigame depending on the level and npc
+     */
     private void drawMinigame() {
         if (LevelManager.getLevelNumber() >= 1
                 && gamePanel.player.getNpcIndex() == 1) {
@@ -515,6 +538,9 @@ public class UI {
         }
     }
 
+    /**
+     * Draws stats on the screen
+     */
     private void drawStats() {
         g.setFont(defaultFont);
         g.setColor(Color.WHITE);
@@ -527,6 +553,9 @@ public class UI {
         }
     }
 
+    /**
+     * Draws a message on the screen
+     */
     private void announceMessage() {
         g.setColor(Color.BLUE);
         g.setFont(g.getFont().deriveFont(35.0f));
@@ -541,6 +570,9 @@ public class UI {
         }
     }
 
+    /**
+     * Draws the main menu
+     */
     private void drawMenu() {
         g.setColor(new Color(212, 175, 55));
         g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
@@ -591,6 +623,9 @@ public class UI {
 
     }
 
+    /**
+     * Draws the pause screen
+     */
     private void drawPause() {
         g.setColor(new Color(0, 0, 0, 200));
         g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
@@ -623,6 +658,9 @@ public class UI {
 
     }
 
+    /**
+     * Draws the dialogue screen
+     */
     private void drawDialogue() {
         g.setFont(g.getFont().deriveFont(23.0f));
         int x = 72;
@@ -639,6 +677,9 @@ public class UI {
         }
     }
 
+    /**
+     * Draws a window with a border
+     */
     private void drawWindow(int x, int y, int width, int height) {
         g.setColor(new Color(0, 0, 0, 200));
         g.fillRoundRect(x, y, width, height, 20, 20);

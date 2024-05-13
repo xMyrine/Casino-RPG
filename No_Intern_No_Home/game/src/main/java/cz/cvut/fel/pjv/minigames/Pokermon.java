@@ -47,7 +47,12 @@ public class Pokermon {
         }
     }
 
-    // Player moves
+    /**
+     * readAkla - Increase the player health by 2
+     * Increase the player health by 2
+     * If the player health is greater than 10
+     * Set the player health to 10
+     */
     private void readAkla() {
         playerHealth += 2;
         if (playerHealth > 10) {
@@ -55,26 +60,43 @@ public class Pokermon {
         }
     }
 
+    /**
+     * taylorsSeries - Increase the player attack by 1
+     * Increase the player attack by 1
+     */
     private void taylorsSeries() {
         enemyHealth -= playerAttack;
     }
 
+    /**
+     * twoInches - Increase the player attack by 1
+     * Increase the player attack by 1
+     */
     private void twoInches() {
         playerAttack += 1;
     }
 
     // Enemy moves
 
+    /**
+     * Attack that increases the enemy attack and health
+     */
     private void lifesteal() {
         enemyAttack += 1;
         enemyHealth += 1;
         playerHealth -= 1;
     }
 
+    /**
+     * Attack that reduces the player health by the enemy attack
+     */
     private void smash() {
         playerHealth -= enemyAttack;
     }
 
+    /**
+     * Attack that heals the enemy
+     */
     private void heal() {
         if (enemyHealth < 10) {
             enemyHealth += 2;
@@ -99,9 +121,14 @@ public class Pokermon {
         return finished;
     }
 
-    // run away
+    /**
+     * Run from the battle
+     * Set the mode to 0
+     * reset the fight
+     */
     private void run() {
         setMode(0);
+        reset();
         gamePanel.changeGameState(GamePanel.GAMESCREEN);
     }
 
@@ -145,8 +172,11 @@ public class Pokermon {
         return shootButton;
     }
 
-    // Enemy attack
-
+    /**
+     * Enemy attack
+     * Based on the random number generated
+     * Execute the attack (lifesteal, smash, heal)
+     */
     private void enemyAttack() {
         int attack = rand.nextInt(4);
         if (enemyHealth <= 0 && !cheatDeath) {
@@ -175,6 +205,11 @@ public class Pokermon {
 
     }
 
+    /**
+     * Execute the command based on the mode
+     * 
+     * @param command - the command to execute
+     */
     public void executeCommand(int command) {
         if (mode == 1) {
             executeModeOneCommand(command);
@@ -187,6 +222,11 @@ public class Pokermon {
         checkEnemyHealth();
     }
 
+    /**
+     * Execute the command based on the mode
+     * 
+     * @param command - the command to execute
+     */
     private void executeModeOneCommand(int command) {
         switch (command) {
             case 0:
@@ -203,6 +243,11 @@ public class Pokermon {
         }
     }
 
+    /**
+     * Execute the command with luck
+     * 
+     * @param command - the command to execute
+     */
     private void executeWithLuck(Runnable command) {
         command.run();
         if (Pokermon.rand.nextDouble() < luck) {
@@ -210,12 +255,18 @@ public class Pokermon {
         }
     }
 
+    /**
+     * Check if the player health is less than 0
+     */
     private void checkPlayerHealth() {
         if (playerHealth <= 0) {
             gamePanel.getGameUI().setAnnounceMessage("You have been defeated press R to start again");
         }
     }
 
+    /**
+     * Check if the enemy health is less than 0
+     */
     private void checkEnemyHealth() {
         if (enemyHealth <= 0 && cheatDeath) {
             gamePanel.getGameUI().setAnnounceMessage("You have defeated the enemy");
@@ -226,6 +277,14 @@ public class Pokermon {
         }
     }
 
+    /**
+     * Shoot the enemy
+     * Reduce the enemy health by 10
+     * Reduce the gun count by 1
+     * Set the mode to 0
+     * If the player doesn't have a gun
+     * Display a message
+     */
     public void shoot() {
         if (gamePanel.getPlayer().getSpecialItem(Player.GUN_INDEX) > 0) {
             gamePanel.getSound().playMusic(7);
@@ -240,6 +299,17 @@ public class Pokermon {
 
     }
 
+    /**
+     * Reset the game
+     * Set the player health to 10
+     * Set the enemy health to 10
+     * Set the player attack to 1
+     * Set the enemy attack to 0
+     * Set the mode to 0
+     * Set the cheat
+     * Set the finished
+     * Load the screen image
+     */
     public void reset() {
         playerHealth = 10;
         enemyHealth = 10;

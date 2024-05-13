@@ -78,6 +78,9 @@ public class Sound {
      * }
      */
 
+    /**
+     * Toggles sound on and off
+     */
     public void toggleSound() {
         if (clip.isActive()) {
             clip.stop();

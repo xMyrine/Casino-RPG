@@ -75,6 +75,9 @@ public class Blackjack {
         return cardBack;
     }
 
+    /**
+     * Starts the game by building the deck, shuffling it, and dealing the first two
+     */
     public void startGame() {
         buildDeck();
         shuffleDeck();
@@ -104,7 +107,7 @@ public class Blackjack {
         }
     }
 
-    /*
+    /**
      * Builds a deck of 52 cards
      */
     private void buildDeck() {
@@ -119,7 +122,7 @@ public class Blackjack {
         }
     }
 
-    /*
+    /**
      * Shuffles the deck
      */
     private void shuffleDeck() {
@@ -131,6 +134,12 @@ public class Blackjack {
         }
     }
 
+    /**
+     * Reduces the value of the hand by 10 if the hand is over 21 and there is an
+     * ace
+     * 
+     * @return the value of the hand
+     */
     private int reduceAce() {
         while (playerHandValue > 21 && playerAceCount > 0) {
             playerHandValue -= 10;
@@ -140,6 +149,12 @@ public class Blackjack {
 
     }
 
+    /**
+     * Reduces the value of the dealer's hand by 10 if the hand is over 21 and there
+     * is an ace
+     * 
+     * @return the value of the dealer's hand
+     */
     private int reduceDealerAce() {
         while (dealerHandValue > 21 && dealerAceCount > 0) {
             dealerHandValue -= 10;
@@ -148,6 +163,9 @@ public class Blackjack {
         return dealerHandValue;
     }
 
+    /**
+     * Player hits and draws a card
+     */
     public void hit() {
         Card card = deck.remove(deck.size() - 1);
         playerHandValue += card.getValue();
@@ -158,6 +176,9 @@ public class Blackjack {
         }
     }
 
+    /**
+     * Player stands and dealer draws cards until the value is 17 or higher
+     */
     public void stand() {
         hitEnabled = false;
         standEnabled = false;
@@ -182,6 +203,9 @@ public class Blackjack {
         return finished;
     }
 
+    /**
+     * Evaluates the game and determines the winner
+     */
     public void evaluate() {
         if (gamePanel.getPlayer().getChipCount() - bet < 0) {
             gamePanel.getGameUI().setAnnounceMessage("You don't have enough chips");

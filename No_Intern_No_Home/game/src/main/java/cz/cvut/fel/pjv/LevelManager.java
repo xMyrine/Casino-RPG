@@ -52,7 +52,7 @@ public class LevelManager {
         // rest of your code
     }
 
-    /*
+    /**
      * Check if the first level is finished and increment the level number if it is
      */
     public boolean checkLevelFinished() {
@@ -99,6 +99,9 @@ public class LevelManager {
         return levelNumber;
     }
 
+    /**
+     * Open the doors based on the level number
+     */
     private void openDoors() {
         for (int i = 0; i < gamePanel.objects.length; i++) {
             if (gamePanel.objects[i] instanceof Door) {
@@ -115,6 +118,10 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Reward the player with a special item fragment
+     * Based on the random number generated
+     */
     private void rewardPlayer() {
         int reward = rand.nextInt(3);
         gamePanel.player.setSpecialItemsFragmentCount(reward,
