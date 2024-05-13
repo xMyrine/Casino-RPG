@@ -25,6 +25,7 @@ public class Main {
             window.setIconImage(icon);
         } catch (IOException e) {
             e.printStackTrace();
+
         }
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(false);

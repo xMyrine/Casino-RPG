@@ -32,6 +32,8 @@ public class UI {
     private BufferedImage shopScreen;
     private BufferedImage craftingScreen;
     private BufferedImage chosenButton;
+    private BufferedImage highButton;
+    private BufferedImage lowButton;
 
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -44,6 +46,8 @@ public class UI {
             shopScreen = ImageIO.read(getClass().getResourceAsStream("/screens/shop.png"));
             chosenButton = ImageIO.read(getClass().getResourceAsStream("/buttons/chosen_button.png"));
             craftingScreen = ImageIO.read(getClass().getResourceAsStream("/screens/Crafting.png"));
+            highButton = ImageIO.read(getClass().getResourceAsStream("/buttons/high_button.png"));
+            lowButton = ImageIO.read(getClass().getResourceAsStream("/buttons/low_button.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -296,6 +300,33 @@ public class UI {
         }
     }
 
+    private void drawDices() {
+        g.setColor(new Color(123, 157, 134));
+        g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
+
+        g.setFont(defaultFont.deriveFont(50.0f));
+        g.setColor(Color.WHITE);
+        g.fillRect(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 3);
+        g.drawRect(GamePanel.SCREEN_WIDTH - GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3,
+                GamePanel.TILE_SIZE * 3);
+
+        g.setColor(Color.BLACK);
+        g.fillRect(GamePanel.SCREEN_WIDTH - GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3,
+                GamePanel.TILE_SIZE * 3);
+        g.drawRect(GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 3);
+        g.drawString(String.valueOf(gamePanel.levelManager.getDices().getRolledNumber1()), GamePanel.TILE_SIZE * 2,
+                GamePanel.TILE_SIZE * 3);
+
+        g.setColor(Color.WHITE);
+        g.drawString(String.valueOf(gamePanel.levelManager.getDices().getRolledNumber2()), GamePanel.TILE_SIZE * 12,
+                GamePanel.TILE_SIZE * 3);
+
+        g.drawImage(highButton, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 9, 80 * 3,
+                32 * 3, null);
+
+        g.drawImage(lowButton, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 9, 80 * 3, 32 * 3, null);
+    }
+
     /*
      * Draws Blackjack minigame
      */
@@ -479,6 +510,8 @@ public class UI {
             drawBlackjack();
         } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 5) {
             drawPokermon();
+        } else {
+            drawDices();
         }
     }
 

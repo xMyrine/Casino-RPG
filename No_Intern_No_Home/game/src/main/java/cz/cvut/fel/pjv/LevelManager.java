@@ -1,9 +1,7 @@
 package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.levels.*;
-import cz.cvut.fel.pjv.minigames.Blackjack;
-import cz.cvut.fel.pjv.minigames.Pokermon;
-import cz.cvut.fel.pjv.minigames.Roulette;
+import cz.cvut.fel.pjv.minigames.*;
 import cz.cvut.fel.pjv.objects.*;
 
 import java.util.logging.Logger;
@@ -24,6 +22,7 @@ public class LevelManager {
     public Roulette roulette;
     public Blackjack blackjack;
     public Pokermon pokermon;
+    protected Dices dices;
     private Random rand = new Random();
 
     private static final String LEVEL_NUMBER_MSG = "Level number: {0}";
@@ -37,6 +36,7 @@ public class LevelManager {
         roulette = new Roulette(gamePanel);
         blackjack = new Blackjack(gamePanel);
         pokermon = new Pokermon(gamePanel);
+        dices = new Dices(gamePanel);
     }
 
     public boolean isLevelInProgress() {
@@ -119,5 +119,9 @@ public class LevelManager {
         int reward = rand.nextInt(3);
         gamePanel.player.setSpecialItemsFragmentCount(reward,
                 gamePanel.player.getSpecialItemsFragmentCount(reward) + 1);
+    }
+
+    public Dices getDices() {
+        return dices;
     }
 }
