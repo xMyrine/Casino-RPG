@@ -32,19 +32,19 @@ public class GamePanel extends JPanel implements Runnable {
     protected transient KeyHandler keyHandler = new KeyHandler(this);
     private transient Thread gameThread;
     protected transient Player player = new Player(this, keyHandler);
-    public CollisionManager collisionManager = new CollisionManager(this);
-    protected TileManager tileManager = new TileManager(this);
-    public ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
-    public Sound sound = new Sound();
-    public LevelManager levelManager = new LevelManager(this);
-    public UI ui = new UI(this);
-    public NPCManager npcManager = new NPCManager(this);
+    protected transient CollisionManager collisionManager = new CollisionManager(this);
+    protected transient TileManager tileManager = new TileManager(this);
+    protected transient ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
+    protected transient Sound sound = new Sound();
+    protected transient LevelManager levelManager = new LevelManager(this);
+    protected transient UI gameUI = new UI(this);
+    protected transient NPCManager npcManager = new NPCManager(this);
 
-    private Logger logger = Logger.getLogger(GamePanel.class.getName());
+    private transient Logger logger = Logger.getLogger(GamePanel.class.getName());
 
     // Game objects
-    public GameObject objects[] = new GameObject[50];
-    public Entity entities[] = new Entity[20];
+    protected transient GameObject[] objects = new GameObject[50];
+    protected transient Entity[] entities = new Entity[20];
 
     // ! Game State
     private int gameState;
@@ -97,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     @Override
     public void run() {
-        double drawInterval = 1000000000 / fps;
+        double drawInterval = 1000000000.0 / fps;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         if (gameState == MENUSCREEN) {
-            ui.draw(g2);
+            gameUI.draw(g2);
         } else {
             tileManager.draw(g2);
             for (int i = 0; i < objects.length; i++) {
@@ -169,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            ui.draw(g2);
+            gameUI.draw(g2);
         }
         // draw the game
 
@@ -211,5 +211,41 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public CollisionManager getCollisionManager() {
+        return collisionManager;
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
+
+    public UI getGameUI() {
+        return gameUI;
+    }
+
+    public GameObject getGameObject(int i) {
+        return objects[i];
+    }
+
+    public void setGameObject(int i, GameObject obj) {
+        objects[i] = obj;
+    }
+
+    public Entity getEntity(int i) {
+        return entities[i];
+    }
+
+    public void setEntity(int i, Entity entity) {
+        entities[i] = entity;
+    }
+
+    public Entity[] getEntities() {
+        return entities;
     }
 }

@@ -73,7 +73,7 @@ public class Prostitute extends Entity implements NPC {
 
     @Override
     public void talk() {
-        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
+        gamePanel.getGameUI().setDialogue(dialogues[dialogueIndex]);
         if (dialogueIndex == 0) {
             reputation = 0;
         }
@@ -81,8 +81,8 @@ public class Prostitute extends Entity implements NPC {
             calculateRizz();
             if (rizz > 2) {
                 dialogueIndex++;
-                gamePanel.levelManager.secondLevel.getLaid();
-                gamePanel.levelManager.checkLevelFinished();
+                gamePanel.getLevelManager().secondLevel.getLaid();
+                gamePanel.getLevelManager().checkLevelFinished();
             }
         }
         dialogueIndex++;

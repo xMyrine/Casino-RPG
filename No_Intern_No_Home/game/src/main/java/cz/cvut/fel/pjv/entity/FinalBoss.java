@@ -14,4 +14,10 @@ public class FinalBoss extends Entity implements NPC {
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
+    @Override
+    public void setDialogueMessage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDialogueMessage'");
+    }
+
 }

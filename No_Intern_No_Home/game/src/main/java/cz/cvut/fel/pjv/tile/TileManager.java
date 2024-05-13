@@ -165,18 +165,19 @@ public class TileManager {
             worldX = worldCol * GamePanel.TILE_SIZE;
             worldY = worldRow * GamePanel.TILE_SIZE;
 
-            screenX = worldX - gamePanel.player.getWorldX() + gamePanel.player.getScreenX();
-            screenY = worldY - gamePanel.player.getWorldY() + gamePanel.player.getScreenY();
+            screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().getScreenX();
+            screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().getScreenY();
 
             int screenTilesWidth = GamePanel.SCREEN_WIDTH / GamePanel.TILE_SIZE;
             int screenTilesHeight = GamePanel.SCREEN_HEIGHT / GamePanel.TILE_SIZE;
 
-            if (worldX - screenTilesWidth * GamePanel.TILE_SIZE < gamePanel.player.getWorldX() + GamePanel.TILE_SIZE
-                    && worldX + screenTilesWidth * GamePanel.TILE_SIZE > gamePanel.player.getWorldX()
+            if (worldX - screenTilesWidth * GamePanel.TILE_SIZE < gamePanel.getPlayer().getWorldX()
+                    + GamePanel.TILE_SIZE
+                    && worldX + screenTilesWidth * GamePanel.TILE_SIZE > gamePanel.getPlayer().getWorldX()
                             - GamePanel.TILE_SIZE
-                    && worldY - screenTilesHeight * GamePanel.TILE_SIZE < gamePanel.player.getWorldY()
+                    && worldY - screenTilesHeight * GamePanel.TILE_SIZE < gamePanel.getPlayer().getWorldY()
                             + GamePanel.TILE_SIZE
-                    && worldY + screenTilesHeight * GamePanel.TILE_SIZE > gamePanel.player.getWorldY()
+                    && worldY + screenTilesHeight * GamePanel.TILE_SIZE > gamePanel.getPlayer().getWorldY()
                             - GamePanel.TILE_SIZE) {
 
                 g.drawImage(tiles[tileNum].getImage(), screenX, screenY, null);

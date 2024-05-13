@@ -63,14 +63,14 @@ public class Worker2 extends Entity implements NPC {
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
-        int screenX = worldX - gamePanel.player.worldX + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE - 24;
+        int screenX = worldX - gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE - 24;
+        int screenY = worldY - gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE - 24;
         // draw only objects that are in the screen
-        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - GamePanel.SCREEN_WIDTH
-                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + GamePanel.SCREEN_WIDTH
-                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - GamePanel.SCREEN_HEIGHT
-                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + GamePanel.SCREEN_HEIGHT) {
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldX - GamePanel.SCREEN_WIDTH
+                && worldX - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH
+                && worldY + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldY - GamePanel.SCREEN_HEIGHT
+                && worldY - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT) {
             g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }

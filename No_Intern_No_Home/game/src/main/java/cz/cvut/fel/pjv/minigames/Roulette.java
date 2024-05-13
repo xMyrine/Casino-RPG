@@ -1,19 +1,22 @@
 package cz.cvut.fel.pjv.minigames;
 
+import java.util.Random;
+
 import cz.cvut.fel.pjv.GamePanel;
 
 public class Roulette {
 
     private int winningNumber;
-    public int playersNumber;
+    private int playersNumber;
     GamePanel gamePanel;
     private int bet;
     private int minimumBet = 5;
-    public boolean validBet = true;
+    private boolean validBet = true;
     private boolean completed = false;
 
     private static final int RED = 666;
     private static final int BLACK = 420;
+    private Random rand = new Random();
 
     public Roulette(GamePanel gp) {
         this.gamePanel = gp;
@@ -25,13 +28,13 @@ public class Roulette {
     }
 
     public boolean end() {
-        gamePanel.levelManager.firstLevel.setMiniGameFinished(completed);
+        gamePanel.getLevelManager().firstLevel.setMiniGameFinished(completed);
         return completed;
     }
 
     private void spin(int bettingNumber) {
-        gamePanel.player.setChipCount(gamePanel.player.getChipCount() - bet);
-        winningNumber = (int) (Math.random() * 37);
+        gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
+        winningNumber = rand.nextInt(37);
         validBet = true;
         evaluate(bettingNumber);
         bet += minimumBet;
@@ -46,23 +49,17 @@ public class Roulette {
             playersNumber = bettingNumber - 2;
         }
 
-        if (playersNumber == RED && winningNumber % 2 == 0) {
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * bet);
+        if ((playersNumber == RED && winningNumber % 2 == 0) || (playersNumber == BLACK && winningNumber % 2 != 0)) {
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 2 * bet);
             completed = true;
-            gamePanel.ui.setAnnounceMessage("You won " + 2 * bet + " chips");
-            gamePanel.sound.playMusic(6);
-            end();
-        } else if (playersNumber == BLACK && winningNumber % 2 != 0) {
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * bet);
-            completed = true;
-            gamePanel.ui.setAnnounceMessage("You won " + 2 * bet + " chips");
-            gamePanel.sound.playMusic(6);
+            gamePanel.getGameUI().setAnnounceMessage("You won " + 2 * bet + " chips");
+            gamePanel.getSound().playMusic(6);
             end();
         } else if (playersNumber == winningNumber) {
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 36 * bet);
-            gamePanel.ui.setAnnounceMessage("You won " + 36 * bet + " chips");
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 36 * bet);
+            gamePanel.getGameUI().setAnnounceMessage("You won " + 36 * bet + " chips");
             completed = true;
-            gamePanel.sound.playMusic(6);
+            gamePanel.getSound().playMusic(6);
             end();
         }
     }
@@ -72,8 +69,8 @@ public class Roulette {
     }
 
     public void bet() {
-        if (this.bet + 5 > gamePanel.player.getChipCount()) {
-            this.bet = gamePanel.player.getChipCount();
+        if (this.bet + 5 > gamePanel.getPlayer().getChipCount()) {
+            this.bet = gamePanel.getPlayer().getChipCount();
             return;
         }
         this.bet += 5;
@@ -95,4 +92,15 @@ public class Roulette {
         this.playersNumber = playersNumber;
     }
 
+    public int getPlayersNumber() {
+        return playersNumber;
+    }
+
+    public boolean isValidBet() {
+        return validBet;
+    }
+
+    public void setValidBet(boolean validBet) {
+        this.validBet = validBet;
+    }
 }

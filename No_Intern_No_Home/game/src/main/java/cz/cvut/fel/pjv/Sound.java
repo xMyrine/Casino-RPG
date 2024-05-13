@@ -27,8 +27,12 @@ public class Sound {
 
     }
 
+    /**
+     * Declares the file based on the index
+     * 
+     * @param i - index of the sound
+     */
     public void declareFile(int i) {
-
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
@@ -51,7 +55,8 @@ public class Sound {
         clip.start();
     }
 
-    /*
+    /**
+     * Plays background music
      * 0 - background music
      */
     public void playMusic() {
@@ -61,15 +66,29 @@ public class Sound {
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float currentVolume = volume.getValue();
-            volume.setValue(currentVolume - 30.0f);
+            volume.setValue(currentVolume - 10.0f);
         }
         this.loopSound();
     }
 
     /*
+     * 
+     * public void stopMusic() {
+     * clip.stop();
+     * }
+     */
+
+    public void toggleSound() {
+        if (clip.isActive()) {
+            clip.stop();
+        } else {
+            clip.start();
+        }
+    }
+
+    /**
      * Plays sound based on the index
      * 
-     * @param i - index of the sound
      * 1 - chip
      * 2 - beer
      * 3 - slot machine
@@ -79,6 +98,8 @@ public class Sound {
      * 7 - shooting
      * 8 - lose
      * 9 - win
+     * 
+     * @param i - index of the sound
      */
 
     public void playMusic(int i) {

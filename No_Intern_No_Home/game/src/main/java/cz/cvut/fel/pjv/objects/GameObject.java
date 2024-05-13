@@ -31,15 +31,17 @@ public abstract class GameObject {
      * @param gamePanel GamePanel
      */
     public void draw(Graphics2D g, GamePanel gamePanel) {
-        int screenX = worldX - gamePanel.player.getWorldX() + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE - 24;
+        int screenX = worldX - gamePanel.getPlayer().getWorldX() + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE
+                - 24;
 
-        int screenY = worldY - gamePanel.player.getWorldY() + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE - 24;
+        int screenY = worldY - gamePanel.getPlayer().getWorldY() + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE
+                - 24;
 
         // draw only objects that are in the screen
-        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.getWorldX() - GamePanel.SCREEN_WIDTH
-                && worldX - GamePanel.TILE_SIZE < gamePanel.player.getWorldX() + GamePanel.SCREEN_WIDTH
-                && worldY + GamePanel.TILE_SIZE > gamePanel.player.getWorldY() - GamePanel.SCREEN_HEIGHT
-                && worldY - GamePanel.TILE_SIZE < gamePanel.player.getWorldY() + GamePanel.SCREEN_HEIGHT) {
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.getPlayer().getWorldX() - GamePanel.SCREEN_WIDTH
+                && worldX - GamePanel.TILE_SIZE < gamePanel.getPlayer().getWorldX() + GamePanel.SCREEN_WIDTH
+                && worldY + GamePanel.TILE_SIZE > gamePanel.getPlayer().getWorldY() - GamePanel.SCREEN_HEIGHT
+                && worldY - GamePanel.TILE_SIZE < gamePanel.getPlayer().getWorldY() + GamePanel.SCREEN_HEIGHT) {
             g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }

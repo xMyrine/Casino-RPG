@@ -184,6 +184,7 @@ public class UI {
         g.drawString("Press Q/E to increase or decrease your bet", 0, GamePanel.TILE_SIZE * 5);
         g.drawString("W/S to navigate around buttons during minigame", 0, GamePanel.TILE_SIZE * 6);
         g.drawString("Press I to toggle inventory", 0, GamePanel.TILE_SIZE * 7);
+        g.drawString("Press F1 to mute the sound", 0, GamePanel.TILE_SIZE * 8);
     }
 
     /*
@@ -458,7 +459,7 @@ public class UI {
                 GamePanel.TILE_SIZE * 10 + 24);
         g.drawImage(chipImage, GamePanel.TILE_SIZE * 10 - 70, GamePanel.TILE_SIZE * 10 - 10, 50, 50, null);
 
-        if (!gamePanel.levelManager.roulette.validBet) {
+        if (!gamePanel.levelManager.roulette.isValidBet()) {
             g.setColor(Color.RED);
             g.setFont(g.getFont().deriveFont(Font.BOLD, 80.0f));
             g.drawString("Not enough chips", GamePanel.TILE_SIZE * 1,

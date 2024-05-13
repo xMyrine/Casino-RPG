@@ -58,7 +58,7 @@ public class LevelManager {
     public boolean checkLevelFinished() {
         if (levelNumber == 1) {
             if (firstLevel.checkLevelFinished() && !firstLevelMessage) {
-                gamePanel.ui.setAnnounceMessage("First Level finished");
+                gamePanel.gameUI.setAnnounceMessage("First Level finished");
                 firstLevelMessage = true;
                 levelInProgress = false;
                 increaseLevel();
@@ -70,7 +70,7 @@ public class LevelManager {
             }
         } else if (levelNumber == 2) {
             if (secondLevel.checkLevelFinished() && !secondLevelMessage) {
-                gamePanel.ui.setAnnounceMessage("Second Level finished");
+                gamePanel.gameUI.setAnnounceMessage("Second Level finished");
                 secondLevelMessage = true;
                 levelInProgress = false;
                 increaseLevel();
@@ -81,7 +81,7 @@ public class LevelManager {
             }
         } else if (levelNumber == 3) {
             if (thirdLevel.checkLevelFinished() && !thirdLevelmessage) {
-                gamePanel.ui.setAnnounceMessage("Third Level finished");
+                gamePanel.gameUI.setAnnounceMessage("Third Level finished");
                 thirdLevelmessage = true;
                 levelInProgress = false;
                 increaseLevel();

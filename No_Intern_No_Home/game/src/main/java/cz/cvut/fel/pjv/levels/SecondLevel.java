@@ -8,6 +8,7 @@ public class SecondLevel extends Level {
     private boolean gotLaid;
 
     public SecondLevel(GamePanel gamePanel) {
+        super();
         this.levelFinished = false;
         this.gamePanel = gamePanel;
         this.gotLaid = false;
@@ -15,13 +16,14 @@ public class SecondLevel extends Level {
 
     public void getLaid() {
         gotLaid = true;
-        gamePanel.levelManager.checkLevelFinished();
+        gamePanel.getLevelManager().checkLevelFinished();
     }
 
     @Override
     public boolean checkLevelFinished() {
-        if (gotLaid && gamePanel.levelManager.blackjack.getFinished()) {
+        if (gotLaid && gamePanel.getLevelManager().blackjack.getFinished()) {
             this.levelFinished = true;
+            logger.info("Second level finished");
             return true;
         }
         return false;

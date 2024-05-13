@@ -6,4 +6,6 @@ public interface NPC {
 
     public void move();
 
+    public void setDialogueMessage();
+
 }

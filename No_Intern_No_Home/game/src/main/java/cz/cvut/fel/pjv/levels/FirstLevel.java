@@ -1,23 +1,19 @@
 package cz.cvut.fel.pjv.levels;
 
-import java.util.logging.Logger;
-
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.minigames.Roulette;
 
 public class FirstLevel extends Level {
     private int finishedSlotMachineCount;
     private boolean miniGameFinished;
     private int playerSlotMachineCount;
     private GamePanel gamePanel;
-    public Roulette roulette;
 
     public FirstLevel(int playerSlotMachineCount, int totalSlotMachineCount, GamePanel gamePanel) {
+        super();
         this.finishedSlotMachineCount = totalSlotMachineCount;
         this.playerSlotMachineCount = playerSlotMachineCount;
         this.miniGameFinished = false;
         this.levelFinished = false;
-        logger = Logger.getLogger(FirstLevel.class.getName());
         this.gamePanel = gamePanel;
 
     }
@@ -36,7 +32,7 @@ public class FirstLevel extends Level {
 
     public void setMiniGameFinished(boolean miniGameFinished) {
         this.miniGameFinished = miniGameFinished;
-        gamePanel.levelManager.checkLevelFinished();
+        gamePanel.getLevelManager().checkLevelFinished();
     }
 
     @Override
@@ -57,7 +53,7 @@ public class FirstLevel extends Level {
     }
 
     public boolean checkSlotMachineCount() {
-        fetchPlayerSlotMachineCount(gamePanel.player.getSlotMachineCount());
+        fetchPlayerSlotMachineCount(gamePanel.getPlayer().getSlotMachineCount());
         if (finishedSlotMachineCount <= playerSlotMachineCount) {
             logger.config("Slot machines finished");
             return true;

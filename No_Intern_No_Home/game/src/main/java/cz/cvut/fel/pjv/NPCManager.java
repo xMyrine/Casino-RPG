@@ -27,6 +27,8 @@ public class NPCManager {
 
     private void spawnLevelThreeNPC() {
         gamePanel.entities[5] = new PokerManTrainer(GamePanel.TILE_SIZE * 37, GamePanel.TILE_SIZE * 36);
+        gamePanel.entities[7] = new Worker3(this.gamePanel, GamePanel.TILE_SIZE * 40,
+                GamePanel.TILE_SIZE * 37);
     }
 
     public void update() {

@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.objects.Alcohol;
+package cz.cvut.fel.pjv.objects.alcohol;
 
 import cz.cvut.fel.pjv.objects.GameObject;
 import cz.cvut.fel.pjv.entity.Player;

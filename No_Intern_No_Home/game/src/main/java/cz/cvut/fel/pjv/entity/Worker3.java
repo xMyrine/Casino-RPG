@@ -8,12 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-public class Worker extends Entity implements NPC {
+public class Worker3 extends Entity implements NPC {
 
     GamePanel gamePanel;
 
-    public Worker(GamePanel panel) {
-        this.name = "Worker";
+    public Worker3(GamePanel panel) {
+        this.name = "Worker3";
         this.gamePanel = panel;
         this.speed = 1;
         this.direction = Constants.LEFT;
@@ -24,8 +24,8 @@ public class Worker extends Entity implements NPC {
         getNPCImage();
     }
 
-    public Worker(GamePanel panel, int x, int y) {
-        this.name = "Worker";
+    public Worker3(GamePanel panel, int x, int y) {
+        this.name = "Worker3";
         this.gamePanel = panel;
         this.speed = 1;
         this.direction = Constants.LEFT;
@@ -38,14 +38,14 @@ public class Worker extends Entity implements NPC {
 
     public void getNPCImage() {
 
-        up1 = assignImage("/npc/worker1_up_1");
-        up2 = assignImage("/npc/worker1_up_2");
-        down1 = assignImage("/npc/worker1_down_1");
-        down2 = assignImage("/npc/worker1_down_2");
-        left1 = assignImage("/npc/worker1_left_1");
-        left2 = assignImage("/npc/worker1_left_2");
-        right1 = assignImage("/npc/worker1_right_1");
-        right2 = assignImage("/npc/worker1_right_2");
+        up1 = assignImage("/npc/worker2_up_1");
+        up2 = assignImage("/npc/worker2_up_2");
+        down1 = assignImage("/npc/worker2_down_1");
+        down2 = assignImage("/npc/worker2_down_2");
+        left1 = assignImage("/npc/worker2_left_1");
+        left2 = assignImage("/npc/worker2_left_2");
+        right1 = assignImage("/npc/worker2_right_1");
+        right2 = assignImage("/npc/worker2_right_2");
 
     }
 
@@ -76,31 +76,26 @@ public class Worker extends Entity implements NPC {
         }
     }
 
+    @Override
     public void setDialogueMessage() {
-        dialogues[0] = "The slot machines around here could use some love.\n I'm not a programmer though.";
-        dialogues[1] = "Or if you want to you can just \ngamble with me first.";
-        dialogues[2] = "I'm not very good at it though. I always lose.";
-        dialogues[3] = "Once you are ready to challenge me\n just talk to me again.";
-        dialogues[4] = "We are gonna play roulette. Rules are as follows:\n You can bet on a number or a color.";
-        dialogues[5] = "If you bet on a number and it comes up\n you win 36 times your bet.";
-        dialogues[6] = "If you bet on a color and it comes up\n you win 2 times your bet.";
-        dialogues[7] = "You can adjust your bet with Q/E but beware,\n if you dont pay attention the bet\n might be rising on its own :)";
-        dialogues[8] = "Use W/S to navigate the roulette table and\n press ENTER to place your bet. Good luck!";
-        dialogues[9] = "(Do you wish to challenge this worker?) (Y/N)";
-        dialogues[10] = "";
-
+        dialogues[0] = "Oh, hello there!";
+        dialogues[1] = "Pretty nice day, isn't it?";
+        dialogues[2] = "Also pretty impressive you made it here!";
+        dialogues[3] = "Ohhh, what game do I play? \n Just a simple dice roll game. \n You can try it out if you want!";
+        dialogues[4] = "You just bet higher or lower than the number I roll. \n If you win, you get double the money!";
+        dialogues[5] = "Oh yeah, don't forget to buy some items from the shopkeeper! \n He has some pretty good stuff!";
+        dialogues[6] = "Also your luck is pretty important in this game. \n The higher the luck, the higher the chance of winning!";
+        dialogues[7] = "(Do you wish to challenge this NPC? (Y/N))";
+        dialogues[8] = "Oh, you want to play? \n Great! Let's start!";
     }
 
     @Override
     public void move() {
         int i;
-
         if (actionCounter < ACTION_DELAY) {
             actionCounter++;
-
         } else {
             i = Entity.random.nextInt(4);
-
             if (i == 0) {
                 direction = Constants.UP;
                 worldY -= speed;
@@ -115,6 +110,7 @@ public class Worker extends Entity implements NPC {
                 worldX += speed;
             }
             actionCounter = 0;
+
         }
     }
 

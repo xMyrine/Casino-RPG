@@ -3,7 +3,7 @@ package cz.cvut.fel.pjv;
 import java.util.logging.Logger;
 
 import cz.cvut.fel.pjv.objects.*;
-import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.objects.alcohol.*;
 
 public class ObjectsSpawner {
 

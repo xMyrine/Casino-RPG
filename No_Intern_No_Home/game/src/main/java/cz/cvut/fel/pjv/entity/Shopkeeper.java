@@ -114,16 +114,16 @@ public class Shopkeeper extends Entity {
         if (gamePanel.getPlayer().getChipCount() > 25) {
             gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() + 0.05f);
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 25);
-            gamePanel.ui.setAnnounceMessage("You have increased your luck by 4%!");
+            gamePanel.getGameUI().setAnnounceMessage("You have increased your luck by 4%!");
         } else {
-            gamePanel.ui.setAnnounceMessage("You don't have enough chips!");
+            gamePanel.getGameUI().setAnnounceMessage("You don't have enough chips!");
         }
     }
 
     private void increasePlayersChips() {
         gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 10);
         gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() - 0.01f);
-        gamePanel.ui.setAnnounceMessage("You have received 5 chips!");
+        gamePanel.getGameUI().setAnnounceMessage("You have received 5 chips!");
     }
 
     private void randomPlayerStats() {
@@ -131,11 +131,11 @@ public class Shopkeeper extends Entity {
             if (random.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
                 gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 10);
                 gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() + 0.01f);
-                gamePanel.ui.setAnnounceMessage("You have received 10 chips!");
+                gamePanel.getGameUI().setAnnounceMessage("You have received 10 chips!");
             } else {
                 gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() - 0.01f);
                 gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 10);
-                gamePanel.ui.setAnnounceMessage("You have lost 5% of your luck!");
+                gamePanel.getGameUI().setAnnounceMessage("You have lost 5% of your luck!");
             }
             if (random.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
                 break;

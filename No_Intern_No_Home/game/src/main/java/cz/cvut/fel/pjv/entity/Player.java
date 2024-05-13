@@ -5,7 +5,7 @@ import cz.cvut.fel.pjv.Inventory;
 import cz.cvut.fel.pjv.KeyHandler;
 import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.*;
-import cz.cvut.fel.pjv.objects.Alcohol.*;
+import cz.cvut.fel.pjv.objects.alcohol.*;
 import cz.cvut.fel.pjv.items.*;
 import cz.cvut.fel.pjv.Constants;
 
@@ -149,7 +149,7 @@ public class Player extends Entity {
 
     }
 
-    /*
+    /**
      * Get the player's image
      */
     public void getPlayerImage() {
@@ -164,6 +164,14 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Assign the player's image
+     * 
+     * @param path
+     * @return the player's image
+     * 
+     */
+
     private BufferedImage assignImage(String path) {
         BufferedImage image = null;
         try {
@@ -177,10 +185,9 @@ public class Player extends Entity {
 
     }
 
-    /*
+    /**
      * Update the player's position based on the key inputs
      */
-
     @Override
     public void update() {
         if (keyHandler.getUp() || keyHandler.getDown() || keyHandler.getLeft() || keyHandler.getRight()) {
@@ -193,16 +200,16 @@ public class Player extends Entity {
         }
     }
 
-    /*
+    /**
      * Check if the player can smoke a cigarette
      */
     private void canSmoke() {
         if (worldY <= 270 && worldX >= 2100) {
-            gamePanel.ui.setAnnounceMessage("You can smoke here (Q)");
+            gamePanel.getGameUI().setAnnounceMessage("You can smoke here (Q)");
         }
     }
 
-    /*
+    /**
      * Update the direction of the player based on the key inputs
      */
     private void updateDirection() {
@@ -220,18 +227,18 @@ public class Player extends Entity {
         }
     }
 
-    /*
+    /**
      * Check for collisions with objects, tiles and NPCs
      */
     private void checkCollisions() {
-        gamePanel.collisionManager.checkTile(this);
-        int objectIndex = gamePanel.collisionManager.checkObjectCollision(this, true);
+        gamePanel.getCollisionManager().checkTile(this);
+        int objectIndex = gamePanel.getCollisionManager().checkObjectCollision(this, true);
         pickUp(objectIndex);
-        npcIndex = gamePanel.collisionManager.checkEntityCollision(this, gamePanel.entities);
+        npcIndex = gamePanel.getCollisionManager().checkEntityCollision(this, gamePanel.getEntities());
         interactWithNPC(npcIndex);
     }
 
-    /*
+    /**
      * Move the player based on the direction
      */
     private void movePlayer() {
@@ -255,7 +262,7 @@ public class Player extends Entity {
         }
     }
 
-    /*
+    /**
      * Update the player's sprite
      */
     private void updateSprite() {
@@ -266,14 +273,14 @@ public class Player extends Entity {
         }
     }
 
-    /*
+    /**
      * Pick up an object
      * 
      * @param objectIndex index of the object in the objects array
      */
     public void pickUp(int objectIndex) {
         if (objectIndex != 69) {
-            String objectName = gamePanel.objects[objectIndex].getName();
+            String objectName = gamePanel.getGameObject(objectIndex).getName();
 
             switch (objectName) {
                 case "chip":
@@ -300,93 +307,93 @@ public class Player extends Entity {
         }
     }
 
-    /*
+    /**
      * Pick up a chip
      * 
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpChip(int objectIndex) {
         chipCount++;
-        gamePanel.objects[objectIndex] = null;
-        gamePanel.sound.playMusic(1);
+        gamePanel.setGameObject(objectIndex, null);
+        gamePanel.getSound().playMusic(1);
     }
 
-    /*
+    /**
      * Pick up a slot machine
      * 
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpSlotMachine(int objectIndex) {
-        if (gamePanel.objects[objectIndex] instanceof SlotMachine &&
-                !((SlotMachine) gamePanel.objects[objectIndex]).finished() &&
+        if (gamePanel.getGameObject(objectIndex) instanceof SlotMachine &&
+                !((SlotMachine) gamePanel.getGameObject(objectIndex)).finished() &&
                 chipCount > 0) {
             chipCount--;
             if (random.nextFloat() < playerLuck) {
-                ((SlotMachine) gamePanel.objects[objectIndex]).setFinished(true);
-                ((SlotMachine) gamePanel.objects[objectIndex]).changeState(true);
+                ((SlotMachine) gamePanel.getGameObject(objectIndex)).setFinished(true);
+                ((SlotMachine) gamePanel.getGameObject(objectIndex)).changeState(true);
                 slotMachineCount++;
-                gamePanel.levelManager.checkLevelFinished();
-                gamePanel.sound.playMusic(3);
+                gamePanel.getLevelManager().checkLevelFinished();
+                gamePanel.getSound().playMusic(3);
             }
         }
     }
 
-    /*
+    /**
      * Pick up a beer
      * 
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpBeer(int objectIndex) {
-        if (gamePanel.objects[objectIndex] instanceof Beer) {
-            this.playerLuck = ((Beer) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+        if (gamePanel.getGameObject(objectIndex) instanceof Beer) {
+            this.playerLuck = ((Beer) gamePanel.getGameObject(objectIndex)).increasePlayersLuck(this);
             logger.log(Level.INFO, PLAYER_LUCK_MESSAGE, this.playerLuck);
         }
-        gamePanel.objects[objectIndex] = null;
+        gamePanel.setGameObject(objectIndex, null);
     }
 
-    /*
+    /**
      * Pick up a chest
      * 
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpChest(int objectIndex) {
-        if (gamePanel.objects[objectIndex] instanceof Chest && gamePanel.getKeyHandler().getInteract()
-                && ((Chest) gamePanel.objects[objectIndex]).open()) {
+        if (gamePanel.getGameObject(objectIndex) instanceof Chest && gamePanel.getKeyHandler().getInteract()
+                && ((Chest) gamePanel.getGameObject(objectIndex)).open()) {
             chipCount += 50;
             int randomInt = random.nextInt(3);
             specialItemsFragnments[randomInt]++;
             gamePanel.getKeyHandler().setInteract(false);
-            gamePanel.sound.playMusic(5);
+            gamePanel.getSound().playMusic(5);
         }
     }
 
-    /*
+    /**
      * Pick up a vodka
      * 
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpVodka(int objectIndex) {
-        if (gamePanel.objects[objectIndex] instanceof Vodka) {
-            this.playerLuck = ((Vodka) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+        if (gamePanel.getGameObject(objectIndex) instanceof Vodka) {
+            this.playerLuck = ((Vodka) gamePanel.getGameObject(objectIndex)).increasePlayersLuck(this);
             logger.log(Level.INFO, PLAYER_LUCK_MESSAGE, this.playerLuck);
         }
-        gamePanel.objects[objectIndex] = null;
+        gamePanel.setGameObject(objectIndex, null);
     }
 
-    /*
+    /**
      * Pick up a Dom Perignon
      * 
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpDomPerignon(int objectIndex) {
-        if (gamePanel.objects[objectIndex] instanceof DomPerignon) {
-            this.playerLuck = ((DomPerignon) gamePanel.objects[objectIndex]).increasePlayersLuck(this);
+        if (gamePanel.getGameObject(objectIndex) instanceof DomPerignon) {
+            this.playerLuck = ((DomPerignon) gamePanel.getGameObject(objectIndex)).increasePlayersLuck(this);
             logger.log(Level.INFO, PLAYER_LUCK_MESSAGE, this.playerLuck);
         }
-        gamePanel.objects[objectIndex] = null;
+        gamePanel.setGameObject(objectIndex, null);
     }
 
-    /*
+    /**
      * Interact with an NPC
      * 
      * @param npcIndex index of the NPC in the entities array
@@ -395,7 +402,7 @@ public class Player extends Entity {
         if (npcIndex != 69) {
             if (gamePanel.getKeyHandler().getInteract()) {
                 gamePanel.changeGameState(GamePanel.DIALOGUESCREEN);
-                gamePanel.entities[npcIndex].talk();
+                gamePanel.getEntity(npcIndex).talk();
             }
             gamePanel.getKeyHandler().setInteract(false);
         }
@@ -539,11 +546,11 @@ public class Player extends Entity {
         Cigarette cigarette = getFirstCigarette();
         if (cigarette != null) {
             cigarette.use();
-            gamePanel.ui.setAnnounceMessage("You smoked a cigarette, your luck increased");
+            gamePanel.getGameUI().setAnnounceMessage("You smoked a cigarette, your luck increased");
             removeFirstCigarette();
         } else {
             logger.log(Level.WARNING, "No cigarette found in inventory");
-            gamePanel.ui.setAnnounceMessage("You don't have a cigarette");
+            gamePanel.getGameUI().setAnnounceMessage("You don't have a cigarette");
         }
     }
 

@@ -121,7 +121,7 @@ public class Craftsman extends Entity {
         } else if (item == Player.GUN_INDEX && gunIndex >= 3 && gamePanel.getPlayer().getChipCount() >= 250) {
             gamePanel.getPlayer().setSpecialItemsFragmentCount(Player.GUN_INDEX,
                     gamePanel.getPlayer().getSpecialItemsFragmentCount(Player.GUN_INDEX) - 3);
-            Gun gun = new Gun(gamePanel.levelManager.pokermon);
+            Gun gun = new Gun(gamePanel.getLevelManager().pokermon);
             gamePanel.getPlayer().addItems(gun);
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 250);
         } else if (item == Player.CARDS_INDEX && cardsIndex >= 3 && gamePanel.getPlayer().getChipCount() >= 100) {
@@ -131,7 +131,7 @@ public class Craftsman extends Entity {
                     gamePanel.getPlayer().getSpecialItem(Player.CARDS_INDEX) + 1);
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 100);
         } else {
-            gamePanel.ui.setAnnounceMessage("Not enough fragments or unsufficient funds");
+            gamePanel.getGameUI().setAnnounceMessage("Not enough fragments or unsufficient funds");
         }
     }
 }

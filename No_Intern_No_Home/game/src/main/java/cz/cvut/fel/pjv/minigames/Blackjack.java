@@ -183,33 +183,33 @@ public class Blackjack {
     }
 
     public void evaluate() {
-        if (gamePanel.player.getChipCount() - bet < 0) {
-            gamePanel.ui.setAnnounceMessage("You don't have enough chips");
+        if (gamePanel.getPlayer().getChipCount() - bet < 0) {
+            gamePanel.getGameUI().setAnnounceMessage("You don't have enough chips");
             return;
         }
         if (!chipsDeducted) {
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() - bet);
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
             chipsDeducted = true;
         }
         dealerHandValue = reduceDealerAce();
         playerHandValue = reduceAce();
 
         if (playerHandValue > 21) {
-            gamePanel.ui.setAnnounceMessage("You busted");
+            gamePanel.getGameUI().setAnnounceMessage("You busted");
         } else if (dealerHandValue > 21) {
-            gamePanel.ui.setAnnounceMessage("Dealer busted");
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * 25);
-            gamePanel.sound.playMusic(6);
+            gamePanel.getGameUI().setAnnounceMessage("Dealer busted");
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 2 * 25);
+            gamePanel.getSound().playMusic(6);
             finished = true;
         } else if (playerHandValue > dealerHandValue) {
-            gamePanel.ui.setAnnounceMessage("You won " + 2 * 25 + " chips");
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 2 * 25);
-            gamePanel.sound.playMusic(6);
+            gamePanel.getGameUI().setAnnounceMessage("You won " + 2 * 25 + " chips");
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 2 * 25);
+            gamePanel.getSound().playMusic(6);
             finished = true;
         } else if (playerHandValue < dealerHandValue) {
-            gamePanel.ui.setAnnounceMessage("You lost");
+            gamePanel.getGameUI().setAnnounceMessage("You lost");
         } else {
-            gamePanel.ui.setAnnounceMessage("It's a tie");
+            gamePanel.getGameUI().setAnnounceMessage("It's a tie");
         }
     }
 

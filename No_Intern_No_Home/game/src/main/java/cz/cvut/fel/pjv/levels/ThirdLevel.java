@@ -6,6 +6,7 @@ public class ThirdLevel extends Level {
     private GamePanel gamePanel;
 
     public ThirdLevel(GamePanel gamePanel) {
+        super();
         this.levelFinished = false;
         this.gamePanel = gamePanel;
 
@@ -13,8 +14,9 @@ public class ThirdLevel extends Level {
 
     @Override
     public boolean checkLevelFinished() {
-        if (gamePanel.levelManager.pokermon.isFinished()) {
+        if (gamePanel.getLevelManager().pokermon.isFinished()) {
             this.levelFinished = true;
+            logger.info("Third level finished");
             return true;
         }
         return false;

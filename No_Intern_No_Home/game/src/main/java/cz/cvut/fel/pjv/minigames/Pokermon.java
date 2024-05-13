@@ -35,7 +35,7 @@ public class Pokermon {
         mode = 0;
         playerAttack = 1;
         enemyAttack = 0;
-        luck = gamePanel.player.getPlayerLuck();
+        luck = gamePanel.getPlayer().getPlayerLuck();
 
         try {
             screenImage = ImageIO.read(getClass().getResourceAsStream("/screens/pokermonbattle.png"));
@@ -78,7 +78,7 @@ public class Pokermon {
     private void heal() {
         if (enemyHealth < 10) {
             enemyHealth += 2;
-            float odds = gamePanel.player.getPlayerLuck();
+            float odds = gamePanel.getPlayer().getPlayerLuck();
             if (Math.random() > odds && enemyHealth < 10) {
                 enemyHealth += 2;
             }
@@ -150,7 +150,7 @@ public class Pokermon {
     private void enemyAttack() {
         int attack = rand.nextInt(4);
         if (enemyHealth <= 0 && !cheatDeath) {
-            gamePanel.ui.setAnnounceMessage("Pickachu Used Cheat Death!");
+            gamePanel.getGameUI().setAnnounceMessage("Pickachu Used Cheat Death!");
             cheatDeath();
         }
         switch (attack) {
@@ -212,28 +212,29 @@ public class Pokermon {
 
     private void checkPlayerHealth() {
         if (playerHealth <= 0) {
-            gamePanel.ui.setAnnounceMessage("You have been defeated press R to start again");
+            gamePanel.getGameUI().setAnnounceMessage("You have been defeated press R to start again");
         }
     }
 
     private void checkEnemyHealth() {
         if (enemyHealth <= 0 && cheatDeath) {
-            gamePanel.ui.setAnnounceMessage("You have defeated the enemy");
+            gamePanel.getGameUI().setAnnounceMessage("You have defeated the enemy");
             finished = true;
-            gamePanel.levelManager.checkLevelFinished();
+            gamePanel.getLevelManager().checkLevelFinished();
             screenImage = winImage;
-            gamePanel.sound.playMusic(6);
+            gamePanel.getSound().playMusic(6);
         }
     }
 
     public void shoot() {
-        if (gamePanel.player.getSpecialItem(Player.GUN_INDEX) > 0) {
-            gamePanel.sound.playMusic(7);
+        if (gamePanel.getPlayer().getSpecialItem(Player.GUN_INDEX) > 0) {
+            gamePanel.getSound().playMusic(7);
             enemyHealth -= 10;
-            gamePanel.player.setSpecialItem(Player.GUN_INDEX, gamePanel.player.getSpecialItem(Player.GUN_INDEX) - 1);
+            gamePanel.getPlayer().setSpecialItem(Player.GUN_INDEX,
+                    gamePanel.getPlayer().getSpecialItem(Player.GUN_INDEX) - 1);
             mode = 0;
         } else {
-            gamePanel.ui.setAnnounceMessage("You don't have a gun");
+            gamePanel.getGameUI().setAnnounceMessage("You don't have a gun");
 
         }
 

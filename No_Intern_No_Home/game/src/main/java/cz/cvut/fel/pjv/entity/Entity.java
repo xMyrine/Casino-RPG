@@ -114,9 +114,9 @@ public abstract class Entity {
         move();
 
         collision = false;
-        gamePanel.collisionManager.checkTile(this);
-        gamePanel.collisionManager.checkObjectCollision(this, false);
-        gamePanel.collisionManager.checkEntityToPlayerCollision(this);
+        gamePanel.getCollisionManager().checkTile(this);
+        gamePanel.getCollisionManager().checkObjectCollision(this, false);
+        gamePanel.getCollisionManager().checkEntityToPlayerCollision(this);
 
         if (!collision) {
 
@@ -202,7 +202,7 @@ public abstract class Entity {
      * entity.
      */
     public void talk() {
-        gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
+        gamePanel.getGameUI().setDialogue(dialogues[dialogueIndex]);
         dialogueIndex++;
         this.turnEntity(gamePanel.getPlayer().direction);
         if (dialogues[dialogueIndex] == null) {

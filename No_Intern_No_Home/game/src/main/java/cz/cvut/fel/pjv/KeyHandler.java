@@ -54,6 +54,9 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if (code == KeyEvent.VK_F1) {
+            gamePanel.getSound().toggleSound();
+        }
         if (gamePanel.getGameState() == GamePanel.MENUSCREEN) {
             if (code == KeyEvent.VK_W) {
                 UI.decreaseCommand(3);

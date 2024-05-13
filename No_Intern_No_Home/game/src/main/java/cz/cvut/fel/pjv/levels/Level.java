@@ -8,6 +8,8 @@ public abstract class Level {
     protected Logger logger;
 
     protected Level() {
+        logger = Logger.getLogger(Level.class.getName());
+        logger.setLevel(java.util.logging.Level.INFO);
     }
 
     public void setLevelFinished(boolean finished) {
