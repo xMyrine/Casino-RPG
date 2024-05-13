@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
+import cz.cvut.fel.pjv.Constants;
 
 public class Shopkeeper extends Entity {
 
@@ -17,7 +18,7 @@ public class Shopkeeper extends Entity {
         this.name = "Shopkeeper";
         this.gamePanel = panel;
         this.speed = 1;
-        this.direction = "left";
+        this.direction = Constants.LEFT;
         this.worldX = 10;
         this.worldY = 10;
 
@@ -28,7 +29,7 @@ public class Shopkeeper extends Entity {
         this.name = "Shopkeeper";
         this.gamePanel = panel;
         this.speed = 1;
-        this.direction = "left";
+        this.direction = Constants.LEFT;
         this.worldX = x;
         this.worldY = y;
 
@@ -63,14 +64,14 @@ public class Shopkeeper extends Entity {
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
-        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * GamePanel.TILE_SIZE - 24;
+        int screenX = worldX - gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * GamePanel.TILE_SIZE - 24;
+        int screenY = worldY - gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE - 24;
         // draw only objects that are in the screen
-        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - gamePanel.screenWidth
-                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + gamePanel.screenWidth
-                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - gamePanel.screenHeight
-                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + gamePanel.screenHeight) {
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldX - GamePanel.SCREEN_WIDTH
+                && worldX - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH
+                && worldY + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldY - GamePanel.SCREEN_HEIGHT
+                && worldY - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT) {
             g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }
@@ -91,16 +92,16 @@ public class Shopkeeper extends Entity {
             i = Entity.random.nextInt(4);
 
             if (i == 0) {
-                direction = "up";
+                direction = Constants.UP;
                 worldY -= speed;
             } else if (i == 1) {
-                direction = "down";
+                direction = Constants.DOWN;
                 worldY += speed;
             } else if (i == 2) {
-                direction = "left";
+                direction = Constants.LEFT;
                 worldX -= speed;
             } else if (i == 3) {
-                direction = "right";
+                direction = Constants.RIGHT;
                 worldX += speed;
             }
             actionCounter = 0;
@@ -110,9 +111,9 @@ public class Shopkeeper extends Entity {
     }
 
     private void increasePlayersLuck() {
-        if (gamePanel.player.getChipCount() > 25) {
-            gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() + 0.05f);
-            gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 25);
+        if (gamePanel.getPlayer().getChipCount() > 25) {
+            gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() + 0.05f);
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 25);
             gamePanel.ui.setAnnounceMessage("You have increased your luck by 4%!");
         } else {
             gamePanel.ui.setAnnounceMessage("You don't have enough chips!");
@@ -120,23 +121,23 @@ public class Shopkeeper extends Entity {
     }
 
     private void increasePlayersChips() {
-        gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 10);
-        gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() - 0.01f);
+        gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 10);
+        gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() - 0.01f);
         gamePanel.ui.setAnnounceMessage("You have received 5 chips!");
     }
 
     private void randomPlayerStats() {
         while (true) {
-            if (random.nextFloat() < gamePanel.player.getPlayerLuck()) {
-                gamePanel.player.setChipCount(gamePanel.player.getChipCount() + 10);
-                gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() + 0.01f);
+            if (random.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
+                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 10);
+                gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() + 0.01f);
                 gamePanel.ui.setAnnounceMessage("You have received 10 chips!");
             } else {
-                gamePanel.player.setPlayerLuck(gamePanel.player.getPlayerLuck() - 0.01f);
-                gamePanel.player.setChipCount(gamePanel.player.getChipCount() - 10);
+                gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() - 0.01f);
+                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 10);
                 gamePanel.ui.setAnnounceMessage("You have lost 5% of your luck!");
             }
-            if (random.nextFloat() < gamePanel.player.getPlayerLuck()) {
+            if (random.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
                 break;
             }
         }

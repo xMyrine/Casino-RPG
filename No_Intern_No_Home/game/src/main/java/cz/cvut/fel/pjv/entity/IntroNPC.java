@@ -6,6 +6,7 @@ import cz.cvut.fel.pjv.Toolbox;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
+import cz.cvut.fel.pjv.Constants;
 
 public class IntroNPC extends Entity implements NPC {
 
@@ -15,7 +16,7 @@ public class IntroNPC extends Entity implements NPC {
         this.name = "IntroNPC";
         this.gamePanel = panel;
         this.speed = 1;
-        this.direction = "down";
+        this.direction = Constants.DOWN;
         this.worldX = 10;
         this.worldY = 10;
 
@@ -27,7 +28,7 @@ public class IntroNPC extends Entity implements NPC {
         this.name = "IntroNPC";
         this.gamePanel = panel;
         this.speed = 1;
-        this.direction = "down";
+        this.direction = Constants.DOWN;
         this.worldX = x;
         this.worldY = y;
 
@@ -63,14 +64,14 @@ public class IntroNPC extends Entity implements NPC {
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
-        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * GamePanel.TILE_SIZE - 24;
+        int screenX = worldX - gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * GamePanel.TILE_SIZE - 24;
+        int screenY = worldY - gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE - 24;
         // draw only objects that are in the screen
-        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - gamePanel.screenWidth
-                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + gamePanel.screenWidth
-                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - gamePanel.screenHeight
-                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + gamePanel.screenHeight) {
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldX - GamePanel.SCREEN_WIDTH
+                && worldX - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH
+                && worldY + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldY - GamePanel.SCREEN_HEIGHT
+                && worldY - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT) {
             g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }
@@ -100,16 +101,16 @@ public class IntroNPC extends Entity implements NPC {
             i = Entity.random.nextInt(4);
 
             if (i == 0) {
-                direction = "up";
+                direction = Constants.UP;
                 worldY -= speed;
             } else if (i == 1) {
-                direction = "down";
+                direction = Constants.DOWN;
                 worldY += speed;
             } else if (i == 2) {
-                direction = "left";
+                direction = Constants.LEFT;
                 worldX -= speed;
             } else if (i == 3) {
-                direction = "right";
+                direction = Constants.RIGHT;
                 worldX += speed;
             }
             actionCounter = 0;

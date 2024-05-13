@@ -19,7 +19,6 @@ import javax.imageio.ImageIO;
 
 public class Main {
     public static void main(String[] args) {
-
         JFrame window = new JFrame("No intern, No home");
         try {
             BufferedImage icon = ImageIO.read(Main.class.getResource("/icons/game_icon.png"));
@@ -34,8 +33,8 @@ public class Main {
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
-        int desiredWidth = gamePanel.screenWidth;
-        int desiredHeight = gamePanel.screenHeight;
+        int desiredWidth = GamePanel.SCREEN_WIDTH;
+        int desiredHeight = GamePanel.SCREEN_HEIGHT;
         window.pack(); // so I can see the game
         window.setLocationRelativeTo(null);
         window.setSize(desiredWidth, desiredHeight);

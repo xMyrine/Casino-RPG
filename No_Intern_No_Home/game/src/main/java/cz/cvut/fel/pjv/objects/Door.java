@@ -3,7 +3,7 @@ package cz.cvut.fel.pjv.objects;
 import javax.imageio.ImageIO;
 import cz.cvut.fel.pjv.Toolbox;
 
-public class Door extends Object implements InteractableObject {
+public class Door extends GameObject implements InteractableObject {
 
     public boolean open;
 

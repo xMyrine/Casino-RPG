@@ -26,6 +26,8 @@ public class LevelManager {
     public Pokermon pokermon;
     private Random rand = new Random();
 
+    private static final String LEVEL_NUMBER_MSG = "Level number: {0}";
+
     public LevelManager(GamePanel gamePanel) {
         this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
         this.secondLevel = new SecondLevel(gamePanel);
@@ -63,7 +65,7 @@ public class LevelManager {
                 openDoors();
                 rewardPlayer();
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
-                logger.warning("Level number: " + levelNumber);
+                logger.log(Level.WARNING, LEVEL_NUMBER_MSG, levelNumber);
                 return firstLevel.checkLevelFinished();
             }
         } else if (levelNumber == 2) {
@@ -74,7 +76,7 @@ public class LevelManager {
                 increaseLevel();
                 openDoors();
                 rewardPlayer();
-                logger.warning("Level number: " + levelNumber);
+                logger.log(Level.WARNING, LEVEL_NUMBER_MSG, levelNumber);
                 return secondLevel.checkLevelFinished();
             }
         } else if (levelNumber == 3) {
@@ -85,7 +87,7 @@ public class LevelManager {
                 increaseLevel();
                 openDoors();
                 rewardPlayer();
-                logger.warning(String.format("Level number: %d", levelNumber));
+                logger.log(Level.WARNING, LEVEL_NUMBER_MSG, levelNumber);
                 return thirdLevel.checkLevelFinished();
             }
         }

@@ -3,9 +3,9 @@ package cz.cvut.fel.pjv.minigames;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.minigames.assets.Card;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -20,19 +20,19 @@ public class Blackjack {
     private boolean chipsDeducted = false;
 
     // Dealer
-    public Card hiddenCard;
-    public ArrayList<Card> dealerHand;
-    public int dealerHandValue;
-    public int dealerAceCount;
+    private Card hiddenCard;
+    private ArrayList<Card> dealerHand;
+    private int dealerHandValue;
+    private int dealerAceCount;
 
     // Player
-    public ArrayList<Card> playerHand;
-    public int playerHandValue;
-    public int playerAceCount;
+    private ArrayList<Card> playerHand;
+    private int playerHandValue;
+    private int playerAceCount;
 
-    public BufferedImage hitButton;
-    public BufferedImage standButton;
-    public BufferedImage cardBack;
+    private BufferedImage hitButton;
+    private BufferedImage standButton;
+    private BufferedImage cardBack;
 
     private boolean hitEnabled = true;
     private boolean standEnabled = true;
@@ -51,11 +51,35 @@ public class Blackjack {
         }
     }
 
+    public Card getHiddenCard() {
+        return hiddenCard;
+    }
+
+    public List<Card> getDealerHand() {
+        return dealerHand;
+    }
+
+    public List<Card> getPlayerHand() {
+        return playerHand;
+    }
+
+    public BufferedImage getHitButton() {
+        return hitButton;
+    }
+
+    public BufferedImage getStandButton() {
+        return standButton;
+    }
+
+    public BufferedImage getCardBack() {
+        return cardBack;
+    }
+
     public void startGame() {
         buildDeck();
         shuffleDeck();
 
-        dealerHand = new ArrayList<Card>();
+        dealerHand = new ArrayList<>();
         dealerAceCount = 0;
         dealerHandValue = 0;
 
@@ -68,7 +92,7 @@ public class Blackjack {
         dealerAceCount += card.isAce() ? 1 : 0;
         dealerHand.add(card);
 
-        playerHand = new ArrayList<Card>();
+        playerHand = new ArrayList<>();
         playerHandValue = 0;
         playerAceCount = 0;
 

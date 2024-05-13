@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.Toolbox;
 
-public class Chip extends Object {
+public class Chip extends GameObject {
 
     public Chip() {
         this.name = "chip";
@@ -14,7 +14,6 @@ public class Chip extends Object {
             this.image = Toolbox.scaleImage(this.image, 48, 48);
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading image");
         }
     }
 
@@ -27,7 +26,6 @@ public class Chip extends Object {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/chip.png"));
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading image");
         }
     }
 }

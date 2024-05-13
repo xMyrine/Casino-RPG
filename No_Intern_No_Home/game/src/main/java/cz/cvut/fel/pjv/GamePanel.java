@@ -12,27 +12,26 @@ import java.util.logging.Level;
 import cz.cvut.fel.pjv.entity.Entity;
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
-import cz.cvut.fel.pjv.objects.Object;
+import cz.cvut.fel.pjv.objects.GameObject;
 
 public class GamePanel extends JPanel implements Runnable {
-    // SCREEN settings
-    public static final int originalTileSize = 16; // 16x16 pixels
-    public static final int scale = 3; // 3x scale
+    public static final int ORIGINAL_TILE_SIZE = 16;
+    public static final int SCALE = 3;
 
-    public static final int TILE_SIZE = originalTileSize * scale;
+    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE;
     public static final int MAX_SCREEN_COL = 16;
     public static final int MAX_SCREEN_ROW = 12;
-    public final int screenWidth = TILE_SIZE * MAX_SCREEN_COL;
-    public final int screenHeight = TILE_SIZE * MAX_SCREEN_ROW;
+    public static final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
+    public static final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
 
-    public static final int maxWorldCol = 50;
-    public static final int maxWorldRow = 50;
+    public static final int MAX_WORLD_COL = 50;
+    public static final int MAX_WORLD_ROW = 50;
 
     protected int fps = 60;
 
-    public KeyHandler keyHandler = new KeyHandler(this);
-    transient Thread gameThread;
-    public Player player = new Player(this, keyHandler);
+    protected transient KeyHandler keyHandler = new KeyHandler(this);
+    private transient Thread gameThread;
+    protected transient Player player = new Player(this, keyHandler);
     public CollisionManager collisionManager = new CollisionManager(this);
     protected TileManager tileManager = new TileManager(this);
     public ObjectsSpawner objectsSpawner = new ObjectsSpawner(this);
@@ -44,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Logger logger = Logger.getLogger(GamePanel.class.getName());
 
     // Game objects
-    public Object objects[] = new Object[50];
+    public GameObject objects[] = new GameObject[50];
     public Entity entities[] = new Entity[20];
 
     // ! Game State
@@ -59,14 +58,19 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int CRAFTSCREEN = 7;
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
-        this.setFocusable(true); // so that the panel can listen to key events
-        logger.setLevel(Level.WARNING);
+        this.setFocusable(true);
+        logger.setLevel(Level.FINEST);
     }
 
+    /**
+     * Sets up the game
+     * This method is used to set up the game
+     * It spawns objects, plays music and sets the game state to the menu screen
+     */
     public void setUpGame() {
         objectsSpawner.spawnObjects();
         sound.playMusic();
@@ -75,6 +79,10 @@ public class GamePanel extends JPanel implements Runnable {
         Entity.getGamePanelInstance(this);
     }
 
+    /**
+     * Starts the game thread
+     * This method is used to start the game thread
+     */
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -84,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
         return gameState;
     }
 
-    /*
+    /**
      * Delta accumulator method
      */
     @Override
@@ -117,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    /*
+    /**
      * This method is called by the game loop to update the game state
      * 
      */
@@ -169,12 +177,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    /*
+    /**
      * Counts the number of objects of a given class
+     * 
+     * @param clazz class of objects
+     * @return count of objects
      */
     public int countObjectsByClass(Class<?> clazz) {
         int count = 0;
-        for (Object obj : objects) {
+        for (GameObject obj : objects) {
             if (obj != null && obj.getClass().equals(clazz)) {
                 count++;
                 logger.log(Level.FINEST, "Object of class {0} found", clazz.getName());
@@ -183,10 +194,22 @@ public class GamePanel extends JPanel implements Runnable {
         return count;
     }
 
-    /*
+    /**
      * Changes the game state
+     * This method is used to change the game state
+     * Every game state has a different behaviour and different objects are drawn
+     * 
+     * @param i new game state
      */
     public void changeGameState(int i) {
         gameState = i;
+    }
+
+    public KeyHandler getKeyHandler() {
+        return keyHandler;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

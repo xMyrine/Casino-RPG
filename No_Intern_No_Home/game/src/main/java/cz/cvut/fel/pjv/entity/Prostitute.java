@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
+import cz.cvut.fel.pjv.Constants;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
@@ -14,7 +15,7 @@ public class Prostitute extends Entity implements NPC {
     public Prostitute(int x, int y) {
         this.name = "Prostitue";
         this.speed = 1;
-        this.direction = "down";
+        this.direction = Constants.DOWN;
         this.worldX = x;
         this.worldY = y;
 
@@ -58,14 +59,14 @@ public class Prostitute extends Entity implements NPC {
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
-        int screenX = worldX - gamePanel.player.worldX + gamePanel.screenWidth - 8 * GamePanel.TILE_SIZE - 24;
+        int screenX = worldX - gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH - 8 * GamePanel.TILE_SIZE - 24;
 
-        int screenY = worldY - gamePanel.player.worldY + gamePanel.screenHeight - 6 * GamePanel.TILE_SIZE - 24;
+        int screenY = worldY - gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT - 6 * GamePanel.TILE_SIZE - 24;
         // draw only objects that are in the screen
-        if (worldX + GamePanel.TILE_SIZE > gamePanel.player.worldX - gamePanel.screenWidth
-                && worldX - GamePanel.TILE_SIZE < gamePanel.player.worldX + gamePanel.screenWidth
-                && worldY + GamePanel.TILE_SIZE > gamePanel.player.worldY - gamePanel.screenHeight
-                && worldY - GamePanel.TILE_SIZE < gamePanel.player.worldY + gamePanel.screenHeight) {
+        if (worldX + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldX - GamePanel.SCREEN_WIDTH
+                && worldX - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldX + GamePanel.SCREEN_WIDTH
+                && worldY + GamePanel.TILE_SIZE > gamePanel.getPlayer().worldY - GamePanel.SCREEN_HEIGHT
+                && worldY - GamePanel.TILE_SIZE < gamePanel.getPlayer().worldY + GamePanel.SCREEN_HEIGHT) {
             g.drawImage(image, screenX, screenY, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
     }
@@ -85,7 +86,7 @@ public class Prostitute extends Entity implements NPC {
             }
         }
         dialogueIndex++;
-        this.turnEntity(gamePanel.player.direction);
+        this.turnEntity(gamePanel.getPlayer().direction);
         if (dialogues[dialogueIndex] == null || dialogueIndex >= 19) {
             dialogueIndex = 0;
         }
@@ -115,7 +116,7 @@ public class Prostitute extends Entity implements NPC {
     }
 
     public void calculateRizz() {
-        rizz = gamePanel.player.getPlayerLuck() * reputation;
+        rizz = gamePanel.getPlayer().getPlayerLuck() * reputation;
     }
 
     @Override
@@ -129,16 +130,16 @@ public class Prostitute extends Entity implements NPC {
             i = Entity.random.nextInt(4);
 
             if (i == 0) {
-                direction = "up";
+                direction = Constants.UP;
                 worldY -= speed;
             } else if (i == 1) {
-                direction = "down";
+                direction = Constants.DOWN;
                 worldY += speed;
             } else if (i == 2) {
-                direction = "left";
+                direction = Constants.LEFT;
                 worldX -= speed;
             } else if (i == 3) {
-                direction = "right";
+                direction = Constants.RIGHT;
                 worldX += speed;
             }
             actionCounter = 0;

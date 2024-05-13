@@ -1,11 +1,11 @@
 package cz.cvut.fel.pjv.objects.Alcohol;
 
 import cz.cvut.fel.pjv.entity.Player;
-import cz.cvut.fel.pjv.objects.Object;
+import cz.cvut.fel.pjv.objects.GameObject;
 
 import javax.imageio.ImageIO;
 
-public class Vodka extends Object implements Alcohol {
+public class Vodka extends GameObject implements Alcohol {
 
     private static final float LUCK = 0.07f;
 
@@ -29,7 +29,7 @@ public class Vodka extends Object implements Alcohol {
         sound.playMusic(2);
         if (newLuck > 1) {
             newLuck = 0.3f;
-            Object.logger.info("Player's luck was now at maximum. Reseting to 0.3.");
+            GameObject.logger.info("Player's luck was now at maximum. Reseting to 0.3.");
         }
 
         return newLuck;

@@ -1,11 +1,11 @@
 package cz.cvut.fel.pjv.objects.Alcohol;
 
-import cz.cvut.fel.pjv.objects.Object;
+import cz.cvut.fel.pjv.objects.GameObject;
 import cz.cvut.fel.pjv.entity.Player;
 
 import javax.imageio.ImageIO;
 
-public class Beer extends Object implements Alcohol {
+public class Beer extends GameObject implements Alcohol {
 
     private static final float LUCK = 0.05f;
 

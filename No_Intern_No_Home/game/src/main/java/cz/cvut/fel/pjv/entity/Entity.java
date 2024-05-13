@@ -9,33 +9,44 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.Constants;
 
 import java.awt.Graphics2D;
 
 public abstract class Entity {
 
     protected static Random random = new Random();
-    public static GamePanel gamePanel;
+    protected static GamePanel gamePanel;
 
-    public int worldX, worldY; // player's position in the world
-    public int screenX, screenY;
-    public int speed;
+    protected int worldX;
+    protected int worldY;
+    protected int screenX;
+    protected int screenY;
+    protected int speed;
 
-    public String name;
-    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-    public String direction;
-    public int spriteCounter = 0;
-    public int spriteIndex = 1;
+    protected String name;
+    protected BufferedImage up1;
+    protected BufferedImage up2;
+    protected BufferedImage down1;
+    protected BufferedImage down2;
+    protected BufferedImage left1;
+    protected BufferedImage left2;
+    protected BufferedImage right1;
+    protected BufferedImage right2;
+    protected String direction;
+    protected int spriteCounter = 0;
+    protected int spriteIndex = 1;
 
-    public Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
-    public int collisionAreaDefaultX, collisionAreaDefaultY;
-    public boolean collision = false;
+    protected Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
+    protected int collisionAreaDefaultX;
+    protected int collisionAreaDefaultY;
+    protected boolean collision = false;
 
     protected int actionCounter = 0;
     protected static final int ACTION_DELAY = 120;
     protected static Logger logger;
 
-    protected String dialogues[] = new String[20];
+    protected String[] dialogues = new String[20];
     protected int dialogueIndex = 0;
 
     public static void getGamePanelInstance(GamePanel gP) {
@@ -44,12 +55,61 @@ public abstract class Entity {
 
     protected Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
     {
-        directionToImageMap.put("up", () -> getSpriteImage(up1, up2));
-        directionToImageMap.put("down", () -> getSpriteImage(down1, down2));
-        directionToImageMap.put("left", () -> getSpriteImage(left1, left2));
-        directionToImageMap.put("right", () -> getSpriteImage(right1, right2));
+        directionToImageMap.put(Constants.UP, () -> getSpriteImage(up1, up2));
+        directionToImageMap.put(Constants.DOWN, () -> getSpriteImage(down1, down2));
+        directionToImageMap.put(Constants.LEFT, () -> getSpriteImage(left1, left2));
+        directionToImageMap.put(Constants.RIGHT, () -> getSpriteImage(right1, right2));
     }
 
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
+
+    public boolean getCollision() {
+        return collision;
+    }
+
+    public int getCollisionAreaDefaultX() {
+        return collisionAreaDefaultX;
+    }
+
+    public int getCollisionAreaDefaultY() {
+        return collisionAreaDefaultY;
+    }
+
+    public Rectangle getCollisionArea() {
+        return collisionArea;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getWorldX() {
+        return worldX;
+    }
+
+    public int getWorldY() {
+        return worldY;
+    }
+
+    public int getScreenX() {
+        return screenX;
+    }
+
+    public int getScreenY() {
+        return screenY;
+    }
+
+    /**
+     * Default update method for all entities. Will probably be overridden by
+     * subclasses.
+     * This method is used to update the entity in the game world.
+     */
     public void update() {
         move();
 
@@ -61,16 +121,16 @@ public abstract class Entity {
         if (!collision) {
 
             switch (direction) {
-                case "up":
+                case Constants.UP:
                     worldY -= speed;
                     break;
-                case "down":
+                case Constants.DOWN:
                     worldY += speed;
                     break;
-                case "left":
+                case Constants.LEFT:
                     worldX -= speed;
                     break;
-                case "right":
+                case Constants.RIGHT:
                     worldX += speed;
                     break;
                 default:
@@ -85,33 +145,35 @@ public abstract class Entity {
         }
     }
 
-    /*
+    /**
      * Default draw method for all entities.
+     * This method is used to draw the entity on the screen.
+     * 
+     * @param g Graphics2D object
      */
     public void draw(Graphics2D g) {
-        if (direction.equals("up")) {
+        BufferedImage image1 = null;
+        BufferedImage image2 = null;
+
+        if (direction.equals(Constants.UP)) {
+            image1 = up1;
+            image2 = up2;
+        } else if (direction.equals(Constants.DOWN)) {
+            image1 = down1;
+            image2 = down2;
+        } else if (direction.equals(Constants.LEFT)) {
+            image1 = left1;
+            image2 = left2;
+        } else if (direction.equals(Constants.RIGHT)) {
+            image1 = right1;
+            image2 = right2;
+        }
+
+        if (image1 != null && image2 != null) {
             if (spriteCounter % 20 < 10) {
-                g.drawImage(up1, screenX, screenY, null);
+                g.drawImage(image1, screenX, screenY, null);
             } else {
-                g.drawImage(up2, screenX, screenY, null);
-            }
-        } else if (direction.equals("down")) {
-            if (spriteCounter % 20 < 10) {
-                g.drawImage(down1, screenX, screenY, null);
-            } else {
-                g.drawImage(down2, screenX, screenY, null);
-            }
-        } else if (direction.equals("left")) {
-            if (spriteCounter % 20 < 10) {
-                g.drawImage(left1, screenX, screenY, null);
-            } else {
-                g.drawImage(left2, screenX, screenY, null);
-            }
-        } else if (direction.equals("right")) {
-            if (spriteCounter % 20 < 10) {
-                g.drawImage(right1, screenX, screenY, null);
-            } else {
-                g.drawImage(right2, screenX, screenY, null);
+                g.drawImage(image2, screenX, screenY, null);
             }
         }
     }
@@ -119,29 +181,40 @@ public abstract class Entity {
     /*
      * Default move method for all entities. Will probably be overridden by
      * subclasses.
+     * This method is used to move the entity in the game world.
      */
     public void move() {
-        if (direction.equals("up")) {
+        if (direction.equals(Constants.UP)) {
             worldY -= speed;
-        } else if (direction.equals("down")) {
+        } else if (direction.equals(Constants.DOWN)) {
             worldY += speed;
-        } else if (direction.equals("left")) {
+        } else if (direction.equals(Constants.LEFT)) {
             worldX -= speed;
-        } else if (direction.equals("right")) {
+        } else if (direction.equals(Constants.RIGHT)) {
             worldX += speed;
         }
     }
 
+    /*
+     * Default talk method for all entities. Will probably be overridden by
+     * subclasses.
+     * This method is used to display dialogues when the player interacts with an
+     * entity.
+     */
     public void talk() {
         gamePanel.ui.setDialogue(dialogues[dialogueIndex]);
         dialogueIndex++;
-        this.turnEntity(gamePanel.player.direction);
+        this.turnEntity(gamePanel.getPlayer().direction);
         if (dialogues[dialogueIndex] == null) {
             dialogueIndex = 0;
             gamePanel.changeGameState(GamePanel.GAMESCREEN);
         }
     }
 
+    /*
+     * Default getSpriteImage method for all entities.
+     * This method is used to get the correct sprite image for the entity.
+     */
     protected BufferedImage getSpriteImage(BufferedImage sprite1, BufferedImage sprite2) {
         if (spriteIndex == 1) {
             return sprite1;
@@ -152,19 +225,23 @@ public abstract class Entity {
         }
     }
 
+    /*
+     * Default turnEntity method for all entities.
+     * Mainly used for turning the entity to face the player.
+     */
     protected void turnEntity(String dir) {
         switch (dir) {
-            case "up":
-                this.direction = "down";
+            case Constants.UP:
+                this.direction = Constants.DOWN;
                 break;
-            case "down":
-                this.direction = "up";
+            case Constants.DOWN:
+                this.direction = Constants.UP;
                 break;
-            case "left":
-                this.direction = "right";
+            case Constants.LEFT:
+                this.direction = Constants.RIGHT;
                 break;
-            case "right":
-                this.direction = "left";
+            case Constants.RIGHT:
+                this.direction = Constants.LEFT;
                 break;
             default:
                 break;

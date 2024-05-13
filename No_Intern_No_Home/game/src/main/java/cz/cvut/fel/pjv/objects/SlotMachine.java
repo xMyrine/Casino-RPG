@@ -1,16 +1,18 @@
 package cz.cvut.fel.pjv.objects;
 
 import javax.imageio.ImageIO;
+import java.util.logging.Level;
+
 import cz.cvut.fel.pjv.Toolbox;
 
-public class SlotMachine extends Object implements InteractableObject {
+public class SlotMachine extends GameObject implements InteractableObject {
 
-    private boolean Finished;
+    private boolean finished;
 
     public SlotMachine() {
         this.name = "slotMachine";
         this.collision = true;
-        this.Finished = false;
+        this.finished = false;
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/slot_mach_l.png"));
         } catch (Exception e) {
@@ -25,7 +27,7 @@ public class SlotMachine extends Object implements InteractableObject {
         this.worldY = worldY;
         this.name = "slotMachine";
         this.collision = true;
-        this.Finished = false;
+        this.finished = false;
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/slot_mach_l.png"));
             this.image = Toolbox.scaleImage(this.image, 48, 48);
@@ -36,11 +38,11 @@ public class SlotMachine extends Object implements InteractableObject {
     }
 
     public boolean finished() {
-        return Finished;
+        return finished;
     }
 
-    public void setFinished(boolean finished) {
-        this.Finished = finished;
+    public void setFinished(boolean fin) {
+        this.finished = fin;
     }
 
     @Override
@@ -55,8 +57,8 @@ public class SlotMachine extends Object implements InteractableObject {
     }
 
     public boolean getState() {
-        logger.fine("Slot machine state: " + Finished);
-        return Finished;
+        logger.log(Level.FINE, "Slot machine state: {}", finished);
+        return finished;
     }
 
 }

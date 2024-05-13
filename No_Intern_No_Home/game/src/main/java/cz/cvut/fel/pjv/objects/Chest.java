@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.objects;
 
 import javax.imageio.ImageIO;
 
-public class Chest extends Object {
+public class Chest extends GameObject {
     private boolean opened;
 
     public Chest(int worldX, int worldY) {

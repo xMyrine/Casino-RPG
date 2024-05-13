@@ -1,11 +1,11 @@
 package cz.cvut.fel.pjv.objects.Alcohol;
 
 import cz.cvut.fel.pjv.entity.Player;
-import cz.cvut.fel.pjv.objects.Object;
+import cz.cvut.fel.pjv.objects.GameObject;
 
 import javax.imageio.ImageIO;
 
-public class DomPerignon extends Object implements Alcohol {
+public class DomPerignon extends GameObject implements Alcohol {
 
     private static final float LUCK = 0.2f;
 

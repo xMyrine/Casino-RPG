@@ -1,12 +1,6 @@
 package cz.cvut.fel.pjv.entity;
 
-public class FinalBoss extends Entity implements NPC, HostileNPC {
-
-    @Override
-    public void attack() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attack'");
-    }
+public class FinalBoss extends Entity implements NPC {
 
     @Override
     public void talk() {

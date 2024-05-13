@@ -3,15 +3,13 @@ package cz.cvut.fel.pjv;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-import cz.cvut.fel.pjv.entity.Player;
-
 public class Inventory {
-    public BufferedImage InventoryImage;
-    public BufferedImage[] inventoryItems;
+    private BufferedImage inventoryImage;
+    private BufferedImage[] inventoryItems;
 
-    public Inventory(Player player) {
+    public Inventory() {
         try {
-            InventoryImage = Toolbox.scaleImage(
+            inventoryImage = Toolbox.scaleImage(
                     ImageIO.read(getClass().getResourceAsStream("/inventory/inventory.png")), 100,
                     100);
             inventoryItems = new BufferedImage[4];
@@ -26,5 +24,17 @@ public class Inventory {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public BufferedImage getInventoryImage() {
+        return inventoryImage;
+    }
+
+    public BufferedImage[] getInventoryItems() {
+        return inventoryItems;
+    }
+
+    public BufferedImage getInventoryItem(int i) {
+        return inventoryItems[i];
     }
 }
