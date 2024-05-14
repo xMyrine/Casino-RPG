@@ -317,7 +317,6 @@ public class Pokermon {
         enemyAttack = 0;
         mode = 0;
         cheatDeath = false;
-        finished = false;
         try {
             screenImage = ImageIO.read(getClass().getResourceAsStream("/screens/pokermonbattle.png"));
         } catch (Exception e) {

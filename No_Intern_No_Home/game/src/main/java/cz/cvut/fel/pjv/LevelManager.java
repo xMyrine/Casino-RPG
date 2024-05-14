@@ -49,7 +49,6 @@ public class LevelManager {
 
     private static void increaseLevel() {
         levelNumber++;
-        // rest of your code
     }
 
     /**
@@ -94,7 +93,6 @@ public class LevelManager {
         return false;
     }
 
-    // Get the current level number
     public static int getLevelNumber() {
         return levelNumber;
     }

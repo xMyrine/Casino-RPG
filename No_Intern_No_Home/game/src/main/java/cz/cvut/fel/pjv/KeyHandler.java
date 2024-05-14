@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv;
 import java.awt.event.KeyListener;
 
 import cz.cvut.fel.pjv.entity.*;
+import cz.cvut.fel.pjv.levels.Level;
 
 import java.awt.event.KeyEvent;
 
@@ -54,9 +55,6 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if (code == KeyEvent.VK_F1) {
-            gamePanel.getSound().toggleSound();
-        }
         if (gamePanel.getGameState() == GamePanel.MENUSCREEN) {
             if (code == KeyEvent.VK_W) {
                 UI.decreaseCommand(3);
@@ -72,8 +70,13 @@ public class KeyHandler implements KeyListener {
             } else if (code == KeyEvent.VK_ENTER && UI.getCommand() == 2) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
             }
-
+            if (code == KeyEvent.VK_F1) {
+                gamePanel.getSound().toggleSound();
+            }
         } else if (gamePanel.getGameState() == GamePanel.GAMESCREEN) {
+            if (code == KeyEvent.VK_F1) {
+                gamePanel.getSound().toggleSound();
+            }
             if (code == KeyEvent.VK_W) {
                 up = true;
             }
@@ -100,6 +103,9 @@ public class KeyHandler implements KeyListener {
                 gamePanel.player.useCigarette();
             }
         } else if (gamePanel.getGameState() == GamePanel.PAUSESCREEN) {
+            if (code == KeyEvent.VK_F1) {
+                gamePanel.getSound().toggleSound();
+            }
             if (code == KeyEvent.VK_ESCAPE) {
                 gamePanel.changeGameState(GamePanel.GAMESCREEN);
             }
@@ -130,7 +136,7 @@ public class KeyHandler implements KeyListener {
             }
             // ROOM MASTERS
             if (code == KeyEvent.VK_Y && (gamePanel.player.getNpcIndex() == 1 || gamePanel.player.getNpcIndex() == 2
-                    || gamePanel.player.getNpcIndex() == 5)) {
+                    || gamePanel.player.getNpcIndex() == 5 || gamePanel.player.getNpcIndex() == 7)) {
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
                 // PROSTITUTE
             } else if (code == KeyEvent.VK_Y && gamePanel.player.getNpcIndex() == 3) {
@@ -221,6 +227,25 @@ public class KeyHandler implements KeyListener {
                 }
                 if (code == KeyEvent.VK_R) {
                     gamePanel.levelManager.pokermon.reset();
+                }
+            } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 7) {
+                if (code == KeyEvent.VK_ESCAPE) {
+                    gamePanel.changeGameState(GamePanel.GAMESCREEN);
+                }
+                if (code == KeyEvent.VK_W) {
+                    UI.decreaseCommand(2);
+                }
+                if (code == KeyEvent.VK_S) {
+                    UI.increaseCommand(2);
+                }
+                if (code == KeyEvent.VK_Q) {
+                    gamePanel.levelManager.getDices().bet();
+                }
+                if (code == KeyEvent.VK_E) {
+                    gamePanel.levelManager.getDices().reduceBet();
+                }
+                if (code == KeyEvent.VK_ENTER) {
+                    gamePanel.levelManager.getDices().startD(UI.getCommand());
                 }
             }
         } else if (gamePanel.getGameState() == GamePanel.CRAFTSCREEN) {

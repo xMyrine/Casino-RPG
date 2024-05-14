@@ -37,16 +37,14 @@ public class Worker3 extends Entity implements NPC {
     }
 
     public void getNPCImage() {
-
-        up1 = assignImage("/npc/worker2_up_1");
-        up2 = assignImage("/npc/worker2_up_2");
-        down1 = assignImage("/npc/worker2_down_1");
-        down2 = assignImage("/npc/worker2_down_2");
-        left1 = assignImage("/npc/worker2_left_1");
-        left2 = assignImage("/npc/worker2_left_2");
-        right1 = assignImage("/npc/worker2_right_1");
-        right2 = assignImage("/npc/worker2_right_2");
-
+        up1 = assignImage("/npc/worker3_up1");
+        up2 = assignImage("/npc/worker3_up2");
+        down1 = assignImage("/npc/worker3_down1");
+        down2 = assignImage("/npc/worker3_down2");
+        left1 = assignImage("/npc/worker3_left1");
+        left2 = assignImage("/npc/worker3_left2");
+        right1 = assignImage("/npc/worker3_right1");
+        right2 = assignImage("/npc/worker3_right2");
     }
 
     protected BufferedImage assignImage(String path) {
@@ -58,7 +56,6 @@ public class Worker3 extends Entity implements NPC {
             e.printStackTrace();
         }
         return image;
-
     }
 
     @Override

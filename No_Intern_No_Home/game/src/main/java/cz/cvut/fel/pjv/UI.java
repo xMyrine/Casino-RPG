@@ -345,6 +345,20 @@ public class UI {
                 32 * 3, null);
 
         g.drawImage(lowButton, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 9, 80 * 3, 32 * 3, null);
+
+        g.drawString("Your chips: ", GamePanel.TILE_SIZE * 6 - 24, GamePanel.TILE_SIZE * 1);
+        g.drawString(String.valueOf(gamePanel.getPlayer().getChipCount()), GamePanel.TILE_SIZE * 6,
+                GamePanel.TILE_SIZE * 2);
+
+        g.drawString("Your bet: ", GamePanel.TILE_SIZE * 6 - 24, GamePanel.TILE_SIZE * 3);
+        g.drawString(String.valueOf(gamePanel.levelManager.getDices().getBet()), GamePanel.TILE_SIZE * 6,
+                GamePanel.TILE_SIZE * 4);
+
+        if (command == 0) {
+            g.drawImage(chipImage, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 9, 80 * 3, 32 * 3, null);
+        } else if (command == 1) {
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 9, 80 * 3, 32 * 3, null);
+        }
     }
 
     /**

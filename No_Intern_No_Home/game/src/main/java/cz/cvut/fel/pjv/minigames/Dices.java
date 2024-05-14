@@ -10,7 +10,7 @@ public class Dices {
     private int bet;
     private int minimumBet = 5;
     private boolean completed = false;
-    Random rand = new Random();
+    private Random rand = new Random();
     private GamePanel gamePanel;
 
     public Dices(GamePanel gp) {
@@ -20,7 +20,7 @@ public class Dices {
     }
 
     public void startD(int bettingNumber) {
-        if (getBet()) {
+        if (getBettingStatus()) {
             roll(bettingNumber);
         }
     }
@@ -29,7 +29,11 @@ public class Dices {
         return completed;
     }
 
-    public boolean getBet() {
+    public int getBet() {
+        return bet;
+    }
+
+    public boolean getBettingStatus() {
         if (gamePanel.getPlayer().getChipCount() >= bet) {
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
             return true;
@@ -40,43 +44,41 @@ public class Dices {
     }
 
     private void roll(int bettingChoice) {
+        gamePanel.getSound().playMusic(8);
+        rolledNumber1 = rand.nextInt(6) + 1;
         rolledNumber2 = rand.nextInt(6) + 1;
-        if (bettingChoice == 0) {
-            if (rolledNumber1 > rolledNumber2) {
-                completed = true;
-                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 2 * bet);
-            } else {
-                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
-            }
-        } else if (bettingChoice == 1) {
-            if (rolledNumber1 < rolledNumber2) {
-                completed = true;
-                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 2 * bet);
-            } else {
-                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
-            }
-        } else if (bettingChoice == 2) {
-            if (rolledNumber1 == rolledNumber2) {
-                completed = true;
-                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 6 * bet);
-            } else {
-                gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
-            }
+        if (((bettingChoice == 1 && rolledNumber1 > rolledNumber2)
+                || (bettingChoice == 0 && rolledNumber1 < rolledNumber2))
+                && rand.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
+            rolledNumber1 = rand.nextInt(6) + 1;
+            rolledNumber2 = rand.nextInt(6) + 1;
+        }
+
+        if ((bettingChoice == 1 && rolledNumber1 > rolledNumber2)
+                || (bettingChoice == 0 && rolledNumber1 < rolledNumber2)) {
+            completed = true;
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 2 * bet);
+            gamePanel.getLevelManager().checkLevelFinished();
+            gamePanel.getSound().playMusic(6);
+        } else {
+            gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
         }
     }
 
-    public void restart() {
-        rolledNumber1 = rand.nextInt(6) + 1;
-        completed = false;
-        startD(bet);
+    public void bet() {
+        if (this.bet + 5 > gamePanel.getPlayer().getChipCount()) {
+            this.bet = gamePanel.getPlayer().getChipCount();
+            return;
+        }
+        this.bet += 5;
     }
 
-    public void increaseBet() {
-        bet += minimumBet;
-    }
-
-    public void decreaseBet() {
-        bet -= minimumBet;
+    public void reduceBet() {
+        if (this.bet - 5 < minimumBet) {
+            this.bet = minimumBet;
+            return;
+        }
+        this.bet -= 5;
     }
 
     public int getRolledNumber1() {

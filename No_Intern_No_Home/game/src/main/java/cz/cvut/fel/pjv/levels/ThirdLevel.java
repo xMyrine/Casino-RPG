@@ -14,7 +14,7 @@ public class ThirdLevel extends Level {
 
     @Override
     public boolean checkLevelFinished() {
-        if (gamePanel.getLevelManager().pokermon.isFinished()) {
+        if (gamePanel.getLevelManager().pokermon.isFinished() && gamePanel.getLevelManager().getDices().end()) {
             this.levelFinished = true;
             logger.info("Third level finished");
             return true;

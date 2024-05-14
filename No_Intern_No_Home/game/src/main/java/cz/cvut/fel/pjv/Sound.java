@@ -9,6 +9,7 @@ import javax.sound.sampled.FloatControl;
 public class Sound {
     private Clip clip;
     private URL[] soundURL = new URL[20];
+    private boolean isMuted = false;
 
     public Sound() {
 
@@ -21,6 +22,7 @@ public class Sound {
             soundURL[5] = getClass().getResource("/sounds/chest_open.wav");
             soundURL[6] = getClass().getResource("/sounds/victory.wav");
             soundURL[7] = getClass().getResource("/sounds/shooting.wav");
+            soundURL[8] = getClass().getResource("/sounds/dice_roll.wav");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,10 +84,12 @@ public class Sound {
      * Toggles sound on and off
      */
     public void toggleSound() {
-        if (clip.isActive()) {
-            clip.stop();
-        } else {
+        if (isMuted) {
             clip.start();
+            isMuted = false;
+        } else {
+            clip.stop();
+            isMuted = true;
         }
     }
 
@@ -99,8 +103,7 @@ public class Sound {
      * 5 - chest
      * 6 - victory
      * 7 - shooting
-     * 8 - lose
-     * 9 - win
+     * 8 - dice roll
      * 
      * @param i - index of the sound
      */
