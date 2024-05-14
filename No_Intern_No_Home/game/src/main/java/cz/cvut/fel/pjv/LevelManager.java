@@ -23,6 +23,7 @@ public class LevelManager {
     public Blackjack blackjack;
     public Pokermon pokermon;
     protected Dices dices;
+    protected RPS rps;
     private Random rand = new Random();
 
     private static final String LEVEL_NUMBER_MSG = "Level number: {0}";
@@ -37,6 +38,7 @@ public class LevelManager {
         blackjack = new Blackjack(gamePanel);
         pokermon = new Pokermon(gamePanel);
         dices = new Dices(gamePanel);
+        rps = new RPS(gamePanel);
     }
 
     public boolean isLevelInProgress() {
@@ -98,6 +100,7 @@ public class LevelManager {
     }
 
     /**
+     * b
      * Open the doors based on the level number
      */
     private void openDoors() {
@@ -128,5 +131,9 @@ public class LevelManager {
 
     public Dices getDices() {
         return dices;
+    }
+
+    public RPS getRps() {
+        return rps;
     }
 }

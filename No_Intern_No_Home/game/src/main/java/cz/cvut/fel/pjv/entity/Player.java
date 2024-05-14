@@ -313,7 +313,7 @@ public class Player extends Entity {
      * @param objectIndex index of the object in the objects array
      */
     private void pickUpChip(int objectIndex) {
-        chipCount++;
+        chipCount += 25;
         gamePanel.setGameObject(objectIndex, null);
         gamePanel.getSound().playMusic(1);
     }

@@ -3,7 +3,6 @@ package cz.cvut.fel.pjv;
 import java.awt.event.KeyListener;
 
 import cz.cvut.fel.pjv.entity.*;
-import cz.cvut.fel.pjv.levels.Level;
 
 import java.awt.event.KeyEvent;
 
@@ -137,6 +136,9 @@ public class KeyHandler implements KeyListener {
             // ROOM MASTERS
             if (code == KeyEvent.VK_Y && (gamePanel.player.getNpcIndex() == 1 || gamePanel.player.getNpcIndex() == 2
                     || gamePanel.player.getNpcIndex() == 5 || gamePanel.player.getNpcIndex() == 7)) {
+                if (gamePanel.player.getNpcIndex() == 5) {
+                    gamePanel.getLevelManager().pokermon.reset(true);
+                }
                 gamePanel.changeGameState(GamePanel.MINIGAMESCREEN);
                 // PROSTITUTE
             } else if (code == KeyEvent.VK_Y && gamePanel.player.getNpcIndex() == 3) {
@@ -226,7 +228,7 @@ public class KeyHandler implements KeyListener {
                     gamePanel.levelManager.pokermon.executeCommand(UI.getCommand());
                 }
                 if (code == KeyEvent.VK_R) {
-                    gamePanel.levelManager.pokermon.reset();
+                    gamePanel.levelManager.pokermon.reset(false);
                 }
             } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 7) {
                 if (code == KeyEvent.VK_ESCAPE) {
@@ -246,6 +248,19 @@ public class KeyHandler implements KeyListener {
                 }
                 if (code == KeyEvent.VK_ENTER) {
                     gamePanel.levelManager.getDices().startD(UI.getCommand());
+                }
+            } else {
+                if (code == KeyEvent.VK_W) {
+                    UI.decreaseCommand(3);
+                }
+                if (code == KeyEvent.VK_S) {
+                    UI.increaseCommand(3);
+                }
+                if (code == KeyEvent.VK_ENTER) {
+                    gamePanel.levelManager.rps.getChoices(UI.getCommand());
+                }
+                if (code == KeyEvent.VK_ESCAPE) {
+                    gamePanel.changeGameState(GamePanel.GAMESCREEN);
                 }
             }
         } else if (gamePanel.getGameState() == GamePanel.CRAFTSCREEN) {

@@ -23,6 +23,8 @@ public class Sound {
             soundURL[6] = getClass().getResource("/sounds/victory.wav");
             soundURL[7] = getClass().getResource("/sounds/shooting.wav");
             soundURL[8] = getClass().getResource("/sounds/dice_roll.wav");
+            soundURL[9] = getClass().getResource("/sounds/pokachu.wav");
+            soundURL[19] = getClass().getResource("/sounds/Megalovania_no_CP.wav");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,13 +74,6 @@ public class Sound {
         }
         this.loopSound();
     }
-
-    /*
-     * 
-     * public void stopMusic() {
-     * clip.stop();
-     * }
-     */
 
     /**
      * Toggles sound on and off

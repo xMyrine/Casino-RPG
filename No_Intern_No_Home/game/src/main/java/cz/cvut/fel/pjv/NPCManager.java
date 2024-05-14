@@ -20,6 +20,7 @@ public class NPCManager {
         gamePanel.entities[0] = new IntroNPC(this.gamePanel, 100, 200);
         gamePanel.entities[1] = new Worker(this.gamePanel, GamePanel.TILE_SIZE * 19, GamePanel.TILE_SIZE * 12);
         gamePanel.entities[4] = new Shopkeeper(this.gamePanel, GamePanel.TILE_SIZE * 22, GamePanel.TILE_SIZE * 22);
+        gamePanel.entities[8] = new FinalBoss(this.gamePanel, GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 40);
         gamePanel.entities[6] = new Craftsman(GamePanel.TILE_SIZE * 20, GamePanel.TILE_SIZE * 22);
     }
 

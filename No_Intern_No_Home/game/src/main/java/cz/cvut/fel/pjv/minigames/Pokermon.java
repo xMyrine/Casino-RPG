@@ -128,7 +128,7 @@ public class Pokermon {
      */
     private void run() {
         setMode(0);
-        reset();
+        reset(false);
         gamePanel.changeGameState(GamePanel.GAMESCREEN);
     }
 
@@ -310,7 +310,10 @@ public class Pokermon {
      * Set the finished
      * Load the screen image
      */
-    public void reset() {
+    public void reset(boolean sound) {
+        if (sound) {
+            gamePanel.getSound().playMusic(9);
+        }
         playerHealth = 10;
         enemyHealth = 10;
         playerAttack = 1;

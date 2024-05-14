@@ -34,6 +34,10 @@ public class UI {
     private BufferedImage chosenButton;
     private BufferedImage highButton;
     private BufferedImage lowButton;
+    private BufferedImage rpsScreen;
+    private BufferedImage rock;
+    private BufferedImage paper;
+    private BufferedImage scissors;
 
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -48,6 +52,10 @@ public class UI {
             craftingScreen = ImageIO.read(getClass().getResourceAsStream("/screens/Crafting.png"));
             highButton = ImageIO.read(getClass().getResourceAsStream("/buttons/high_button.png"));
             lowButton = ImageIO.read(getClass().getResourceAsStream("/buttons/low_button.png"));
+            rpsScreen = ImageIO.read(getClass().getResourceAsStream("/screens/RPC_arena.jpg"));
+            rock = ImageIO.read(getClass().getResourceAsStream("/objects/rock.png"));
+            paper = ImageIO.read(getClass().getResourceAsStream("/objects/paper.png"));
+            scissors = ImageIO.read(getClass().getResourceAsStream("/objects/scissors.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,6 +144,24 @@ public class UI {
                 drawInventory();
             }
         }
+    }
+
+    private void drawRPC() {
+        g.drawImage(rpsScreen, 0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT - 24, null);
+        if (command == 0) {
+            g.drawImage(rock, GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 3, 200,
+                    229, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 9, 80 * 2, 32 * 2, null);
+        } else if (command == 1) {
+            g.drawImage(paper, GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 4, 200,
+                    143, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 6, GamePanel.TILE_SIZE * 9, 80 * 2, 32 * 2, null);
+        } else if (command == 2) {
+            g.drawImage(scissors, GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 4, 200,
+                    176, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 12, GamePanel.TILE_SIZE * 9, 80 * 2, 32 * 2, null);
+        }
+
     }
 
     /**
@@ -547,8 +573,10 @@ public class UI {
             drawBlackjack();
         } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 5) {
             drawPokermon();
-        } else {
+        } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 7) {
             drawDices();
+        } else {
+            drawRPC();
         }
     }
 
