@@ -1,14 +1,18 @@
 package cz.cvut.fel.pjv.entity;
 
-import javax.imageio.ImageIO;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
+/**
+ * PokerManTrainer is an NPC that the player has to defeat in 3rd level to get
+ * to level 4
+ * This NPC's minigame is PokerMan game that is heavily inspired by Pokemon.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class PokerManTrainer extends Entity {
 
     public PokerManTrainer(int x, int y) {
@@ -22,8 +26,10 @@ public class PokerManTrainer extends Entity {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
-
         up1 = assignImage("/npc/trainer_up");
         up2 = assignImage("/npc/trainer_up");
         down1 = assignImage("/npc/trainer_down");
@@ -32,18 +38,6 @@ public class PokerManTrainer extends Entity {
         left2 = assignImage("/npc/trainer_left");
         right1 = assignImage("/npc/trainer_right");
         right2 = assignImage("/npc/trainer_right");
-
-    }
-
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
 
     }
 
@@ -58,6 +52,12 @@ public class PokerManTrainer extends Entity {
 
     }
 
+    /**
+     * PokerManTrainer has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -73,6 +73,9 @@ public class PokerManTrainer extends Entity {
         }
     }
 
+    /**
+     * PokerManTrainer does not move.
+     */
     @Override
     public void move() {
         actionCounter = 0;

@@ -4,6 +4,14 @@ import java.util.Random;
 
 import cz.cvut.fel.pjv.GamePanel;
 
+/**
+ * Dices is a minigame where the player throws dices simitaneously with the
+ * worker.
+ * The player can bet whether the player or the worker will get the higher
+ * If the player wins, the player gets double the bet.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Dices {
     private int rolledNumber1;
     private int rolledNumber2;
@@ -19,12 +27,22 @@ public class Dices {
         this.gamePanel = gp;
     }
 
+    /**
+     * Starts the dices minigame.
+     * 
+     * @param bettingNumber the player's betting choice
+     */
     public void startD(int bettingNumber) {
         if (getBettingStatus()) {
             roll(bettingNumber);
         }
     }
 
+    /**
+     * Checks if the dices minigame is finished.
+     * 
+     * @return true if the dices minigame is finished
+     */
     public boolean end() {
         return completed;
     }
@@ -33,6 +51,12 @@ public class Dices {
         return bet;
     }
 
+    /**
+     * Checks if the player has enough chips to bet.
+     * If the player has enough chips, the player bets the amount of chips.
+     * 
+     * @return true if the player has enough chips to bet
+     */
     public boolean getBettingStatus() {
         if (gamePanel.getPlayer().getChipCount() >= bet) {
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - bet);
@@ -43,13 +67,20 @@ public class Dices {
         }
     }
 
+    /**
+     * Simulates the rolling of the dices.
+     * If the worker loses and player gets unlucky, the worker rolls again.
+     * This method plays the sound effect of the dices rolling.
+     * 
+     * @param bettingChoice
+     */
     private void roll(int bettingChoice) {
         gamePanel.getSound().playMusic(8);
         rolledNumber1 = rand.nextInt(6) + 1;
         rolledNumber2 = rand.nextInt(6) + 1;
         if (((bettingChoice == 1 && rolledNumber1 > rolledNumber2)
                 || (bettingChoice == 0 && rolledNumber1 < rolledNumber2))
-                && rand.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
+                && rand.nextFloat() > gamePanel.getPlayer().getPlayerLuck()) {
             rolledNumber1 = rand.nextInt(6) + 1;
             rolledNumber2 = rand.nextInt(6) + 1;
         }
@@ -65,6 +96,9 @@ public class Dices {
         }
     }
 
+    /**
+     * Increases the player's bet by 5 chips.
+     */
     public void bet() {
         if (this.bet + 5 > gamePanel.getPlayer().getChipCount()) {
             this.bet = gamePanel.getPlayer().getChipCount();
@@ -73,6 +107,9 @@ public class Dices {
         this.bet += 5;
     }
 
+    /**
+     * Decreases the player's bet by 5 chips.
+     */
     public void reduceBet() {
         if (this.bet - 5 < minimumBet) {
             this.bet = minimumBet;

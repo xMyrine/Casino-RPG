@@ -9,6 +9,16 @@ import javax.imageio.ImageIO;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.entity.Player;
 
+/**
+ * Pokermon is a minigame that the player plays in the third level.
+ * The player has to defeat the enemy to finish the level.
+ * The player can use special items to defeat the enemy.
+ * 
+ * Pokermon is inspired by the Pokemon game:
+ * https://en.wikipedia.org/wiki/Pok%C3%A9mon_(video_game_series)
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Pokermon {
     private int playerHealth;
     private int enemyHealth;
@@ -23,7 +33,6 @@ public class Pokermon {
     private BufferedImage shootButton;
     private BufferedImage attackButtons;
     private BufferedImage winImage;
-
     private static Random rand = new Random();
 
     private GamePanel gamePanel;
@@ -286,11 +295,10 @@ public class Pokermon {
      * Display a message
      */
     public void shoot() {
-        if (gamePanel.getPlayer().getSpecialItem(Player.GUN_INDEX) > 0) {
+        if (gamePanel.getPlayer().isSpecialItemInInventory(Player.GUN_INDEX)) {
             gamePanel.getSound().playMusic(7);
             enemyHealth -= 10;
-            gamePanel.getPlayer().setSpecialItem(Player.GUN_INDEX,
-                    gamePanel.getPlayer().getSpecialItem(Player.GUN_INDEX) - 1);
+            gamePanel.getPlayer().removeSpecialItem(Player.GUN_INDEX);
             mode = 0;
         } else {
             gamePanel.getGameUI().setAnnounceMessage("You don't have a gun");

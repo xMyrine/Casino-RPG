@@ -5,6 +5,10 @@ import cz.cvut.fel.pjv.entity.Player;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Beer is an alcohol object in the game.
+ * It increases the player's luck by 0.05.
+ */
 public class Beer extends GameObject implements Alcohol {
 
     private static final float LUCK = 0.05f;
@@ -22,6 +26,11 @@ public class Beer extends GameObject implements Alcohol {
         }
     }
 
+    /**
+     * Increase the player's luck by 0.05.
+     * 
+     * @param player the player object
+     */
     @Override
     public float increasePlayersLuck(Player player) {
         float newLuck = player.getPlayerLuck();

@@ -2,6 +2,12 @@ package cz.cvut.fel.pjv.objects;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Chest is a game object that can be opened by the player.
+ * It gives the player a random reward when opened.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Chest extends GameObject {
     private boolean opened;
 
@@ -18,6 +24,11 @@ public class Chest extends GameObject {
         }
     }
 
+    /**
+     * Open the chest.
+     * 
+     * @return true if the chest was opened, false if it was already opened
+     */
     public boolean open() {
         if (!opened) {
             opened = true;

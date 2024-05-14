@@ -5,6 +5,12 @@ import java.util.logging.Logger;
 import cz.cvut.fel.pjv.objects.*;
 import cz.cvut.fel.pjv.objects.alcohol.*;
 
+/**
+ * ObjectsSpawner is a class that spawns objects in the game.
+ * It spawns objects based on the level.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class ObjectsSpawner {
 
     private GamePanel gamePanel;
@@ -69,10 +75,10 @@ public class ObjectsSpawner {
         logger.fine("Spawning level 3 objects");
         gamePanel.objects[32] = new Door(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 35);
         gamePanel.objects[33] = new Door(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 36);
-        gamePanel.objects[21] = new Chip(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 38);
+        gamePanel.objects[21] = new Chip(GamePanel.TILE_SIZE * 27, GamePanel.TILE_SIZE * 38);
         gamePanel.objects[22] = new Chip(GamePanel.TILE_SIZE * 25, GamePanel.TILE_SIZE * 38);
         gamePanel.objects[23] = new Chip(GamePanel.TILE_SIZE * 26, GamePanel.TILE_SIZE * 38);
-        gamePanel.objects[24] = new DomPerignon(GamePanel.TILE_SIZE * 24, GamePanel.TILE_SIZE * 39);
+        gamePanel.objects[24] = new DomPerignon(GamePanel.TILE_SIZE * 27, GamePanel.TILE_SIZE * 39);
         gamePanel.objects[25] = new Vodka(GamePanel.TILE_SIZE * 25, GamePanel.TILE_SIZE * 39);
         gamePanel.levelManager.setLevelInProgress(true);
     }

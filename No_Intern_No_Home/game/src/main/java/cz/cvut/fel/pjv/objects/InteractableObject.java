@@ -1,5 +1,10 @@
 package cz.cvut.fel.pjv.objects;
 
+/**
+ * Interface for all interactable objects in the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public interface InteractableObject {
 
     /**

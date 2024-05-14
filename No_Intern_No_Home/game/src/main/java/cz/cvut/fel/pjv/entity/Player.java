@@ -3,7 +3,6 @@ package cz.cvut.fel.pjv.entity;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Inventory;
 import cz.cvut.fel.pjv.KeyHandler;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.objects.*;
 import cz.cvut.fel.pjv.objects.alcohol.*;
 import cz.cvut.fel.pjv.items.*;
@@ -13,13 +12,16 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+/**
+ * Player is the main character in the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Player extends Entity {
 
     private GamePanel gamePanel;
@@ -28,15 +30,12 @@ public class Player extends Entity {
     private Inventory inventory;
     private boolean showInventory = false;
 
-    private int chipCount = 500;
+    private int chipCount;
     private int slotMachineCount = 0;
     private Random random = new Random();
     private float playerLuck = 1f;
     private int npcIndex = 69;
-    private int[] specialItemsFragnments = { 3, 3, 3 };
-    private int cigar;
-    private int gun;
-    private int cards;
+    private int[] specialItemsFragnments = { 0, 0, 0 };
 
     public static final int CIGAR_INDEX = 0;
     public static final int GUN_INDEX = 1;
@@ -49,10 +48,6 @@ public class Player extends Entity {
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
-
-        cigar = 0;
-        gun = 1;
-        cards = 0;
 
         screenX = GamePanel.SCREEN_WIDTH / 2 - GamePanel.TILE_SIZE / 2;
         screenY = GamePanel.SCREEN_HEIGHT / 2 - GamePanel.TILE_SIZE / 2;
@@ -67,8 +62,6 @@ public class Player extends Entity {
         logger.setLevel(Level.WARNING);
 
         items = new ArrayList<>();
-        // !REMOVE THIS LATER
-        items.add(new Cigarette(this));
 
         setDefaultValues();
         getPlayerImage();
@@ -102,7 +95,7 @@ public class Player extends Entity {
         this.chipCount = chipCount;
     }
 
-    /*
+    /**
      * Set the player's luck
      * Ensure the player's luck is between 0 and 1
      * 
@@ -124,17 +117,19 @@ public class Player extends Entity {
         return playerLuck;
     }
 
-    /*
+    /**
      * Set the player's default values
      */
     public void setDefaultValues() {
         worldX = GamePanel.TILE_SIZE * 2;
         worldY = GamePanel.TILE_SIZE * 2;
-        this.speed = 15;
+        this.speed = 3;
         direction = Constants.DOWN; // default direction
+        chipCount = 500;
+        items.add(new Cigarette(this));
     }
 
-    /*
+    /**
      * Set the player's speed
      * Ensure the player's speed is not negative
      * 
@@ -161,27 +156,6 @@ public class Player extends Entity {
         left2 = assignImage("/player/pleft2");
         right1 = assignImage("/player/pright");
         right2 = assignImage("/player/pright2");
-
-    }
-
-    /**
-     * Assign the player's image
-     * 
-     * @param path
-     * @return the player's image
-     * 
-     */
-
-    private BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path +
-                    ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
 
     }
 
@@ -408,14 +382,22 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Draw the player on the screen
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage img = directionToImageMap.getOrDefault(direction, () -> null).get();
         g.drawImage(img, screenX, screenY, null);
     }
 
-    /*
-     * Get the player's inventory
+    /**
+     * Get the player's amount of special item fragments
+     * 
+     * @param item the special item INDEX (CIGAR_INDEX, GUN_INDEX, CARDS_INDEX)
+     * @return the amount of special item fragments
      */
     public int getSpecialItemsFragmentCount(int item) {
         switch (item) {
@@ -430,8 +412,11 @@ public class Player extends Entity {
         }
     }
 
-    /*
+    /**
      * Set the player's inventory
+     * 
+     * @param item  the special item INDEX (CIGAR_INDEX, GUN_INDEX, CARDS_INDEX)
+     * @param count the amount of special item fragments
      */
     public void setSpecialItemsFragmentCount(int item, int count) {
         switch (item) {
@@ -449,50 +434,19 @@ public class Player extends Entity {
         }
     }
 
-    /*
-     * Set the player's inventory
-     */
-    public void setSpecialItem(int item, int count) {
-        switch (item) {
-            case CIGAR_INDEX:
-                cigar = count;
-                break;
-            case GUN_INDEX:
-                gun = count;
-                break;
-            case CARDS_INDEX:
-                cards = count;
-                break;
-            default:
-                break;
-        }
-    }
-
-    /*
-     * Get the player's inventory
-     */
-    public int getSpecialItem(int item) {
-        switch (item) {
-            case CIGAR_INDEX:
-                return cigar;
-            case GUN_INDEX:
-                return gun;
-            case CARDS_INDEX:
-                return cards;
-            default:
-                return 0;
-        }
-    }
-
-    /*
+    /**
      * Add an item to the player's inventory
+     * 
+     * @param item the item to add
      */
     public void addItems(Items item) {
         items.add(item);
     }
 
-    /*
+    /**
      * Get the gun from the player's inventory
+     * 
+     * @return the Gun object, null if not found
      */
     public Gun getFirstGun() {
         for (Items item : items) {
@@ -503,22 +457,27 @@ public class Player extends Entity {
         return null;
     }
 
-    /*
+    /**
      * Remove the gun from the player's inventory
+     * 
+     * @return true if the gun was removed, false otherwise
      */
-    public void removeFirstGun() {
+    private boolean removeFirstGun() {
         for (Items item : items) {
             if (item instanceof Gun) {
                 items.remove(item);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
-    /*
+    /**
      * Use the gun from the player's inventory
+     * 
+     * @return Cigarette if is in inventory, null otherwise
      */
-    public Cigarette getFirstCigarette() {
+    private Cigarette getFirstCigarette() {
         for (Items item : items) {
             if (item instanceof Cigarette) {
                 return (Cigarette) item;
@@ -527,19 +486,22 @@ public class Player extends Entity {
         return null;
     }
 
-    /*
+    /**
      * Remove the cigarette from the player's inventory
+     * 
+     * @return true if the cigarette was removed, false otherwise
      */
-    public void removeFirstCigarette() {
+    private boolean removeFirstCigarette() {
         for (Items item : items) {
             if (item instanceof Cigarette) {
                 items.remove(item);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
-    /*
+    /**
      * Use the cigarette from the player's inventory
      */
     public void useCigarette() {
@@ -554,15 +516,72 @@ public class Player extends Entity {
         }
     }
 
-    /*
-     * Check if the player has a cigarette in the inventory
+    /**
+     * Get the cards from the player's inventory
+     * 
+     * @return the PlayingCards object
      */
-    public boolean isCigaretteInInventory() {
+    private PlayingCards getFirstCards() {
         for (Items item : items) {
-            if (item instanceof Cigarette) {
+            if (item instanceof PlayingCards) {
+                return (PlayingCards) item;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Remove the cards from the player's inventory
+     * 
+     * @return true if the cards were removed, false otherwise
+     */
+    private boolean removeFirstCards() {
+        for (Items item : items) {
+            if (item instanceof PlayingCards) {
+                items.remove(item);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Use the cards from the player's inventory
+     *
+     * @param item the item to find in the inventory
+     * 
+     * @return true if the item is in the inventory, false otherwise
+     */
+    public boolean isSpecialItemInInventory(int item) {
+        switch (item) {
+            case CIGAR_INDEX:
+                return getFirstCigarette() != null;
+            case GUN_INDEX:
+                return getFirstGun() != null;
+            case CARDS_INDEX:
+                return getFirstCards() != null;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Remove a special item from the player's inventory
+     *
+     * @param item the item to remove
+     * @return true if the item was removed, false otherwise
+     */
+    public boolean removeSpecialItem(int item) {
+        switch (item) {
+            case CIGAR_INDEX:
+                removeFirstCigarette();
+                return true;
+            case GUN_INDEX:
+                return removeFirstGun();
+            case CARDS_INDEX:
+                return removeFirstCards();
+            default:
+                return false;
+        }
     }
 }

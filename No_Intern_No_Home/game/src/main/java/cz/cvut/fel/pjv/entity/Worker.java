@@ -1,13 +1,18 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
+/**
+ * Worker is an NPC that the player can interact with.
+ * It is the first minigame npc the player meets in the game.
+ * The player can play roulette with the worker.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Worker extends Entity implements NPC {
 
     GamePanel gamePanel;
@@ -36,8 +41,10 @@ public class Worker extends Entity implements NPC {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
-
         up1 = assignImage("/npc/worker1_up_1");
         up2 = assignImage("/npc/worker1_up_2");
         down1 = assignImage("/npc/worker1_down_1");
@@ -49,18 +56,12 @@ public class Worker extends Entity implements NPC {
 
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-
-    }
-
+    /**
+     * Worker has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -76,6 +77,10 @@ public class Worker extends Entity implements NPC {
         }
     }
 
+    /**
+     * Dialogue messages for the worker.
+     * Player can challenge the worker to play roulette, while in the dialogue.
+     */
     public void setDialogueMessage() {
         dialogues[0] = "The slot machines around here could use some love.\n I'm not a programmer though.";
         dialogues[1] = "Or if you want to you can just \ngamble with me first.";
@@ -91,16 +96,16 @@ public class Worker extends Entity implements NPC {
 
     }
 
+    /**
+     * Worker moves randomly.
+     */
     @Override
     public void move() {
         int i;
-
         if (actionCounter < ACTION_DELAY) {
             actionCounter++;
-
         } else {
             i = Entity.random.nextInt(4);
-
             if (i == 0) {
                 direction = Constants.UP;
                 worldY -= speed;

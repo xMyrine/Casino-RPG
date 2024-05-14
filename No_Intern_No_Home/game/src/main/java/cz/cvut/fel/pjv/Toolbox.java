@@ -3,6 +3,11 @@ package cz.cvut.fel.pjv;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+/**
+ * Toolbox is a utility class that contains useful methods.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Toolbox {
 
     private Toolbox() {

@@ -14,6 +14,13 @@ import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
 import cz.cvut.fel.pjv.objects.GameObject;
 
+/**
+ * GamePanel is the main class of the game
+ * It contains the game loop and the game state
+ * It is also the class where most of the game objects are created and managed
+ * 
+ * @Author Minh Tu Pham
+ */
 public class GamePanel extends JPanel implements Runnable {
     public static final int ORIGINAL_TILE_SIZE = 16;
     public static final int SCALE = 3;
@@ -44,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game objects
     protected transient GameObject[] objects = new GameObject[50];
-    protected transient Entity[] entities = new Entity[20];
+    protected transient Entity[] entities = new Entity[15];
 
     // ! Game State
     private int gameState;
@@ -56,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int CONTROLSSCREEN = 5;
     public static final int SHOPSCREEN = 6;
     public static final int CRAFTSCREEN = 7;
+    public static final int ENDSCREEN = 8;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -145,6 +153,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    /**
+     * This method is called by the game loop to draw the game
+     * 
+     * @param g Graphics object
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

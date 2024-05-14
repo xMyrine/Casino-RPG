@@ -2,11 +2,17 @@ package cz.cvut.fel.pjv.levels;
 
 import cz.cvut.fel.pjv.GamePanel;
 
+/**
+ * FirstLevel is the first level of the game.
+ * The player has to finish all slot machines and the minigame to finish the
+ * level.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class FirstLevel extends Level {
     private int finishedSlotMachineCount;
     private boolean miniGameFinished;
     private int playerSlotMachineCount;
-    private GamePanel gamePanel;
 
     public FirstLevel(int playerSlotMachineCount, int totalSlotMachineCount, GamePanel gamePanel) {
         super();
@@ -30,6 +36,11 @@ public class FirstLevel extends Level {
         this.finishedSlotMachineCount = count;
     }
 
+    /**
+     * Sets the minigameFinished to true and checks if the level is finished.
+     * 
+     * @param miniGameFinished
+     */
     public void setMiniGameFinished(boolean miniGameFinished) {
         this.miniGameFinished = miniGameFinished;
         gamePanel.getLevelManager().checkLevelFinished();
@@ -52,6 +63,11 @@ public class FirstLevel extends Level {
         return levelFinished;
     }
 
+    /**
+     * Checks if the player has finished all slot machines.
+     * 
+     * @return true if the player has finished all slot machines
+     */
     public boolean checkSlotMachineCount() {
         fetchPlayerSlotMachineCount(gamePanel.getPlayer().getSlotMachineCount());
         if (finishedSlotMachineCount <= playerSlotMachineCount) {
@@ -61,6 +77,13 @@ public class FirstLevel extends Level {
         return false;
     }
 
+    /**
+     * Checks if the level is finished.
+     * If the slot machines are finished and the roulette is finished, the level is
+     * finished.
+     * 
+     * @return true if the level is finished
+     */
     @Override
     public boolean checkLevelFinished() {
         if (checkSlotMachineCount() && miniGameFinished) {
@@ -70,6 +93,11 @@ public class FirstLevel extends Level {
         return false;
     }
 
+    /**
+     * Fetches the player's slot machine count.
+     * 
+     * @param playerSlotMachineCount
+     */
     public void fetchPlayerSlotMachineCount(int playerSlotMachineCount) {
         this.playerSlotMachineCount = playerSlotMachineCount;
     }

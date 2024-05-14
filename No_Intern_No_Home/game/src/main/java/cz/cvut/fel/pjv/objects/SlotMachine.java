@@ -5,6 +5,12 @@ import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.Toolbox;
 
+/**
+ * SlotMachine is a game object that the player can interact with.
+ * Player has to interact with the slot machine to finish the first level.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class SlotMachine extends GameObject implements InteractableObject {
 
     private boolean finished;
@@ -45,6 +51,10 @@ public class SlotMachine extends GameObject implements InteractableObject {
         this.finished = fin;
     }
 
+    /**
+     * Change the state of the slot machine.
+     * Changes the image of the slot machine to the finished state.
+     */
     @Override
     public void changeState(boolean check) {
         if (check) {

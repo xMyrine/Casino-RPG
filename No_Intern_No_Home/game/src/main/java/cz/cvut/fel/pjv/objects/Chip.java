@@ -4,6 +4,12 @@ import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.Toolbox;
 
+/**
+ * Chip is a game object that the player can collect.
+ * Increases the player's chip count when collected.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Chip extends GameObject {
 
     public Chip() {

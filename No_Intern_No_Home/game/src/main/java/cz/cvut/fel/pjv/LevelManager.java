@@ -8,10 +8,18 @@ import java.util.logging.Logger;
 import java.util.Random;
 import java.util.logging.Level;
 
+/**
+ * LevelManager is a class that manages the levels in the game.
+ * It checks if the level is finished and increments the level number.
+ * It also rewards the player with a special item fragment.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class LevelManager {
-    public FirstLevel firstLevel;
-    public SecondLevel secondLevel;
-    public ThirdLevel thirdLevel;
+    private FirstLevel firstLevel;
+    private SecondLevel secondLevel;
+    private ThirdLevel thirdLevel;
+    private FourthLevel fourthLevel;
     private GamePanel gamePanel;
     private boolean firstLevelMessage = false;
     private boolean secondLevelMessage = false;
@@ -19,9 +27,9 @@ public class LevelManager {
     private boolean levelInProgress = true;
     private static int levelNumber = 1; // ! Change to 1
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
-    public Roulette roulette;
-    public Blackjack blackjack;
-    public Pokermon pokermon;
+    private Roulette roulette;
+    private Blackjack blackjack;
+    private Pokermon pokermon;
     protected Dices dices;
     protected RPS rps;
     private Random rand = new Random();
@@ -32,6 +40,7 @@ public class LevelManager {
         this.firstLevel = new FirstLevel(gamePanel.player.getSlotMachineCount(), 5, gamePanel);
         this.secondLevel = new SecondLevel(gamePanel);
         this.thirdLevel = new ThirdLevel(gamePanel);
+        this.fourthLevel = new FourthLevel(gamePanel);
         this.gamePanel = gamePanel;
         logger.setLevel(Level.WARNING);
         roulette = new Roulette(gamePanel);
@@ -91,8 +100,12 @@ public class LevelManager {
                 logger.log(Level.WARNING, LEVEL_NUMBER_MSG, levelNumber);
                 return thirdLevel.checkLevelFinished();
             }
+        } else if (levelNumber == 4 && fourthLevel.checkLevelFinished()) {
+            gamePanel.changeGameState(GamePanel.ENDSCREEN);
+            return fourthLevel.checkLevelFinished();
         }
         return false;
+
     }
 
     public static int getLevelNumber() {
@@ -100,7 +113,6 @@ public class LevelManager {
     }
 
     /**
-     * b
      * Open the doors based on the level number
      */
     private void openDoors() {
@@ -111,8 +123,8 @@ public class LevelManager {
                                 .getCurrentObjectLevelSpawned()));
                 logger.log(Level.INFO, "Door state changed");
                 if (((Door) gamePanel.objects[i]).getState()
-                        && !((Door) gamePanel.objects[i]).open) {
-                    ((Door) gamePanel.objects[i]).open = true;
+                        && !((Door) gamePanel.objects[i]).isOpen()) {
+                    ((Door) gamePanel.objects[i]).setOpen(true);
                     gamePanel.sound.playMusic(4);
                 }
             }
@@ -135,5 +147,29 @@ public class LevelManager {
 
     public RPS getRps() {
         return rps;
+    }
+
+    public FirstLevel getFirstLevel() {
+        return firstLevel;
+    }
+
+    public SecondLevel getSecondLevel() {
+        return secondLevel;
+    }
+
+    public ThirdLevel getThirdLevel() {
+        return thirdLevel;
+    }
+
+    public Roulette getRoulette() {
+        return roulette;
+    }
+
+    public Blackjack getBlackjack() {
+        return blackjack;
+    }
+
+    public Pokermon getPokermon() {
+        return pokermon;
     }
 }

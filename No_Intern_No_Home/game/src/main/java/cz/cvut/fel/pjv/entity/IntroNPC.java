@@ -1,16 +1,19 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import cz.cvut.fel.pjv.Constants;
 
+/**
+ * IntroNPC is the first NPC the player meets in the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class IntroNPC extends Entity implements NPC {
 
-    GamePanel gamePanel;
+    private GamePanel gamePanel;
 
     public IntroNPC(GamePanel panel) {
         this.name = "IntroNPC";
@@ -36,8 +39,10 @@ public class IntroNPC extends Entity implements NPC {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
-
         up1 = assignImage("/npc/guy_up_1");
         up2 = assignImage("/npc/guy_up_2");
         down1 = assignImage("/npc/guy_down_1");
@@ -49,18 +54,12 @@ public class IntroNPC extends Entity implements NPC {
 
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-
-    }
-
+    /**
+     * IntroNPC has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -76,6 +75,10 @@ public class IntroNPC extends Entity implements NPC {
         }
     }
 
+    /**
+     * Adding dialogue messages to the dialogue array of the NPC.
+     * Intro NPC explains the basic mechanics of the game and what is the end goal.
+     */
     public void setDialogueMessage() {
         dialogues[0] = "Ayo, you are new around here. \n Haven't seen you before.";
         dialogues[1] = "I assume finding work, did not age well for you. \n You are in the right place.";

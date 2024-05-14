@@ -10,8 +10,21 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Blackjack is a minigame that the player plays in the second level.
+ * Player cannot modify the bet amount yet. It will be implemented in the
+ * future.
+ * It follows regular blackjack rules.
+ * 
+ * This class was heavily inspired by the following tutorial:
+ * https://www.youtube.com/watch?v=GMdgjaDdOjI
+ * 
+ * NOTE: This code was written even before the assignment was given as a side
+ * project.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Blackjack {
-
     GamePanel gamePanel;
     ArrayList<Card> deck;
     Random random = new Random();
@@ -77,6 +90,7 @@ public class Blackjack {
 
     /**
      * Starts the game by building the deck, shuffling it, and dealing the first two
+     * cards to the dealer and the player
      */
     public void startGame() {
         buildDeck();
@@ -237,6 +251,9 @@ public class Blackjack {
         }
     }
 
+    /**
+     * Resets the game
+     */
     public void reset() {
         hitEnabled = true;
         standEnabled = true;

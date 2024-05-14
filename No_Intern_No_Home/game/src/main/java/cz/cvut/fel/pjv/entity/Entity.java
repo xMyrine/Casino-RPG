@@ -7,12 +7,20 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
+import java.awt.Graphics2D;
+import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.GamePanel;
+import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
-import java.awt.Graphics2D;
-
+/**
+ * Abstract class for all entities in the game.
+ * This class contains the basic methods and attributes for all entities.
+ * Such as movement, collision, dialogue, etc.
+ * 
+ * @Author Minh Tu Pham
+ */
 public abstract class Entity {
 
     protected static Random random = new Random();
@@ -178,7 +186,25 @@ public abstract class Entity {
         }
     }
 
-    /*
+    /**
+     * Default assignImage method for all entities.
+     * 
+     * @param path path to the image
+     * @return BufferedImage object
+     */
+    protected BufferedImage assignImage(String path) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
+            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+
+    }
+
+    /**
      * Default move method for all entities. Will probably be overridden by
      * subclasses.
      * This method is used to move the entity in the game world.
@@ -195,7 +221,7 @@ public abstract class Entity {
         }
     }
 
-    /*
+    /**
      * Default talk method for all entities. Will probably be overridden by
      * subclasses.
      * This method is used to display dialogues when the player interacts with an
@@ -211,9 +237,12 @@ public abstract class Entity {
         }
     }
 
-    /*
+    /**
      * Default getSpriteImage method for all entities.
      * This method is used to get the correct sprite image for the entity.
+     * 
+     * @param sprite1 first sprite image
+     * @param sprite2 second sprite image
      */
     protected BufferedImage getSpriteImage(BufferedImage sprite1, BufferedImage sprite2) {
         if (spriteIndex == 1) {
@@ -225,9 +254,11 @@ public abstract class Entity {
         }
     }
 
-    /*
+    /**
      * Default turnEntity method for all entities.
      * Mainly used for turning the entity to face the player.
+     * 
+     * @param dir direction to turn to
      */
     protected void turnEntity(String dir) {
         switch (dir) {

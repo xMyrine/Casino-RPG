@@ -5,6 +5,15 @@ import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.entity.Entity;
 
+/**
+ * CollisionManager is a class that manages all the collisions in the game.
+ * It checks if the entity collides with a tile, object, player or another
+ * entity.
+ * Most of the methods take advantage of the Rectangle class and its methods to
+ * check if two rectangles intersect.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class CollisionManager {
 
     GamePanel gamePanel;
@@ -19,7 +28,7 @@ public class CollisionManager {
     /**
      * Check if the entity collides with a tile
      * 
-     * @param entity
+     * @param entity - entity to check
      */
     public void checkTile(Entity entity) {
         int entityLeftWorldX = entity.getWorldX() + entity.getCollisionArea().x;
@@ -121,6 +130,9 @@ public class CollisionManager {
 
     /**
      * Check if the Player collides with an object
+     * The method works by checking if the player's collision area intersects with
+     * the object's collision area. If the player collides with the object, the
+     * player's collision is set to true.
      * 
      * @param entity - entity to check
      * @param player - true if the entity is the player
@@ -205,9 +217,13 @@ public class CollisionManager {
 
     /**
      * Check if the player collides with an entity
+     * The method works by checking if the player's collision area intersects with
+     * the entity's collision area. If the player collides with the entity, the
+     * player's collision is set to true.
      * 
      * @param entity - entity to check
      * @param target - array of entities to check
+     * @return index of the entity
      */
     public int checkEntityCollision(Entity entity, Entity[] target) {
         int index = 69;
@@ -266,6 +282,9 @@ public class CollisionManager {
 
     /**
      * Check if the entity collides with the player
+     * The method works by checking if the entity's collision area intersects with
+     * the player's collision area. If the entity collides with the player, the
+     * entity's collision is set to true.
      * 
      * @param entity - entity to check
      */

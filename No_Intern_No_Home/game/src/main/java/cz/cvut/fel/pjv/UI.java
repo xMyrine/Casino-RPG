@@ -11,6 +11,11 @@ import java.util.logging.Logger;
 import cz.cvut.fel.pjv.minigames.assets.Card;
 import cz.cvut.fel.pjv.objects.*;
 
+/**
+ * UI class is responsible for drawing the UI elements on the screen.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class UI {
 
     private GamePanel gamePanel;
@@ -38,6 +43,8 @@ public class UI {
     private BufferedImage rock;
     private BufferedImage paper;
     private BufferedImage scissors;
+    private BufferedImage endScreen;
+    private BufferedImage menuBG;
 
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -56,6 +63,8 @@ public class UI {
             rock = ImageIO.read(getClass().getResourceAsStream("/objects/rock.png"));
             paper = ImageIO.read(getClass().getResourceAsStream("/objects/paper.png"));
             scissors = ImageIO.read(getClass().getResourceAsStream("/objects/scissors.png"));
+            endScreen = ImageIO.read(getClass().getResourceAsStream("/screens/endgame.jpg"));
+            menuBG = ImageIO.read(getClass().getResourceAsStream("/screens/menubg.jpg"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,12 +147,38 @@ public class UI {
             drawShop();
         } else if (state == GamePanel.CRAFTSCREEN) {
             drawCrafting();
+        } else if (state == GamePanel.ENDSCREEN) {
+            drawENDSCREEN();
         } else {
             drawStats();
             if (gamePanel.player.isInventoryVisible()) {
                 drawInventory();
             }
         }
+    }
+
+    /**
+     * Draws the ending Screen
+     */
+    private void drawENDSCREEN() {
+        g.drawImage(endScreen, 0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT - 24, null);
+        g.setColor(new Color(0, 0, 0, 200));
+        g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
+        g.setColor(Color.WHITE);
+        g.setFont(g.getFont().deriveFont(40.0f));
+        if (gamePanel.getLevelManager().getRps().end()) {
+            g.drawString("Congratulations! You have finished the game!", GamePanel.TILE_SIZE * 2,
+                    GamePanel.TILE_SIZE * 2);
+        } else if (gamePanel.getLevelManager().getRps().getBusted()) {
+            g.drawString("Unlucky, you lost! Maybe next time!", GamePanel.TILE_SIZE * 2,
+                    GamePanel.TILE_SIZE * 2);
+        }
+        g.drawString("Total chip count:" + gamePanel.getPlayer().getChipCount(), GamePanel.TILE_SIZE * 2,
+                GamePanel.TILE_SIZE * 4);
+        g.drawString("Thank you for playing!", GamePanel.TILE_SIZE * 2, GamePanel.TILE_SIZE * 6);
+
+        g.setFont(g.getFont().deriveFont(30.0f));
+        g.drawString("Press ESC to exit", GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 10);
     }
 
     private void drawRPC() {
@@ -162,6 +197,21 @@ public class UI {
             g.drawImage(chipImage, GamePanel.TILE_SIZE * 12, GamePanel.TILE_SIZE * 9, 80 * 2, 32 * 2, null);
         }
 
+        g.setColor(Color.RED);
+        g.setFont(g.getFont().deriveFont(30.0f));
+        g.drawString("Boss points: " + gamePanel.levelManager.getRps().getBossPoints(), GamePanel.TILE_SIZE * 1,
+                GamePanel.TILE_SIZE * 1);
+
+        g.setColor(Color.GREEN);
+        g.drawString("Player points: " + gamePanel.levelManager.getRps().getPlayerPoints(), GamePanel.TILE_SIZE * 10,
+                GamePanel.TILE_SIZE * 5);
+
+        if (gamePanel.getPlayer().getChipCount() < 1000) {
+            g.setColor(new Color(0, 0, 0, 200));
+            g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
+            g.setColor(Color.WHITE);
+            g.drawString("You need at least 1000 chips to play", GamePanel.TILE_SIZE * 4, GamePanel.TILE_SIZE * 4);
+        }
     }
 
     /**
@@ -177,11 +227,11 @@ public class UI {
         if (command == 0) {
             g.drawImage(chosenButton, GamePanel.TILE_SIZE * 7, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
                     GamePanel.TILE_SIZE * 2, null);
-            g.drawString("Craft Cigar for 3 cigar fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
+            g.drawString("Craft Gun for 3 gun fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
         } else if (command == 1) {
             g.drawImage(chosenButton, GamePanel.TILE_SIZE * 12 + 24, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 3,
                     GamePanel.TILE_SIZE * 2, null);
-            g.drawString("Craft Gun for 3 gun fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
+            g.drawString("Craft Cigar for 3 cigar fragments", GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE + 10);
         } else if (command == 2) {
             g.drawImage(chosenButton, GamePanel.TILE_SIZE * 12 + 24, GamePanel.TILE_SIZE * 7 + 24,
                     GamePanel.TILE_SIZE * 3,
@@ -247,16 +297,11 @@ public class UI {
             if (inventory.getInventoryItem(i) == null) {
                 break;
             }
-            if (gamePanel.player.getSpecialItem(i) >= 1) {
+            if (gamePanel.player.isSpecialItemInInventory(i)) {
                 g.drawImage(inventory.getInventoryItem(i), GamePanel.TILE_SIZE * 4 + 30,
                         (GamePanel.TILE_SIZE + 13) * (2 + i),
                         GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
             }
-        }
-
-        if (gamePanel.player.isCigaretteInInventory()) {
-            g.drawImage(inventory.getInventoryItem(0), GamePanel.TILE_SIZE * 4 + 30, (GamePanel.TILE_SIZE + 13) * 2,
-                    GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
         }
 
         g.setColor(Color.WHITE);
@@ -278,11 +323,11 @@ public class UI {
      */
     private void drawPokermon() {
 
-        g.drawImage(gamePanel.levelManager.pokermon.getScreenImage(), 0, 0, GamePanel.SCREEN_WIDTH,
+        g.drawImage(gamePanel.levelManager.getPokermon().getScreenImage(), 0, 0, GamePanel.SCREEN_WIDTH,
                 GamePanel.SCREEN_HEIGHT - 36,
                 null);
-        if (gamePanel.levelManager.pokermon.getMode() == 1) {
-            g.drawImage(gamePanel.levelManager.pokermon.getAttackButtons(), 0, 0, GamePanel.SCREEN_WIDTH,
+        if (gamePanel.levelManager.getPokermon().getMode() == 1) {
+            g.drawImage(gamePanel.levelManager.getPokermon().getAttackButtons(), 0, 0, GamePanel.SCREEN_WIDTH,
                     GamePanel.SCREEN_HEIGHT - 36,
                     null);
             g.setColor(new Color(0, 0, 0, 200));
@@ -315,31 +360,34 @@ public class UI {
 
         g.setColor(Color.BLACK);
         g.setFont(g.getFont().deriveFont(30.0f));
-        g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getPlayerAttack()),
+        g.drawString(String.format("%d", gamePanel.levelManager.getPokermon().getPlayerAttack()),
                 GamePanel.TILE_SIZE * 15 + 10,
                 GamePanel.TILE_SIZE * 6 + 30);
 
-        g.drawString(String.format("%d", gamePanel.levelManager.pokermon.getEnemyAttack()), GamePanel.TILE_SIZE * 4,
+        g.drawString(String.format("%d", gamePanel.levelManager.getPokermon().getEnemyAttack()),
+                GamePanel.TILE_SIZE * 4,
                 GamePanel.TILE_SIZE);
 
-        for (int i = 0; i < gamePanel.levelManager.pokermon.getEnemyHealth(); i++) {
+        for (int i = 0; i < gamePanel.levelManager.getPokermon().getEnemyHealth(); i++) {
             g.setColor(Color.RED);
             g.fillRect(16 + (i * 21), GamePanel.TILE_SIZE * 1 + 10, 14, 14);
             g.setColor(Color.BLACK);
             g.drawRect(16 + (i * 21), GamePanel.TILE_SIZE * 1 + 10, 14, 14);
         }
 
-        for (int i = 0; i < gamePanel.levelManager.pokermon.getPlayerHealth(); i++) {
+        for (int i = 0; i < gamePanel.levelManager.getPokermon().getPlayerHealth(); i++) {
             g.setColor(Color.GREEN);
             g.fillRect(GamePanel.TILE_SIZE * 11 + 16 + (i * 21), GamePanel.TILE_SIZE * 7, 14, 14);
             g.setColor(Color.BLACK);
             g.drawRect(GamePanel.TILE_SIZE * 11 + 16 + (i * 21), GamePanel.TILE_SIZE * 7, 14, 14);
         }
 
-        if (gamePanel.levelManager.pokermon.getMode() == 2) {
-            g.drawImage(gamePanel.levelManager.pokermon.getShootButton(), 0, 0, GamePanel.SCREEN_WIDTH,
+        if (gamePanel.levelManager.getPokermon().getMode() == 2) {
+            g.drawImage(gamePanel.levelManager.getPokermon().getShootButton(), 0, 0, GamePanel.SCREEN_WIDTH,
                     GamePanel.SCREEN_HEIGHT - 36,
                     null);
+            g.setColor(Color.WHITE);
+            g.drawString("PRESS (W) TO SHOOT", GamePanel.TILE_SIZE * 4, GamePanel.TILE_SIZE * 4);
         }
     }
 
@@ -394,37 +442,40 @@ public class UI {
         g.setColor(new Color(123, 157, 134));
         g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
 
-        g.drawImage(gamePanel.levelManager.blackjack.getHitButton(), GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 9,
+        g.drawImage(gamePanel.levelManager.getBlackjack().getHitButton(), GamePanel.TILE_SIZE * 3,
+                GamePanel.TILE_SIZE * 9,
                 GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 2, null);
 
-        g.drawImage(gamePanel.levelManager.blackjack.getStandButton(), GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 9,
+        g.drawImage(gamePanel.levelManager.getBlackjack().getStandButton(), GamePanel.TILE_SIZE * 8,
+                GamePanel.TILE_SIZE * 9,
                 GamePanel.TILE_SIZE * 5, GamePanel.TILE_SIZE * 2, null);
 
-        if (command == 0 && gamePanel.levelManager.blackjack.getHitEnabled()) {
+        if (command == 0 && gamePanel.levelManager.getBlackjack().getHitEnabled()) {
             g.drawImage(chipImage, GamePanel.TILE_SIZE * 3 + 10, GamePanel.TILE_SIZE * 9 + 10, 40, 40, null);
-        } else if (command == 1 && gamePanel.levelManager.blackjack.getStandEnabled()) {
+        } else if (command == 1 && gamePanel.levelManager.getBlackjack().getStandEnabled()) {
             g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 + 10, GamePanel.TILE_SIZE * 9 + 10, 40, 40, null);
         }
 
         // crossing out the hit button if it is not enabled
-        if (!gamePanel.levelManager.blackjack.getHitEnabled()) {
+        if (!gamePanel.levelManager.getBlackjack().getHitEnabled()) {
             g.drawImage(crossedButton, GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
                     GamePanel.TILE_SIZE * 2, null);
         }
         // crossing out the stand button if it is not enabled
-        if (!gamePanel.levelManager.blackjack.getStandEnabled()) {
+        if (!gamePanel.levelManager.getBlackjack().getStandEnabled()) {
             g.drawImage(crossedButton, GamePanel.TILE_SIZE * 8, GamePanel.TILE_SIZE * 9, GamePanel.TILE_SIZE * 5,
                     GamePanel.TILE_SIZE * 2, null);
         }
-        if (gamePanel.levelManager.blackjack.getStandEnabled()) {
-            g.drawImage(gamePanel.levelManager.blackjack.getCardBack(), GamePanel.TILE_SIZE * 1, 24,
-                    Card.cardWidth, Card.cardHeight, null);
+        if (gamePanel.levelManager.getBlackjack().getStandEnabled()) {
+            g.drawImage(gamePanel.levelManager.getBlackjack().getCardBack(), GamePanel.TILE_SIZE * 1, 24,
+                    Card.CARD_WIDTH, Card.CARD_HEIGHT, null);
         } else {
             try {
                 BufferedImage img = ImageIO.read(
                         getClass()
-                                .getResourceAsStream(gamePanel.levelManager.blackjack.getHiddenCard().getImagePath()));
-                g.drawImage(img, GamePanel.TILE_SIZE * 1, 24, Card.cardWidth, Card.cardHeight, null);
+                                .getResourceAsStream(
+                                        gamePanel.levelManager.getBlackjack().getHiddenCard().getImagePath()));
+                g.drawImage(img, GamePanel.TILE_SIZE * 1, 24, Card.CARD_WIDTH, Card.CARD_HEIGHT, null);
             } catch (Exception e) {
                 logger.warning("Error loading Card image");
             }
@@ -432,26 +483,27 @@ public class UI {
 
         try {
             // Dealers Hand
-            for (int i = 0; i < gamePanel.levelManager.blackjack.getDealerHand().size(); i++) {
-                Card card = gamePanel.levelManager.blackjack.getDealerHand().get(i);
+            for (int i = 0; i < gamePanel.levelManager.getBlackjack().getDealerHand().size(); i++) {
+                Card card = gamePanel.levelManager.getBlackjack().getDealerHand().get(i);
                 BufferedImage img = ImageIO.read(getClass().getResourceAsStream(card.getImagePath()));
-                g.drawImage(img, ((Card.cardWidth) * (i + 1)) + GamePanel.TILE_SIZE, 24, Card.cardWidth,
-                        Card.cardHeight,
+                g.drawImage(img, ((Card.CARD_WIDTH) * (i + 1)) + GamePanel.TILE_SIZE, 24, Card.CARD_WIDTH,
+                        Card.CARD_HEIGHT,
                         null);
             }
 
             // Players Hand
-            for (int i = 0; i < gamePanel.levelManager.blackjack.getPlayerHand().size(); i++) {
-                Card card = gamePanel.levelManager.blackjack.getPlayerHand().get(i);
+            for (int i = 0; i < gamePanel.levelManager.getBlackjack().getPlayerHand().size(); i++) {
+                Card card = gamePanel.levelManager.getBlackjack().getPlayerHand().get(i);
                 BufferedImage img = ImageIO.read(getClass().getResourceAsStream(card.getImagePath()));
-                g.drawImage(img, ((Card.cardWidth) * (i)) + GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 5,
-                        Card.cardWidth, Card.cardHeight, null);
+                g.drawImage(img, ((Card.CARD_WIDTH) * (i)) + GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 5,
+                        Card.CARD_WIDTH, Card.CARD_HEIGHT, null);
             }
         } catch (Exception e) {
             logger.warning("Error loading Card image");
         }
 
-        if (!gamePanel.levelManager.blackjack.getStandEnabled() && !gamePanel.levelManager.blackjack.getHitEnabled()) {
+        if (!gamePanel.levelManager.getBlackjack().getStandEnabled()
+                && !gamePanel.levelManager.getBlackjack().getHitEnabled()) {
             g.setColor(Color.WHITE);
             g.setFont(g.getFont().deriveFont(Font.BOLD, 50.0f));
             g.drawString("Press R to restart the game", GamePanel.TILE_SIZE * 1, GamePanel.TILE_SIZE * 8);
@@ -523,14 +575,14 @@ public class UI {
         // Drawing Bet
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 70.0f));
-        g.drawString("BET:" + gamePanel.levelManager.roulette.getBet(), GamePanel.TILE_SIZE * 10,
+        g.drawString("BET:" + gamePanel.levelManager.getRoulette().getBet(), GamePanel.TILE_SIZE * 10,
                 GamePanel.TILE_SIZE * 1 + 24);
 
         // Winning number
 
-        if (gamePanel.levelManager.roulette.getWinningNumber() == 0) {
+        if (gamePanel.levelManager.getRoulette().getWinningNumber() == 0) {
             g.setColor(Color.GREEN);
-        } else if (gamePanel.levelManager.roulette.getWinningNumber() % 2 == 0) {
+        } else if (gamePanel.levelManager.getRoulette().getWinningNumber() % 2 == 0) {
             g.setColor(Color.RED);
         } else {
             g.setColor(Color.BLACK);
@@ -541,7 +593,7 @@ public class UI {
 
         g.setColor(Color.WHITE);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 150.0f));
-        g.drawString("" + gamePanel.levelManager.roulette.getWinningNumber(), GamePanel.TILE_SIZE * 10,
+        g.drawString("" + gamePanel.levelManager.getRoulette().getWinningNumber(), GamePanel.TILE_SIZE * 10,
                 GamePanel.TILE_SIZE * 8);
 
         // Current Balance
@@ -550,7 +602,7 @@ public class UI {
                 GamePanel.TILE_SIZE * 10 + 24);
         g.drawImage(chipImage, GamePanel.TILE_SIZE * 10 - 70, GamePanel.TILE_SIZE * 10 - 10, 50, 50, null);
 
-        if (!gamePanel.levelManager.roulette.isValidBet()) {
+        if (!gamePanel.levelManager.getRoulette().isValidBet()) {
             g.setColor(Color.RED);
             g.setFont(g.getFont().deriveFont(Font.BOLD, 80.0f));
             g.drawString("Not enough chips", GamePanel.TILE_SIZE * 1,
@@ -575,8 +627,10 @@ public class UI {
             drawPokermon();
         } else if (LevelManager.getLevelNumber() >= 3 && gamePanel.player.getNpcIndex() == 7) {
             drawDices();
-        } else {
+        } else if (LevelManager.getLevelNumber() >= 4 && gamePanel.player.getNpcIndex() == 8) {
             drawRPC();
+        } else {
+            drawENDSCREEN();
         }
     }
 
@@ -588,8 +642,9 @@ public class UI {
         g.setColor(Color.WHITE);
         g.drawImage(chipImage, 0, 0, 40, 40, null);
         g.drawString("" + gamePanel.player.getChipCount(), xStatsTextOffset, yStatsTextOffset);
-        g.drawString("Luck: " + gamePanel.player.getPlayerLuck() * 100 + "%", 0, yStatsTextOffset * 2);
-
+        if (gamePanel.getKeyHandler().getInteract()) {
+            g.drawString("Interact is ON", xStatsTextOffset, yStatsTextOffset + 40);
+        }
         if (announceMessage) {
             announceMessage();
         }
@@ -616,10 +671,11 @@ public class UI {
      * Draws the main menu
      */
     private void drawMenu() {
-        g.setColor(new Color(212, 175, 55));
+        g.drawImage(menuBG, 0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, null);
+        g.setColor(new Color(0, 0, 0, 150));
         g.fillRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
-        String title = "PLEASE HELP";
-        g.setFont(g.getFont().deriveFont(Font.BOLD, 100.0f));
+        String title = "No Intern, No home";
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 65.0f));
         FontMetrics fm = g.getFontMetrics();
         int titleWidth = fm.stringWidth(title);
         int x = (GamePanel.SCREEN_WIDTH - titleWidth) / 2;
@@ -650,19 +706,10 @@ public class UI {
             g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 110, GamePanel.TILE_SIZE * 5 - 25, 30, 30, null);
         }
 
-        title = "TEST";
-        g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
-        g.setColor(Color.WHITE);
-        g.drawString(title, GamePanel.TILE_SIZE * 8 - 65, GamePanel.TILE_SIZE * 6);
-        if (command == 2) {
-            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 110, GamePanel.TILE_SIZE * 6 - 25, 30, 30, null);
-        }
-
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20.0f));
-        g.setColor(Color.BLACK);
+        g.setColor(Color.GRAY);
         g.drawString("Disclaimer: Gambling can be addictive. Please play responsibly.", GamePanel.TILE_SIZE * 2,
                 GamePanel.TILE_SIZE * 11);
-
     }
 
     /**

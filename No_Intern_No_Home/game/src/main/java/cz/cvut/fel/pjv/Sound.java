@@ -6,10 +6,16 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
 
+/**
+ * Sound is a class that plays sounds in the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Sound {
     private Clip clip;
     private URL[] soundURL = new URL[20];
     private boolean isMuted = false;
+    private Clip bgMusicClip;
 
     public Sound() {
 
@@ -24,6 +30,7 @@ public class Sound {
             soundURL[7] = getClass().getResource("/sounds/shooting.wav");
             soundURL[8] = getClass().getResource("/sounds/dice_roll.wav");
             soundURL[9] = getClass().getResource("/sounds/pokachu.wav");
+            soundURL[10] = getClass().getResource("/sounds/con_te_partiro_nocp.wav");
             soundURL[19] = getClass().getResource("/sounds/Megalovania_no_CP.wav");
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,20 +77,25 @@ public class Sound {
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float currentVolume = volume.getValue();
-            volume.setValue(currentVolume - 10.0f);
+            volume.setValue(currentVolume - 20.0f);
         }
         this.loopSound();
+        this.bgMusicClip = clip;
     }
 
     /**
      * Toggles sound on and off
      */
     public void toggleSound() {
+        if (bgMusicClip == null) {
+            return;
+        }
+
         if (isMuted) {
-            clip.start();
+            bgMusicClip.start();
             isMuted = false;
         } else {
-            clip.stop();
+            bgMusicClip.stop();
             isMuted = true;
         }
     }
@@ -115,5 +127,21 @@ public class Sound {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(-10.0f);
         }
+    }
+
+    /**
+     * Plays a new sound instead of the background music
+     * This method is used for the end of the game
+     * 
+     * @param i - index of the sound
+     */
+    public void playNewSound(int i) {
+        // Stop the background music
+        if (bgMusicClip != null && bgMusicClip.isRunning()) {
+            bgMusicClip.stop();
+        }
+
+        // Play the new sound
+        this.playMusic(i);
     }
 }

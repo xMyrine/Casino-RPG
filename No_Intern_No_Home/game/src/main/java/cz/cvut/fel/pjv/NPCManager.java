@@ -2,6 +2,11 @@ package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.entity.*;
 
+/**
+ * NPCManager is a class that manages the NPCs in the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class NPCManager {
 
     GamePanel gamePanel;

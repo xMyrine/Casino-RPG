@@ -1,13 +1,18 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
+/**
+ * Worker3 is an NPC that the player can interact with.
+ * It is the third minigame npc the player meets in the game.
+ * The player can play dice roll with the worker.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Worker3 extends Entity implements NPC {
 
     GamePanel gamePanel;
@@ -36,6 +41,9 @@ public class Worker3 extends Entity implements NPC {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
         up1 = assignImage("/npc/worker3_up1");
         up2 = assignImage("/npc/worker3_up2");
@@ -47,17 +55,12 @@ public class Worker3 extends Entity implements NPC {
         right2 = assignImage("/npc/worker3_right2");
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-
+    /**
+     * Worker3 has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -73,6 +76,10 @@ public class Worker3 extends Entity implements NPC {
         }
     }
 
+    /**
+     * Sets the dialogue messages for the NPC.
+     * Player can play dice roll with the worker, while in the dialogue.
+     */
     @Override
     public void setDialogueMessage() {
         dialogues[0] = "Oh, hello there!";

@@ -5,6 +5,13 @@ import cz.cvut.fel.pjv.objects.GameObject;
 
 import javax.imageio.ImageIO;
 
+/**
+ * DomPerignon is an alcohol object in the game.
+ * Dom Perignon is a high-quality champagne that increases the player's luck by
+ * 0.2.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class DomPerignon extends GameObject implements Alcohol {
 
     private static final float LUCK = 0.2f;
@@ -22,6 +29,11 @@ public class DomPerignon extends GameObject implements Alcohol {
         }
     }
 
+    /**
+     * Increase the player's luck by 0.2.
+     * 
+     * @param player the player object
+     */
     @Override
     public float increasePlayersLuck(Player player) {
         float newLuck = player.getPlayerLuck();

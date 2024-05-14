@@ -1,13 +1,18 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
+/**
+ * Worker2 is an NPC that the player can interact with.
+ * It is the second minigame npc the player meets in the game.
+ * The player can play blackjack with the worker.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Worker2 extends Entity implements NPC {
     GamePanel gamePanel;
 
@@ -35,8 +40,10 @@ public class Worker2 extends Entity implements NPC {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
-
         up1 = assignImage("/npc/worker2_up_1");
         up2 = assignImage("/npc/worker2_up_2");
         down1 = assignImage("/npc/worker2_down_1");
@@ -48,18 +55,12 @@ public class Worker2 extends Entity implements NPC {
 
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-
-    }
-
+    /**
+     * Worker2 has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -75,6 +76,11 @@ public class Worker2 extends Entity implements NPC {
         }
     }
 
+    /**
+     * Set the dialogue messages for worker.
+     * Player can start blackjack with the worker, while the worker gives the player
+     * some tips.
+     */
     public void setDialogueMessage() {
         dialogues[0] = "I see you have made it this far. \n I am impressed.";
         dialogues[1] = "See that prostitute walking over there?\n Bet you never saw one of these\n You study CS anyways LOL.";
@@ -85,17 +91,16 @@ public class Worker2 extends Entity implements NPC {
         dialogues[6] = "Each card from 2 to 10 has a value equal to its number.\n Jack, Queen, and King all have a value of 10,\nwhile aces can be counted as either 1 or 11.";
         dialogues[7] = "You are competing against the dealer,\nso whoever has a better score wins. Going over 21 is a “bust” or an automatic loss,\nwhile hitting exactly 21 is an automatic win.";
         dialogues[8] = "";
-
     }
 
+    /**
+     * Worker2 has a random movement pattern.
+     */
     @Override
     public void move() {
-
         int i;
-
         if (actionCounter < ACTION_DELAY) {
             actionCounter++;
-
         } else {
             i = Entity.random.nextInt(4);
 

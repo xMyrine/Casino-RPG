@@ -1,14 +1,20 @@
 package cz.cvut.fel.pjv.entity;
 
 import java.util.Random;
-import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
+/**
+ * Shopkeeper is an NPC that the player can interact with in the first level.
+ * The player can increase their luck, receive chips or have random stats
+ * changes.
+ * Shopkeeper also opens the shop screen.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Shopkeeper extends Entity {
 
     private GamePanel gamePanel;
@@ -36,8 +42,10 @@ public class Shopkeeper extends Entity {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
-
         up1 = assignImage("/npc/shop_up_1");
         up2 = assignImage("/npc/shop_up_2");
         down1 = assignImage("/npc/shop_down_1");
@@ -49,18 +57,12 @@ public class Shopkeeper extends Entity {
 
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-
-    }
-
+    /**
+     * Shopkeeper has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -76,15 +78,20 @@ public class Shopkeeper extends Entity {
         }
     }
 
+    /**
+     * Instead of dialogue Shopkeeper opens the shop screen.
+     */
     @Override
     public void talk() {
         gamePanel.changeGameState(6);
     }
 
+    /**
+     * Shopkeeper moves randomly.
+     */
     @Override
     public void move() {
         int i;
-
         if (actionCounter < ACTION_DELAY) {
             actionCounter++;
 
@@ -110,6 +117,9 @@ public class Shopkeeper extends Entity {
 
     }
 
+    /**
+     * Increases the player's luck by 4% at the cost of 25 chips.
+     */
     private void increasePlayersLuck() {
         if (gamePanel.getPlayer().getChipCount() > 25) {
             gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() + 0.05f);
@@ -120,12 +130,18 @@ public class Shopkeeper extends Entity {
         }
     }
 
+    /**
+     * Increases the player's chips by 10 at the cost of 1% of their luck.
+     */
     private void increasePlayersChips() {
         gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() + 10);
         gamePanel.getPlayer().setPlayerLuck(gamePanel.getPlayer().getPlayerLuck() - 0.01f);
         gamePanel.getGameUI().setAnnounceMessage("You have received 5 chips!");
     }
 
+    /**
+     * Randomly increases or decreases the player's luck and chips.
+     */
     private void randomPlayerStats() {
         while (true) {
             if (random.nextFloat() < gamePanel.getPlayer().getPlayerLuck()) {
@@ -143,6 +159,13 @@ public class Shopkeeper extends Entity {
         }
     }
 
+    /**
+     * Executes the command given by the player.
+     * Depending on the command, the player's stats are changed.
+     * Either (1) increase luck, (2) increase chips or (3) random stats change.
+     * 
+     * @param command
+     */
     public void executeCommand(int command) {
         switch (command) {
             case 0:

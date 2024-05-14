@@ -10,6 +10,13 @@ import javax.imageio.ImageIO;
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Sound;
 
+/**
+ * Abstract class for all game objects in the game.
+ * This class contains the basic methods and attributes for all game objects.
+ * Such as drawing, collision, etc.
+ * 
+ * @Author Minh Tu Pham
+ */
 public abstract class GameObject {
 
     protected BufferedImage image;

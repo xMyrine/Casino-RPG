@@ -3,6 +3,12 @@ package cz.cvut.fel.pjv;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
+/**
+ * Inventory is a class that contains the inventory image and the inventory
+ * items.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Inventory {
     private BufferedImage inventoryImage;
     private BufferedImage[] inventoryItems;

@@ -1,5 +1,10 @@
 package cz.cvut.fel.pjv;
 
+/**
+ * Constants used in the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public final class Constants {
 
     public static final String UP = "up";

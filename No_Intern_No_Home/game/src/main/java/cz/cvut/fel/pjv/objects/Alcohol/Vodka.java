@@ -5,6 +5,12 @@ import cz.cvut.fel.pjv.objects.GameObject;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Vodka is an alcohol object in the game.
+ * Vodka is a strong alcohol that increases the player's luck by 0.07.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Vodka extends GameObject implements Alcohol {
 
     private static final float LUCK = 0.07f;
@@ -22,6 +28,11 @@ public class Vodka extends GameObject implements Alcohol {
         }
     }
 
+    /**
+     * Increase the player's luck by 0.07.
+     * 
+     * @param player the player object
+     */
     @Override
     public float increasePlayersLuck(Player player) {
         float newLuck = player.getPlayerLuck();

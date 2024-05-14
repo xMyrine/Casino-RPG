@@ -1,14 +1,17 @@
 package cz.cvut.fel.pjv.entity;
 
-import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.items.*;
 import cz.cvut.fel.pjv.Constants;
 
+/**
+ * Craftsman is an NPC that crafts special items for the player.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Craftsman extends Entity {
 
     public Craftsman() {
@@ -43,18 +46,12 @@ public class Craftsman extends Entity {
 
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-
-    }
-
+    /**
+     * Craftsman has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -70,11 +67,17 @@ public class Craftsman extends Entity {
         }
     }
 
+    /**
+     * Instead of dialogue Craftsman opens the crafting screen.
+     */
     @Override
     public void talk() {
         gamePanel.changeGameState(GamePanel.CRAFTSCREEN);
     }
 
+    /**
+     * Craftsman moves randomly.
+     */
     @Override
     public void move() {
         int i;
@@ -104,8 +107,13 @@ public class Craftsman extends Entity {
 
     }
 
-    /*
+    /**
      * Craftsman crafts special items for the player.
+     * Adds the item to the player's inventory and removes the fragments from the
+     * player's fragment inventory.
+     * Player must have enough fragments and chips to craft the item.
+     * 
+     * @param item index of the item to be crafted
      */
     public void craft(int item) {
         int cigarCount = gamePanel.getPlayer().getSpecialItemsFragmentCount(Player.CIGAR_INDEX);
@@ -121,14 +129,13 @@ public class Craftsman extends Entity {
         } else if (item == Player.GUN_INDEX && gunIndex >= 3 && gamePanel.getPlayer().getChipCount() >= 250) {
             gamePanel.getPlayer().setSpecialItemsFragmentCount(Player.GUN_INDEX,
                     gamePanel.getPlayer().getSpecialItemsFragmentCount(Player.GUN_INDEX) - 3);
-            Gun gun = new Gun(gamePanel.getLevelManager().pokermon);
+            Gun gun = new Gun(gamePanel.getLevelManager().getPokermon());
             gamePanel.getPlayer().addItems(gun);
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 250);
         } else if (item == Player.CARDS_INDEX && cardsIndex >= 3 && gamePanel.getPlayer().getChipCount() >= 100) {
             gamePanel.getPlayer().setSpecialItemsFragmentCount(Player.CARDS_INDEX,
                     gamePanel.getPlayer().getSpecialItemsFragmentCount(Player.CARDS_INDEX) - 3);
-            gamePanel.getPlayer().setSpecialItem(Player.CARDS_INDEX,
-                    gamePanel.getPlayer().getSpecialItem(Player.CARDS_INDEX) + 1);
+            gamePanel.getPlayer().addItems(new PlayingCards());
             gamePanel.getPlayer().setChipCount(gamePanel.getPlayer().getChipCount() - 100);
         } else {
             gamePanel.getGameUI().setAnnounceMessage("Not enough fragments or unsufficient funds");

@@ -1,13 +1,20 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
-import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+/**
+ * Prostitute is an NPC that the player can interact with.
+ * In order to pass through the second level, the player has to answer the
+ * prostitute's questions.
+ * Player has to have a certain amount of luck to pass the test and correct
+ * answers increases the reputation.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Prostitute extends Entity implements NPC {
     private int reputation = 0;
     private float rizz = 0;
@@ -23,8 +30,10 @@ public class Prostitute extends Entity implements NPC {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
-
         up1 = assignImage("/npc/prost_up_1");
         up2 = assignImage("/npc/prost_up_2");
         down1 = assignImage("/npc/prost_down_1");
@@ -36,26 +45,26 @@ public class Prostitute extends Entity implements NPC {
 
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-
-    }
-
+    /**
+     * Increase reputation by 1.
+     */
     public void increaseReputation() {
         reputation++;
     }
 
+    /**
+     * Decrease reputation by 1.
+     */
     public void decreaseReputation() {
         reputation--;
     }
 
+    /**
+     * Prostitute has 4 directions and 2 sprites for each direction.
+     * Draws the NPC on the screen relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -71,6 +80,13 @@ public class Prostitute extends Entity implements NPC {
         }
     }
 
+    /**
+     * Prostitute dialogue method
+     * Compared to others NPCs, Prostitute has a unique dialogue system.
+     * If the player answers the questions correctly, the reputation increases.
+     * If the player answers the questions incorrectly, the reputation decreases.
+     * 
+     */
     @Override
     public void talk() {
         gamePanel.getGameUI().setDialogue(dialogues[dialogueIndex]);
@@ -81,7 +97,7 @@ public class Prostitute extends Entity implements NPC {
             calculateRizz();
             if (rizz > 2) {
                 dialogueIndex++;
-                gamePanel.getLevelManager().secondLevel.getLaid();
+                gamePanel.getLevelManager().getSecondLevel().getLaid();
                 gamePanel.getLevelManager().checkLevelFinished();
             }
         }
@@ -92,6 +108,11 @@ public class Prostitute extends Entity implements NPC {
         }
     }
 
+    /**
+     * Assigns dialogue messages to the NPC.
+     * Prostitute has 20 dialogue messages, which is the maximum amount of
+     * dialogue messages an NPC can have.
+     */
     public void setDialogueMessage() {
         dialogues[0] = "Oh, Hi there handsome. You look like you \n could use some company.";
         dialogues[1] = "Before we get to have fun, I will need\nyou to show me you are master RIZZLER.";
@@ -115,10 +136,16 @@ public class Prostitute extends Entity implements NPC {
         dialogues[19] = "";
     }
 
-    public void calculateRizz() {
+    /**
+     * Calculates the rizz value.
+     */
+    private void calculateRizz() {
         rizz = gamePanel.getPlayer().getPlayerLuck() * reputation;
     }
 
+    /**
+     * Prostitute moves randomly.
+     */
     @Override
     public void move() {
         int i;

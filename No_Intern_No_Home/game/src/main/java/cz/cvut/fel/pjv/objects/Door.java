@@ -3,9 +3,14 @@ package cz.cvut.fel.pjv.objects;
 import javax.imageio.ImageIO;
 import cz.cvut.fel.pjv.Toolbox;
 
+/**
+ * Door is a game object that is opened after completing the level.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class Door extends GameObject implements InteractableObject {
 
-    public boolean open;
+    private boolean open;
 
     public Door(int worldX, int worldY) {
         this.worldX = worldX;
@@ -22,6 +27,11 @@ public class Door extends GameObject implements InteractableObject {
 
     }
 
+    /**
+     * Change the state of the door.
+     * 
+     * @param check true if the door should be opened, false if it should be closed
+     */
     @Override
     public void changeState(boolean check) {
         if (check) {
@@ -36,6 +46,14 @@ public class Door extends GameObject implements InteractableObject {
 
     public boolean getState() {
         return !collision;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
 }

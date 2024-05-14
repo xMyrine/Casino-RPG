@@ -1,16 +1,19 @@
 package cz.cvut.fel.pjv.entity;
 
 import cz.cvut.fel.pjv.GamePanel;
-import cz.cvut.fel.pjv.Toolbox;
 import cz.cvut.fel.pjv.Constants;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
+/**
+ * Final boss is the last NPC the player has to defeat in order to win the game.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class FinalBoss extends Entity implements NPC {
 
-    GamePanel gamePanel;
+    private GamePanel gamePanel;
     private int directionIndex = 0;
     private static final String[] DIRECTIONS = { Constants.UP, Constants.RIGHT, Constants.DOWN, Constants.LEFT };
     private static final int STEPS_PER_DIRECTION = 5;
@@ -40,6 +43,9 @@ public class FinalBoss extends Entity implements NPC {
         getNPCImage();
     }
 
+    /**
+     * Assigns images to the NPC.
+     */
     public void getNPCImage() {
         up1 = assignImage("/npc/finalboss_up1");
         up2 = assignImage("/npc/finalboss_up2");
@@ -51,17 +57,12 @@ public class FinalBoss extends Entity implements NPC {
         right2 = assignImage("/npc/finalboss_right2");
     }
 
-    protected BufferedImage assignImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-            image = Toolbox.scaleImage(image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-
+    /**
+     * Draws the Final Boss on the screen.
+     * Relative to the player's position.
+     * 
+     * @param g Graphics2D object
+     */
     @Override
     public void draw(Graphics2D g) {
         BufferedImage image = directionToImageMap.getOrDefault(direction, () -> null).get();
@@ -77,6 +78,9 @@ public class FinalBoss extends Entity implements NPC {
         }
     }
 
+    /**
+     * Adding dialogue messages to the dialogue array of the NPC.
+     */
     @Override
     public void setDialogueMessage() {
         dialogues[0] = "Welcome challenger! Prepare to face your doom!";
@@ -94,6 +98,9 @@ public class FinalBoss extends Entity implements NPC {
         dialogues[12] = "(Do you wish to challenge the Final Boss?)\n (Y/N)";
     }
 
+    /**
+     * Final boss moves in a square pattern.
+     */
     @Override
     public void move() {
         if (actionCounter < ACTION_DELAY) {
