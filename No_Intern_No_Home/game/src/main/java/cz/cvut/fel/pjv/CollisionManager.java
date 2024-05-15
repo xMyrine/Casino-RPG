@@ -153,6 +153,13 @@ public class CollisionManager {
         return index;
     }
 
+    /**
+     * Updates the x and y coordinates of the collision areas for the given entity
+     * and object.
+     *
+     * @param entity The entity whose collision area coordinates are to be updated.
+     * @param object The object whose collision area coordinates are to be updated.
+     */
     private void updateCollisionAreas(Entity entity, GameObject object) {
         entity.getCollisionArea().x = entity.getWorldX() + entity.getCollisionAreaDefaultX();
         entity.getCollisionArea().y = entity.getWorldY() + entity.getCollisionAreaDefaultY();
@@ -161,6 +168,18 @@ public class CollisionManager {
         object.getCollisionArea().y = object.getWorldY() + object.getCollisionArea().y;
     }
 
+    /**
+     * Checks for a collision between the given entity and object in the direction
+     * the entity is moving.
+     *
+     * @param entity The entity to check for a collision.
+     * @param object The object to check for a collision with.
+     * @param player A boolean indicating whether the entity is a player.
+     * @param i      The index of the object in the game panel's objects array.
+     * @param index  The current index of the object the player is colliding with.
+     * @return The index of the object the player is colliding with, or 69 if the
+     *         player is not colliding with any object.
+     */
     private int checkCollisionInDirection(Entity entity, GameObject object, boolean player, int i, int index) {
         switch (entity.getDirection()) {
             case Constants.UP:
@@ -176,12 +195,27 @@ public class CollisionManager {
         }
     }
 
+    /**
+     * Checks for a collision between the given entity and object, and updates the
+     * entity's collision status and the index if necessary.
+     *
+     * @param entity The entity to check for a collision.
+     * @param object The object to check for a collision with.
+     * @param player A boolean indicating whether the entity is a player.
+     * @param i      The index of the object in the game panel's objects array.
+     * @param index  The current index of the object the player is colliding with.
+     * @param dx     The change in the x coordinate of the entity's collision area.
+     * @param dy     The change in the y coordinate of the entity's collision area.
+     * @return The index of the object the player is colliding with, or the current
+     *         index if the player is not colliding with the object.
+     */
     private int checkCollision(Entity entity, GameObject object, boolean player, int i, int index, int dx, int dy) {
         entity.getCollisionArea().x += dx;
         entity.getCollisionArea().y += dy;
 
         if (entity.getCollisionArea().intersects(object.getCollisionArea())) {
-            logger.log(Level.FINER, entity.getDirection() + " Collision with object {0}", object.getName());
+            logger.log(Level.FINER, "{0} Collision with object {1}",
+                    new Object[] { entity.getDirection(), object.getName() });
             if (object.getCollision()) {
                 entity.setCollision(true);
             }
@@ -193,6 +227,13 @@ public class CollisionManager {
         return index;
     }
 
+    /**
+     * Resets the x and y coordinates of the collision areas for the given entity
+     * and object to their default values.
+     *
+     * @param entity The entity whose collision area coordinates are to be reset.
+     * @param object The object whose collision area coordinates are to be reset.
+     */
     private void resetCollisionAreas(Entity entity, GameObject object) {
         entity.getCollisionArea().x = entity.getCollisionAreaDefaultX();
         entity.getCollisionArea().y = entity.getCollisionAreaDefaultY();
