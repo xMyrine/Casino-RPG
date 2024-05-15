@@ -123,9 +123,9 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = GamePanel.TILE_SIZE * 2;
         worldY = GamePanel.TILE_SIZE * 2;
-        this.speed = 10;
+        this.speed = 3;
         direction = Constants.DOWN; // default direction
-        chipCount = 50000;
+        chipCount = 1000;
         items.add(new Cigarette(this));
     }
 

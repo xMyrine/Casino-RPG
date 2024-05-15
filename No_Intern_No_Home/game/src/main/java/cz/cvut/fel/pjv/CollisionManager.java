@@ -262,7 +262,6 @@ public class CollisionManager {
                 resetCollisionAreas(entity, target[i]);
             }
         }
-
         return index;
     }
 
