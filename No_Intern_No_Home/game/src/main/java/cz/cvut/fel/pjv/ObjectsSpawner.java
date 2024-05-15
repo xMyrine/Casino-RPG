@@ -87,12 +87,24 @@ public class ObjectsSpawner {
         return currentObjectLevelSpawned;
     }
 
+    /**
+     * Spawns objects based on the level
+     * This method is only called when the game is loaded from a save file
+     * 
+     * @param level the level to spawn objects for
+     */
     protected void spawnObjectsFromSave(int level) {
         if (level >= 2) {
             spawnLevelTwoObjects();
         }
+        if (level == 3) {
+            gamePanel.getLevelManager().openDoors();
+        }
         if (level >= 3) {
             spawnLevelThreeObjects();
+        }
+        if (level == 4) {
+            gamePanel.getLevelManager().openDoors();
         }
     }
 

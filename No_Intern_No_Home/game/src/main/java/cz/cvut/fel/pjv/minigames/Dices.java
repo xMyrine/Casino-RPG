@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.minigames;
 import java.util.Random;
 
 import cz.cvut.fel.pjv.GamePanel;
+import lombok.Data;
 
 /**
  * Dices is a minigame where the player throws dices simitaneously with the
@@ -12,6 +13,7 @@ import cz.cvut.fel.pjv.GamePanel;
  * 
  * @Author Minh Tu Pham
  */
+@Data
 public class Dices {
     private int rolledNumber1;
     private int rolledNumber2;

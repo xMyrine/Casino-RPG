@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.minigames;
 import java.util.Random;
 
 import cz.cvut.fel.pjv.GamePanel;
+import lombok.Data;
 
 /**
  * RPS is a minigame where the player plays Rock, Paper, Scissors against the
@@ -12,6 +13,7 @@ import cz.cvut.fel.pjv.GamePanel;
  * 
  * @Author Minh Tu Pham
  */
+@Data
 public class RPS {
 
     public static final int ROCK = 0;

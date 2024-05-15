@@ -46,6 +46,11 @@ public class NPCManager {
                 GamePanel.TILE_SIZE * 37);
     }
 
+    /**
+     * Spawns the NPCs in the game depending on the level.
+     * 
+     * @param level the level of the game
+     */
     protected void spawnNPCs(int level) {
         if (level >= 2) {
             spawnLevelTwoNPC();

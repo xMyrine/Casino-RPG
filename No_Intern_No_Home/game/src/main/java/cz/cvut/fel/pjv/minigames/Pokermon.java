@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.entity.Player;
+import lombok.Data;
 
 /**
  * Pokermon is a minigame that the player plays in the third level.
@@ -19,6 +20,7 @@ import cz.cvut.fel.pjv.entity.Player;
  * 
  * @Author Minh Tu Pham
  */
+@Data
 public class Pokermon {
     private int playerHealth;
     private int enemyHealth;

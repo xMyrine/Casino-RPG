@@ -135,6 +135,7 @@ public class Player extends Entity {
      * 
      * @param speed the player's speed
      */
+    @Override
     public void setSpeed(int speed) {
         if (speed < 0) {
             this.speed = 0;
@@ -583,5 +584,25 @@ public class Player extends Entity {
             default:
                 return false;
         }
+    }
+
+    /**
+     * Get the number of instances of a class in the player's inventory
+     * 
+     * @param clazz the class to count instances of
+     * @return the number of instances of the class in the player's inventory
+     */
+    public int countInstances(Class<?> clazz) {
+        int count = 0;
+        for (Items item : items) {
+            if (clazz.isInstance(item)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void addItem(Items item) {
+        items.add(item);
     }
 }

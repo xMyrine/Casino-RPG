@@ -25,7 +25,7 @@ public class LevelManager {
     private boolean secondLevelMessage = false;
     private boolean thirdLevelmessage = false;
     private boolean levelInProgress = true;
-    private static int levelNumber = 1; // ! Change to 1
+    private static int levelNumber = 1;
     private Logger logger = Logger.getLogger(LevelManager.class.getName());
     private Roulette roulette;
     private Blackjack blackjack;
@@ -112,7 +112,30 @@ public class LevelManager {
         return levelNumber;
     }
 
+    /**
+     * Spawn objects and NPCs based on the level number
+     * This method is used only for loading the game from a save file
+     * It make sures that the minigames are completed so player cannot
+     * abuse the save file to skip the minigames
+     * 
+     * @param level the level number
+     */
     public void spawnObjectsAndNPC(int level) {
+        if (level == 2) {
+            roulette.setCompleted(true);
+            firstLevel.setPlayerSlotMachineCount(firstLevel.getFinishedSlotMachineCount());
+            firstLevelMessage = true;
+        }
+        if (level == 3) {
+            blackjack.setFinished(true);
+            secondLevel.getLaid();
+            secondLevelMessage = true;
+        }
+        if (level == 4) {
+            pokermon.setFinished(true);
+            dices.setCompleted(true);
+            thirdLevelmessage = true;
+        }
         gamePanel.getObjectsSpawner().spawnObjectsFromSave(level);
         gamePanel.getNpcManager().spawnNPCs(level);
     }
@@ -120,7 +143,7 @@ public class LevelManager {
     /**
      * Open the doors based on the level number
      */
-    private void openDoors() {
+    public void openDoors() {
         for (int i = 0; i < gamePanel.objects.length; i++) {
             if (gamePanel.objects[i] instanceof Door) {
                 ((Door) gamePanel.objects[i])

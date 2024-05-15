@@ -3,7 +3,6 @@ package cz.cvut.fel.pjv;
 import java.awt.event.KeyListener;
 
 import cz.cvut.fel.pjv.entity.*;
-import cz.cvut.fel.pjv.saves.Storage;
 
 import java.awt.event.KeyEvent;
 

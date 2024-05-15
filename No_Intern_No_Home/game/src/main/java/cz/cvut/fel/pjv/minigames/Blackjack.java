@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.minigames;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.minigames.assets.Card;
+import lombok.Data;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import javax.imageio.ImageIO;
  * 
  * @Author Minh Tu Pham
  */
+@Data
 public class Blackjack {
     GamePanel gamePanel;
     ArrayList<Card> deck;
