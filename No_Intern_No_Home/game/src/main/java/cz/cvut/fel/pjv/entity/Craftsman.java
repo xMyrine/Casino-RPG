@@ -73,6 +73,7 @@ public class Craftsman extends Entity {
     @Override
     public void talk() {
         gamePanel.changeGameState(GamePanel.CRAFTSCREEN);
+        gamePanel.getSound().playMusic(11);
     }
 
     /**

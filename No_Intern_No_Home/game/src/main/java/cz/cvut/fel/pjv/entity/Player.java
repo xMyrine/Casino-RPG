@@ -171,6 +171,7 @@ public class Player extends Entity {
             checkCollisions();
             movePlayer();
             updateSprite();
+            canSmoke();
         }
     }
 

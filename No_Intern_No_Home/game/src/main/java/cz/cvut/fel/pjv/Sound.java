@@ -31,7 +31,7 @@ public class Sound {
             soundURL[8] = getClass().getResource("/sounds/dice_roll.wav");
             soundURL[9] = getClass().getResource("/sounds/pokachu.wav");
             soundURL[10] = getClass().getResource("/sounds/con_te_partiro_nocp.wav");
-            soundURL[19] = getClass().getResource("/sounds/Megalovania_no_CP.wav");
+            soundURL[11] = getClass().getResource("/sounds/asian_mart.wav");
         } catch (Exception e) {
             e.printStackTrace();
         }
