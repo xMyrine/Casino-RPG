@@ -13,6 +13,13 @@ import cz.cvut.fel.pjv.items.Cigarette;
 import cz.cvut.fel.pjv.items.Gun;
 import cz.cvut.fel.pjv.items.PlayingCards;
 
+/**
+ * StorageLoader is a class that saves and loads the game state.
+ * It saves the level, the number of chips, the player's position, the player's
+ * fragments, and the player's items.
+ * 
+ * @Author Minh Tu Pham
+ */
 public class StorageLoader {
     protected GamePanel gamePanel;
 
@@ -20,6 +27,11 @@ public class StorageLoader {
         this.gamePanel = gp;
     }
 
+    /**
+     * Saves the game state to a file.
+     * It saves it to the file save.ser.
+     * 
+     */
     public void save() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.ser")))) {
             Storage storage = new Storage();
@@ -41,6 +53,12 @@ public class StorageLoader {
         }
     }
 
+    /**
+     * Loads the game state from a file.
+     * It loads it from the file save.ser.
+     * If the file does not exist, it prints a stack trace.
+     * 
+     */
     public void load() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.ser")))) {
             Storage storage = (Storage) ois.readObject();
@@ -60,6 +78,12 @@ public class StorageLoader {
         }
     }
 
+    /**
+     * Adds the items to the player's inventory.
+     * It adds the items based on the storage object.
+     * 
+     * @param storage
+     */
     private void addItems(Storage storage) {
         for (int i = 0; i < storage.cigaretteCount; i++) {
             gamePanel.getPlayer()
