@@ -171,17 +171,18 @@ public class Player extends Entity {
             checkCollisions();
             movePlayer();
             updateSprite();
-            canSmoke();
         }
     }
 
     /**
      * Check if the player can smoke a cigarette
      */
-    private void canSmoke() {
+    private boolean canSmoke() {
         if (worldY <= 270 && worldX >= 2100) {
             gamePanel.getGameUI().setAnnounceMessage("You can smoke here (Q)");
+            return true;
         }
+        return false;
     }
 
     /**
@@ -507,13 +508,13 @@ public class Player extends Entity {
      */
     public void useCigarette() {
         Cigarette cigarette = getFirstCigarette();
-        if (cigarette != null) {
+        if (cigarette != null && canSmoke()) {
             cigarette.use();
             gamePanel.getGameUI().setAnnounceMessage("You smoked a cigarette, your luck increased");
             removeFirstCigarette();
         } else {
             logger.log(Level.WARNING, "No cigarette found in inventory");
-            gamePanel.getGameUI().setAnnounceMessage("You don't have a cigarette");
+            gamePanel.getGameUI().setAnnounceMessage("You don't have a cigarette or you can't smoke here (Q)");
         }
     }
 
