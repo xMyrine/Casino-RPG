@@ -89,8 +89,13 @@ public class IntroNPC extends Entity implements NPC {
         dialogues[6] = "Craftsman is also around here. He can craft you items \nif you bring him the right materials or enough money.";
         dialogues[7] = "To enter a new room and unlock more games,\n you need to beat the worker running around here.";
         dialogues[8] = "He is a tough one, also he might tell you\n to do something around the room as well,\n so make sure to do that.";
-        dialogues[9] = "Oh, who am I? Hmm, Let's just say I am a friend. \nI am here to help you out.";
-        dialogues[10] = "";
+        dialogues[9] = "After completing a level\n you will be rewarded special item fragments.\nCheck your inventory to see how many you have.";
+        dialogues[10] = "To check the controls, press esc\n use W and S to navigate around the screen\n and enter to select.";
+        dialogues[11] = "You can also check the controls in the inventory\n by pressing I.";
+        dialogues[12] = "If you happen to have a cigar\n there is a designated smoking area\n where you can smoke it.";
+        dialogues[13] = "Should be somewhere around the second room.";
+        dialogues[14] = "Oh, who am I? Hmm, Let's just say I am a friend. \nI am here to help you out.";
+        dialogues[15] = "";
     }
 
     @Override
