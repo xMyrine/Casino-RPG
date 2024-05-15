@@ -744,21 +744,21 @@ public class UI {
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("Controls", GamePanel.TILE_SIZE * 7, GamePanel.TILE_SIZE * 5 + 20);
+        g.drawString("Controls", GamePanel.TILE_SIZE * 6, GamePanel.TILE_SIZE * 5 + 20);
 
         if (command == 2) {
             g.setColor(Color.RED);
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("SAVE GAME", GamePanel.TILE_SIZE * 8 + 24, GamePanel.TILE_SIZE * 6 + 20);
+        g.drawString("Save Game", GamePanel.TILE_SIZE * 5 + 24, GamePanel.TILE_SIZE * 6 + 20);
 
         if (command == 3) {
             g.setColor(Color.RED);
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("EXIT", GamePanel.TILE_SIZE * 8 + 24, GamePanel.TILE_SIZE * 7 + 20);
+        g.drawString("EXIT", GamePanel.TILE_SIZE * 6, GamePanel.TILE_SIZE * 7 + 20);
 
     }
 

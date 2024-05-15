@@ -135,7 +135,6 @@ public class Player extends Entity {
      * 
      * @param speed the player's speed
      */
-    @Override
     public void setSpeed(int speed) {
         if (speed < 0) {
             this.speed = 0;

@@ -22,7 +22,6 @@ import cz.cvut.fel.pjv.Constants;
  * 
  * @Author Minh Tu Pham
  */
-@Data
 public abstract class Entity {
 
     protected static Random random = new Random();
@@ -59,16 +58,16 @@ public abstract class Entity {
     protected String[] dialogues = new String[20];
     protected int dialogueIndex = 0;
 
-    public static void getGamePanelInstance(GamePanel gP) {
-        gamePanel = gP;
-    }
-
     protected Map<String, Supplier<BufferedImage>> directionToImageMap = new HashMap<>();
     {
         directionToImageMap.put(Constants.UP, () -> getSpriteImage(up1, up2));
         directionToImageMap.put(Constants.DOWN, () -> getSpriteImage(down1, down2));
         directionToImageMap.put(Constants.LEFT, () -> getSpriteImage(left1, left2));
         directionToImageMap.put(Constants.RIGHT, () -> getSpriteImage(right1, right2));
+    }
+
+    public static void getGamePanelInstance(GamePanel gP) {
+        gamePanel = gP;
     }
 
     public void setCollision(boolean collision) {
@@ -281,4 +280,11 @@ public abstract class Entity {
         }
     }
 
+    public void setWorldX(int x) {
+        this.worldX = x;
+    }
+
+    public void setWorldY(int y) {
+        this.worldY = y;
+    }
 }
