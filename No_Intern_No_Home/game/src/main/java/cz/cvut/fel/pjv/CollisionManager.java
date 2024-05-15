@@ -257,54 +257,96 @@ public class CollisionManager {
 
         for (int i = 0; i < target.length; i++) {
             if (target[i] != null) {
-                entity.getCollisionArea().x = entity.getWorldX() + entity.getCollisionAreaDefaultX();
-                entity.getCollisionArea().y = entity.getWorldY() + entity.getCollisionAreaDefaultY();
-
-                target[i].getCollisionArea().x = target[i].getWorldX()
-                        + target[i].getCollisionArea().x;
-                target[i].getCollisionArea().y = target[i].getWorldY()
-                        + target[i].getCollisionArea().y;
-
-                switch (entity.getDirection()) {
-                    case Constants.UP:
-                        entity.getCollisionArea().y -= entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(target[i].getCollisionArea())) {
-                            entity.setCollision(true);
-                            index = i;
-                        }
-                        break;
-                    case Constants.DOWN:
-                        entity.getCollisionArea().y += entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(target[i].getCollisionArea())) {
-                            entity.setCollision(true);
-                            index = i;
-                        }
-                        break;
-                    case Constants.LEFT:
-                        entity.getCollisionArea().x -= entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(target[i].getCollisionArea())) {
-                            entity.setCollision(true);
-                            index = i;
-                        }
-                        break;
-                    case Constants.RIGHT:
-                        entity.getCollisionArea().x += entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(target[i].getCollisionArea())) {
-                            entity.setCollision(true);
-                            index = i;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                entity.getCollisionArea().x = entity.getCollisionAreaDefaultX();
-                entity.getCollisionArea().y = entity.getCollisionAreaDefaultY();
-
-                target[i].getCollisionArea().x = target[i].getCollisionAreaDefaultX();
-                target[i].getCollisionArea().y = target[i].getCollisionAreaDefaultY();
+                updateCollisionAreas(entity, target[i]);
+                index = checkCollisionInDirection(entity, target[i], i, index);
+                resetCollisionAreas(entity, target[i]);
             }
         }
+
         return index;
+    }
+
+    /**
+     * Updates the x and y coordinates of the collision areas for the given entity
+     * and target.
+     *
+     * @param entity The entity whose collision area coordinates are to be updated.
+     * @param target The target entity whose collision area coordinates are to be
+     *               updated.
+     */
+    private void updateCollisionAreas(Entity entity, Entity target) {
+        entity.getCollisionArea().x = entity.getWorldX() + entity.getCollisionAreaDefaultX();
+        entity.getCollisionArea().y = entity.getWorldY() + entity.getCollisionAreaDefaultY();
+
+        target.getCollisionArea().x = target.getWorldX() + target.getCollisionArea().x;
+        target.getCollisionArea().y = target.getWorldY() + target.getCollisionArea().y;
+    }
+
+    /**
+     * Checks for a collision between the given entity and target in the direction
+     * the entity is moving.
+     *
+     * @param entity The entity to check for a collision.
+     * @param target The target entity to check for a collision with.
+     * @param i      The index of the target in the array of entities.
+     * @param index  The current index of the target the entity is colliding with.
+     * @return The index of the target the entity is colliding with, or the current
+     *         index if the entity is not colliding with the target.
+     */
+    private int checkCollisionInDirection(Entity entity, Entity target, int i, int index) {
+        switch (entity.getDirection()) {
+            case Constants.UP:
+                return checkCollision(entity, target, i, index, 0, -entity.getSpeed());
+            case Constants.DOWN:
+                return checkCollision(entity, target, i, index, 0, entity.getSpeed());
+            case Constants.LEFT:
+                return checkCollision(entity, target, i, index, -entity.getSpeed(), 0);
+            case Constants.RIGHT:
+                return checkCollision(entity, target, i, index, entity.getSpeed(), 0);
+            default:
+                return index;
+        }
+    }
+
+    /**
+     * Checks for a collision between the given entity and target, and updates the
+     * entity's collision status and the index if necessary.
+     *
+     * @param entity The entity to check for a collision.
+     * @param target The target entity to check for a collision with.
+     * @param i      The index of the target in the array of entities.
+     * @param index  The current index of the target the entity is colliding with.
+     * @param dx     The change in the x coordinate of the entity's collision area.
+     * @param dy     The change in the y coordinate of the entity's collision area.
+     * @return The index of the target the entity is colliding with, or the current
+     *         index if the entity is not colliding with the target.
+     */
+    private int checkCollision(Entity entity, Entity target, int i, int index, int dx, int dy) {
+        entity.getCollisionArea().x += dx;
+        entity.getCollisionArea().y += dy;
+
+        if (entity.getCollisionArea().intersects(target.getCollisionArea())) {
+            entity.setCollision(true);
+            index = i;
+        }
+
+        return index;
+    }
+
+    /**
+     * Resets the x and y coordinates of the collision areas for the given entity
+     * and target to their default values.
+     *
+     * @param entity The entity whose collision area coordinates are to be reset.
+     * @param target The target entity whose collision area coordinates are to be
+     *               reset.
+     */
+    private void resetCollisionAreas(Entity entity, Entity target) {
+        entity.getCollisionArea().x = entity.getCollisionAreaDefaultX();
+        entity.getCollisionArea().y = entity.getCollisionAreaDefaultY();
+
+        target.getCollisionArea().x = target.getCollisionAreaDefaultX();
+        target.getCollisionArea().y = target.getCollisionAreaDefaultY();
     }
 
     /**
