@@ -112,6 +112,11 @@ public class LevelManager {
         return levelNumber;
     }
 
+    public void spawnObjectsAndNPC(int level) {
+        gamePanel.getObjectsSpawner().spawnObjectsFromSave(level);
+        gamePanel.getNpcManager().spawnNPCs(level);
+    }
+
     /**
      * Open the doors based on the level number
      */
@@ -139,6 +144,17 @@ public class LevelManager {
         int reward = rand.nextInt(3);
         gamePanel.player.setSpecialItemsFragmentCount(reward,
                 gamePanel.player.getSpecialItemsFragmentCount(reward) + 1);
+    }
+
+    public static int setLevelNumber(int levelNumber) {
+        if (levelNumber < 1) {
+            LevelManager.levelNumber = 1;
+        } else if (levelNumber > 4) {
+            LevelManager.levelNumber = 4;
+        } else {
+            LevelManager.levelNumber = levelNumber;
+        }
+        return LevelManager.levelNumber;
     }
 
     public Dices getDices() {

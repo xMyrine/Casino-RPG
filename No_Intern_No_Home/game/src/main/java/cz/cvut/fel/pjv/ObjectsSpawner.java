@@ -87,6 +87,15 @@ public class ObjectsSpawner {
         return currentObjectLevelSpawned;
     }
 
+    protected void spawnObjectsFromSave(int level) {
+        if (level >= 2) {
+            spawnLevelTwoObjects();
+        }
+        if (level >= 3) {
+            spawnLevelThreeObjects();
+        }
+    }
+
     /**
      * Updates the game
      * This method clears the items laying on the ground when the level is changed

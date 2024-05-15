@@ -46,6 +46,15 @@ public class NPCManager {
                 GamePanel.TILE_SIZE * 37);
     }
 
+    protected void spawnNPCs(int level) {
+        if (level >= 2) {
+            spawnLevelTwoNPC();
+        }
+        if (level >= 3) {
+            spawnLevelThreeNPC();
+        }
+    }
+
     /**
      * Updates the NPC in the game depending on the level.
      */

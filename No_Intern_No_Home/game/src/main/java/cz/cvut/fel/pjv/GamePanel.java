@@ -13,6 +13,7 @@ import cz.cvut.fel.pjv.entity.Entity;
 import cz.cvut.fel.pjv.entity.Player;
 import cz.cvut.fel.pjv.tile.TileManager;
 import cz.cvut.fel.pjv.objects.GameObject;
+import cz.cvut.fel.pjv.saves.StorageLoader;
 
 /**
  * GamePanel is the main class of the game
@@ -46,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     protected transient LevelManager levelManager = new LevelManager(this);
     protected transient UI gameUI = new UI(this);
     protected transient NPCManager npcManager = new NPCManager(this);
+    protected transient StorageLoader storageLoader = new StorageLoader(this);
 
     private transient Logger logger = Logger.getLogger(GamePanel.class.getName());
 
@@ -260,5 +262,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Entity[] getEntities() {
         return entities;
+    }
+
+    public ObjectsSpawner getObjectsSpawner() {
+        return objectsSpawner;
+    }
+
+    public NPCManager getNpcManager() {
+        return npcManager;
     }
 }

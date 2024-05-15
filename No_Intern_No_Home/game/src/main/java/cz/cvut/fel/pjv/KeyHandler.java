@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv;
 import java.awt.event.KeyListener;
 
 import cz.cvut.fel.pjv.entity.*;
+import cz.cvut.fel.pjv.saves.Storage;
 
 import java.awt.event.KeyEvent;
 
@@ -102,15 +103,16 @@ public class KeyHandler implements KeyListener {
      */
     private void handleMenuScreenKeyPress(int code) {
         if (code == KeyEvent.VK_W) {
-            UI.decreaseCommand(2);
+            UI.decreaseCommand(3);
         }
         if (code == KeyEvent.VK_S) {
-            UI.increaseCommand(2);
-
+            UI.increaseCommand(3);
         }
         if (code == KeyEvent.VK_ENTER && UI.getCommand() == 0) {
             gamePanel.changeGameState(GamePanel.GAMESCREEN);
         } else if (code == KeyEvent.VK_ENTER && UI.getCommand() == 1) {
+            gamePanel.storageLoader.load();
+        } else if (code == KeyEvent.VK_ENTER && UI.getCommand() == 2) {
             System.exit(0);
         }
 
@@ -174,13 +176,16 @@ public class KeyHandler implements KeyListener {
             gamePanel.changeGameState(GamePanel.CONTROLSSCREEN);
         }
         if (code == KeyEvent.VK_ENTER && UI.getCommand() == 2) {
+            gamePanel.storageLoader.save();
+        }
+        if (code == KeyEvent.VK_ENTER && UI.getCommand() == 3) {
             System.exit(0);
         }
         if (code == KeyEvent.VK_W) {
-            UI.decreaseCommand(3);
+            UI.decreaseCommand(4);
         }
         if (code == KeyEvent.VK_S) {
-            UI.increaseCommand(3);
+            UI.increaseCommand(4);
         }
     }
 

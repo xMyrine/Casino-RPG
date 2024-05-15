@@ -690,20 +690,28 @@ public class UI {
         g.drawImage(titleImage, GamePanel.TILE_SIZE * 2, GamePanel.SCREEN_HEIGHT / 2 - 100,
                 GamePanel.TILE_SIZE * 3, GamePanel.TILE_SIZE * 3, null);
 
-        g.setFont(g.getFont().deriveFont(Font.BOLD, 70.0f));
-        title = "PLAY";
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
+        title = "PLAY NEW GAME";
         g.setColor(Color.WHITE);
-        g.drawString(title, GamePanel.TILE_SIZE * 8 - 100, GamePanel.TILE_SIZE * 4);
+        g.drawString(title, GamePanel.TILE_SIZE * 7 - 100, GamePanel.TILE_SIZE * 4);
         if (command == 0) {
-            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 150, GamePanel.TILE_SIZE * 4 - 40, 50, 50, null);
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 7 - 150, GamePanel.TILE_SIZE * 4 - 40, 50, 50, null);
+        }
+
+        title = "LOAD GAME";
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
+        g.setColor(Color.WHITE);
+        g.drawString(title, GamePanel.TILE_SIZE * 7 - 50, GamePanel.TILE_SIZE * 6);
+        if (command == 1) {
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 7 - 100, GamePanel.TILE_SIZE * 6 - 25, 30, 30, null);
         }
 
         title = "EXIT";
         g.setFont(g.getFont().deriveFont(Font.BOLD, 40.0f));
         g.setColor(Color.WHITE);
-        g.drawString(title, GamePanel.TILE_SIZE * 8 - 65, GamePanel.TILE_SIZE * 5);
-        if (command == 1) {
-            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 110, GamePanel.TILE_SIZE * 5 - 25, 30, 30, null);
+        g.drawString(title, GamePanel.TILE_SIZE * 8 - 65, GamePanel.TILE_SIZE * 8);
+        if (command == 2) {
+            g.drawImage(chipImage, GamePanel.TILE_SIZE * 8 - 110, GamePanel.TILE_SIZE * 8 - 25, 30, 30, null);
         }
 
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20.0f));
@@ -743,7 +751,14 @@ public class UI {
         } else {
             g.setColor(Color.WHITE);
         }
-        g.drawString("Exit", GamePanel.TILE_SIZE * 8 + 24, GamePanel.TILE_SIZE * 6 + 20);
+        g.drawString("SAVE GAME", GamePanel.TILE_SIZE * 8 + 24, GamePanel.TILE_SIZE * 6 + 20);
+
+        if (command == 3) {
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.WHITE);
+        }
+        g.drawString("EXIT", GamePanel.TILE_SIZE * 8 + 24, GamePanel.TILE_SIZE * 7 + 20);
 
     }
 

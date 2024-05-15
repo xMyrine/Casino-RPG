@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import cz.cvut.fel.pjv.GamePanel;
 import cz.cvut.fel.pjv.Toolbox;
+import lombok.Data;
 import cz.cvut.fel.pjv.Constants;
 
 /**
@@ -21,6 +22,7 @@ import cz.cvut.fel.pjv.Constants;
  * 
  * @Author Minh Tu Pham
  */
+@Data
 public abstract class Entity {
 
     protected static Random random = new Random();
