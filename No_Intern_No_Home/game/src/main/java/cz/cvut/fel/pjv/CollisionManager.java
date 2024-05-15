@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 import cz.cvut.fel.pjv.entity.Entity;
+import cz.cvut.fel.pjv.objects.GameObject;
 
 /**
  * CollisionManager is a class that manages all the collisions in the game.
@@ -22,7 +23,7 @@ public class CollisionManager {
     public CollisionManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         logger = Logger.getLogger(this.getClass().getName());
-        logger.setLevel(Level.WARNING);
+        logger.setLevel(Level.FINEST);
     }
 
     /**
@@ -143,76 +144,61 @@ public class CollisionManager {
 
         for (int i = 0; i < gamePanel.objects.length; i++) {
             if (gamePanel.objects[i] != null) {
-                entity.getCollisionArea().x = entity.getWorldX() + entity.getCollisionAreaDefaultX();
-                entity.getCollisionArea().y = entity.getWorldY() + entity.getCollisionAreaDefaultY();
-
-                gamePanel.objects[i].getCollisionArea().x = gamePanel.objects[i].getWorldX()
-                        + gamePanel.objects[i].getCollisionArea().x;
-                gamePanel.objects[i].getCollisionArea().y = gamePanel.objects[i].getWorldY()
-                        + gamePanel.objects[i].getCollisionArea().y;
-
-                switch (entity.getDirection()) {
-                    case Constants.UP:
-                        entity.getCollisionArea().y -= entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(gamePanel.objects[i].getCollisionArea())) {
-                            logger.log(Level.FINER, "UP Collision with object {0}", gamePanel.objects[i].getName());
-                            if (gamePanel.objects[i].getCollision()) {
-                                entity.setCollision(true);
-                            }
-                            if (player) {
-                                index = i;
-                            }
-                        }
-                        break;
-                    case Constants.DOWN:
-                        entity.getCollisionArea().y += entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(gamePanel.objects[i].getCollisionArea())) {
-                            logger.log(Level.FINER, "DOWN Collision with object {0}", gamePanel.objects[i].getName());
-                            if (gamePanel.objects[i].getCollision()) {
-                                entity.setCollision(true);
-                            }
-                            if (player) {
-                                index = i;
-                            }
-                        }
-                        break;
-                    case Constants.LEFT:
-                        entity.getCollisionArea().x -= entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(gamePanel.objects[i].getCollisionArea())) {
-                            logger.log(Level.FINER, "LEFT Collision with object {0}", gamePanel.objects[i].getName());
-                            if (gamePanel.objects[i].getCollision()) {
-                                entity.setCollision(true);
-                            }
-                            if (player) {
-                                index = i;
-                            }
-                        }
-                        break;
-                    case Constants.RIGHT:
-                        entity.getCollisionArea().x += entity.getSpeed();
-                        if (entity.getCollisionArea().intersects(gamePanel.objects[i].getCollisionArea())) {
-                            logger.log(Level.FINER, "RIGHT Collision with object {0}", gamePanel.objects[i].getName());
-                            if (gamePanel.objects[i].getCollision()) {
-                                entity.setCollision(true);
-                            }
-                            if (player) {
-                                index = i;
-                            }
-
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                entity.getCollisionArea().x = entity.getCollisionAreaDefaultX();
-                entity.getCollisionArea().y = entity.getCollisionAreaDefaultY();
-
-                gamePanel.objects[i].getCollisionArea().x = gamePanel.objects[i].getCollisionAreaDefaultX();
-                gamePanel.objects[i].getCollisionArea().y = gamePanel.objects[i].getCollisionAreaDefaultY();
+                updateCollisionAreas(entity, gamePanel.objects[i]);
+                index = checkCollisionInDirection(entity, gamePanel.objects[i], player, i, index);
+                resetCollisionAreas(entity, gamePanel.objects[i]);
             }
         }
 
         return index;
+    }
+
+    private void updateCollisionAreas(Entity entity, GameObject object) {
+        entity.getCollisionArea().x = entity.getWorldX() + entity.getCollisionAreaDefaultX();
+        entity.getCollisionArea().y = entity.getWorldY() + entity.getCollisionAreaDefaultY();
+
+        object.getCollisionArea().x = object.getWorldX() + object.getCollisionArea().x;
+        object.getCollisionArea().y = object.getWorldY() + object.getCollisionArea().y;
+    }
+
+    private int checkCollisionInDirection(Entity entity, GameObject object, boolean player, int i, int index) {
+        switch (entity.getDirection()) {
+            case Constants.UP:
+                return checkCollision(entity, object, player, i, index, 0, -entity.getSpeed());
+            case Constants.DOWN:
+                return checkCollision(entity, object, player, i, index, 0, entity.getSpeed());
+            case Constants.LEFT:
+                return checkCollision(entity, object, player, i, index, -entity.getSpeed(), 0);
+            case Constants.RIGHT:
+                return checkCollision(entity, object, player, i, index, entity.getSpeed(), 0);
+            default:
+                return index;
+        }
+    }
+
+    private int checkCollision(Entity entity, GameObject object, boolean player, int i, int index, int dx, int dy) {
+        entity.getCollisionArea().x += dx;
+        entity.getCollisionArea().y += dy;
+
+        if (entity.getCollisionArea().intersects(object.getCollisionArea())) {
+            logger.log(Level.FINER, entity.getDirection() + " Collision with object {0}", object.getName());
+            if (object.getCollision()) {
+                entity.setCollision(true);
+            }
+            if (player) {
+                index = i;
+            }
+        }
+
+        return index;
+    }
+
+    private void resetCollisionAreas(Entity entity, GameObject object) {
+        entity.getCollisionArea().x = entity.getCollisionAreaDefaultX();
+        entity.getCollisionArea().y = entity.getCollisionAreaDefaultY();
+
+        object.getCollisionArea().x = object.getCollisionAreaDefaultX();
+        object.getCollisionArea().y = object.getCollisionAreaDefaultY();
     }
 
     /**
